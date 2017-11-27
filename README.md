@@ -23,5 +23,5 @@
 
 -----------------------------------------
 
-[1] https://maven.apache.org/guides/introduction/introduction-to-the-pom.html 
+[1] https://maven.apache.org/guides/introduction/introduction-to-the-pom.html <br>
 [2] https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html
