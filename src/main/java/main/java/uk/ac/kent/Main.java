@@ -19,7 +19,7 @@ public final class Main extends Application {
     @Override
     public final void start(final Stage stage) throws java.io.IOException {
         final Parent root = FXMLLoader
-                .load(getClass().getResource("sample.fxml"));
+                .load(getClass().getResource("main.fxml"));
         stage.setTitle("Hello World");
         stage.setScene(new Scene(root, WIDTH, HEIGHT));
         stage.show();
