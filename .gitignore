@@ -13,7 +13,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 *.zip
@@ -536,3 +535,4 @@ backup/
 
 # Application bundle for Mac OS
 *.app/
+*.iml

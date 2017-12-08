@@ -1,1 +1,1 @@
-package main.java.uk.ac.kent;
+package uk.ac.kent;

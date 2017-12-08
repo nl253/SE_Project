@@ -40,10 +40,17 @@
             <name>charlotte</name>
             <organization>Kent Univerity</organization>
             <roles>
-                <role>documentation</role>
                 <role>UML</role>
                 <role>coding</role>
-                <role>reports</role>
+            </roles>
+        </contributor>
+        <contributor>
+            <email>to be filled in</email>
+            <name>Bradley</name>
+            <organization>Kent Univerity</organization>
+            <roles>
+                <role>documentation</role>
+                <role>UML</role>
             </roles>
         </contributor>
         <contributor>
@@ -51,13 +58,68 @@
             <name>Imaan Fakim</name>
             <organization>Kent Univerity</organization>
             <roles>
-                <role>Management</role>
+                <role>management</role>
                 <role>documentation</role>
                 <role>UML</role>
                 <role>reports</role>
             </roles>
         </contributor>
     </contributors>
+
+    <dependencies>
+
+        <!-- Apache standard library -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
+        </dependency>
+
+        <!-- Google core libraries - graphs, collections, functional patterns -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.5-jre</version>
+        </dependency>
+
+        <!-- MySQL JDBC driver -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.8-dmr</version>
+        </dependency>
+
+        <!-- JSON library from Google -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- [> Apache IO utils <] -->
+        <!-- <dependency> -->
+        <!-- <groupId>commons-io</groupId> -->
+        <!-- <artifactId>commons-io</artifactId> -->
+        <!-- <version>2.6</version> -->
+        <!-- </dependency> -->
+
+        <!-- local SQLite-like database - for testing  -->
+        <!-- <dependency> -->
+        <!-- <groupId>com.h2database</groupId> -->
+        <!-- <artifactId>h2</artifactId> -->
+        <!-- <version>1.4.196</version> -->
+        <!-- <scope>test</scope> -->
+        <!-- </dependency> -->
+
+        <!-- [> data compression <] -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.apache.commons</groupId> -->
+        <!-- <artifactId>commons-compress</artifactId> -->
+        <!-- <version>1.15</version> -->
+        <!-- </dependency> -->
+
+    </dependencies>
 
     <build>
         <plugins>
@@ -111,6 +173,30 @@
                     <mainClass>main.java.uk.ac.kent.Main</mainClass>
                 </configuration>
             </plugin>
+
+
+            <!--Bundle dependencies as well as this project's sources-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>uk.ac.kent.Main</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -1,4 +1,4 @@
-package main.java.uk.ac.kent;
+package uk.ac.kent;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

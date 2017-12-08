@@ -1,45 +1,46 @@
-package database;
+package uk.ac.kent;
 
 import java.sql.*;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
+ * NOTE make sure that a database called yuconz exists on dragon.kent.ac.uk
+ *
  * @author nl253
  */
 
-@SuppressWarnings({"NewClassNamingConvention", "CallToDriverManagerGetConnection", "CallToSystemExit", "CallToPrintStackTrace", "JDBCResourceOpenedButNotSafelyClosed", "JDBCExecuteWithNonConstantString", "StaticVariableUsedBeforeInitialization", "StaticVariableMayNotBeInitialized", "UtilityClassCanBeEnum", "FieldNamingConvention", "MethodWithMultipleReturnPoints", "SameParameterValue", "UseOfSystemOutOrSystemErr"})
-public final class Shortcuts {
+@SuppressWarnings({"NewClassNamingConvention", "CallToDriverManagerGetConnection", "CallToSystemExit", "CallToPrintStackTrace", "JDBCResourceOpenedButNotSafelyClosed", "JDBCExecuteWithNonConstantString", "StaticVariableUsedBeforeInitialization", "StaticVariableMayNotBeInitialized", "UtilityClassCanBeEnum", "FieldNamingConvention", "MethodWithMultipleReturnPoints", "SameParameterValue", "UseOfSystemOutOrSystemErr", "ImplicitCallToSuper", "unused"})
+public final class Database {
+
+    /** Logger for the class */
+    private static final Logger log = Logger.getAnonymousLogger();
 
     private static final String PROTOCOL = "jdbc";
-    private static final String DBTYPE = "sqlite";
-    private static final String DATABASE = "database.sqlite3";
+    private static final String DBTYPE = "mysql";
+    private static final String HOST = "dragon.kent.ac.uk";
+    private static final String DATABASE = "yuconz";
     private static final String URI = String
-            .format("%s:%s:%s", PROTOCOL, DBTYPE, DATABASE);
+            .format("%s:%s:%s/%s", PROTOCOL, DBTYPE, HOST, DATABASE);
     private static boolean connected;
     private static Statement statement;
     private static Connection connection;
 
-    private Shortcuts() {}
+    private Database() {}
 
     /**
-     * @param queryString
-     * @return
-     *
-     * @throws SQLException
+     * @param queryString sql query
+     * @return Optionally a ResultSet
      */
 
     @SuppressWarnings({"MethodWithMultipleReturnPoints", "WeakerAccess"})
-    static Optional<ResultSet> query(final String queryString) throws SQLException {
+    static Optional<ResultSet> query(final String queryString) {
         if (!connected) connect();
         if (getStatement().isPresent()) try {
             return Optional.ofNullable(statement.executeQuery(queryString));
         } catch (final SQLException ignored) {}
         return Optional.empty();
     }
-
-    /**
-     * @throws SQLException
-     */
 
     @SuppressWarnings("CallToPrintStackTrace")
     private static void connect() {
@@ -51,7 +52,7 @@ public final class Shortcuts {
     }
 
     /**
-     * @throws SQLException
+     * @throws SQLException when something goes wrong when communicating with datatabase
      */
 
     public static void close() throws SQLException {
@@ -74,7 +75,7 @@ public final class Shortcuts {
     }
 
 
-    public static void main(final String... args) throws SQLException {
+    public static void main(final String... args) {
         query("CREATE if not exists DATABASE new_database")
                 .ifPresent(System.out::println);
     }
