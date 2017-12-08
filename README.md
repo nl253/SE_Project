@@ -25,8 +25,6 @@
 
 See [the meetings directory](doc/meetings/).
 
-- [27-11-17](doc/meetings/27-11-17.md)
-
 -----------------------------------------
 
 [1] https://maven.apache.org/guides/introduction/introduction-to-the-pom.html <br>
