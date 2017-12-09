@@ -1,12 +1,13 @@
 package uk.ac.kent.people;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import javax.persistence.Entity;
 
 /**
  * @author norbert
  */
 
+@Entity(name = "Manager")
 @SuppressWarnings({"unused", "PublicMethodNotExposedInInterface", "WeakerAccess", "ParameterHidesMemberVariable", "PublicConstructor", "FieldNotUsedInToString", "InstanceVariableMayNotBeInitialized", "FieldNamingConvention", "ClassWithoutLogger", "NewClassNamingConvention"})
 public class Manager extends Employee {
 

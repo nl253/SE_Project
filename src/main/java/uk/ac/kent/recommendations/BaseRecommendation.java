@@ -1,5 +1,7 @@
 package uk.ac.kent.recommendations;
 
+import javax.persistence.Entity;
+
 /**
  * @author norbert
  */

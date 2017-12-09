@@ -2,14 +2,19 @@ package uk.ac.kent.people;
 
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * @author norbert
  */
 
+@Entity(name = "Employee")
 @SuppressWarnings({"unused", "PublicMethodNotExposedInInterface", "WeakerAccess", "ParameterHidesMemberVariable", "PublicConstructor", "FieldNotUsedInToString", "InstanceVariableMayNotBeInitialized", "FieldNamingConvention", "ClassWithoutLogger", "UseOfClone", "UseOfObsoleteDateTimeApi"})
 public class Employee {
 
+    @Id
+    private int id;
     private final String surname;
     private final String name;
     private final LocalDateTime dateEmployed;

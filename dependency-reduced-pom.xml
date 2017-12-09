@@ -21,7 +21,7 @@
     <contributor>
       <name>charlotte</name>
       <email>charlotte</email>
-      <organization>Kent Univerity</organization>
+      <organization>Kent University</organization>
       <roles>
         <role>UML</role>
         <role>coding</role>
@@ -30,7 +30,7 @@
     <contributor>
       <name>Bradley</name>
       <email>to be filled in</email>
-      <organization>Kent Univerity</organization>
+      <organization>Kent University</organization>
       <roles>
         <role>documentation</role>
         <role>UML</role>
@@ -39,7 +39,7 @@
     <contributor>
       <name>Imaan Fakim</name>
       <email>if50@kent.ac.uk</email>
-      <organization>Kent Univerity</organization>
+      <organization>Kent University</organization>
       <roles>
         <role>management</role>
         <role>documentation</role>
@@ -95,7 +95,8 @@
         <artifactId>javafx-maven-plugin</artifactId>
         <version>8.8.3</version>
         <configuration>
-          <mainClass>main.java.uk.ac.kent.Main</mainClass>
+          <mainClass>uk.ac.kent.Main</mainClass>
+          <vendor>uk.ac.kent</vendor>
         </configuration>
       </plugin>
       <plugin>
