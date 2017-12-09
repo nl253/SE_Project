@@ -74,6 +74,11 @@ public final class Database {
         return Optional.ofNullable(connection);
     }
 
+    /**
+     * For testing.
+     *
+     * @param args command line args
+     */
 
     public static void main(final String... args) {
         query("CREATE if not exists DATABASE new_database")

@@ -1,7 +1,7 @@
 package uk.ac.kent.people;
 
 import java.text.MessageFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @author norbert
@@ -12,18 +12,18 @@ public class Employee {
 
     private final String surname;
     private final String name;
-    private final Date dateEmployed;
+    private final LocalDateTime dateEmployed;
     private Departament departament;
 
-    public final Date getEmployed() { return (Date) dateEmployed.clone();}
+    public final LocalDateTime getEmployed() { return dateEmployed;}
 
     final Departament getDepartament() { return departament;}
 
     @SuppressWarnings("ImplicitCallToSuper")
-    public Employee(final String surname, final String name, final Date dateEmployed, final Departament departament) {
+    public Employee(final String surname, final String name, final LocalDateTime dateEmployed, final Departament departament) {
         this.surname = surname;
         this.name = name;
-        this.dateEmployed = (Date) dateEmployed.clone();
+        this.dateEmployed = dateEmployed;
         this.departament = departament;
     }
 
