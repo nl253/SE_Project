@@ -1,6 +1,10 @@
 package uk.ac.kent;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -10,7 +14,6 @@ import java.util.logging.Logger;
  * @author nl253
  */
 
-@SuppressWarnings({"NewClassNamingConvention", "CallToDriverManagerGetConnection", "CallToSystemExit", "CallToPrintStackTrace", "JDBCResourceOpenedButNotSafelyClosed", "JDBCExecuteWithNonConstantString", "StaticVariableUsedBeforeInitialization", "StaticVariableMayNotBeInitialized", "UtilityClassCanBeEnum", "FieldNamingConvention", "MethodWithMultipleReturnPoints", "SameParameterValue", "UseOfSystemOutOrSystemErr", "ImplicitCallToSuper", "unused"})
 public final class Database {
 
     /** Logger for the class */
@@ -55,14 +58,14 @@ public final class Database {
      * @throws SQLException when something goes wrong when communicating with datatabase
      */
 
-    public static void close() throws SQLException {
+    static void close() throws SQLException {
         if (!connected) return;
         statement.close();
         connection.close();
         connected = false;
     }
 
-    public static boolean isConnected() { return connected; }
+    static boolean isConnected() { return connected; }
 
     @SuppressWarnings({"StaticVariableUsedBeforeInitialization", "WeakerAccess"})
     static Optional<Statement> getStatement() {
@@ -70,18 +73,7 @@ public final class Database {
     }
 
     @SuppressWarnings("StaticVariableUsedBeforeInitialization")
-    public static Optional<Connection> getConnection() {
+    static Optional<Connection> getConnection() {
         return Optional.ofNullable(connection);
-    }
-
-    /**
-     * For testing.
-     *
-     * @param args command line args
-     */
-
-    public static void main(final String... args) {
-        query("CREATE if not exists DATABASE new_database")
-                .ifPresent(System.out::println);
     }
 }

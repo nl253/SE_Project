@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox spacing="10" prefHeight="300.0" prefWidth="300.0"
+      xmlns="http://javafx.com/javafx/8.0.121"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="uk.ac.kent.LoginController">
+
+    <padding>
+        <Insets top="25" right="25" bottom="25" left="25"/>
+    </padding>
+
+    <Label text="User Name:" GridPane.columnIndex="0"
+           GridPane.rowIndex="1"/>
+    <TextField fx:id="usernameField" GridPane.columnIndex="1"
+               GridPane.rowIndex="1"/>
+    <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+    <PasswordField fx:id="passwordField" GridPane.columnIndex="1"
+                   GridPane.rowIndex="2"/>
+    <Button fx:id="btn" contentDisplay="CENTER" mnemonicParsing="false"
+            text="Log In"/>
+</VBox>

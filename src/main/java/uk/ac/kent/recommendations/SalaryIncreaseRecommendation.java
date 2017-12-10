@@ -1,11 +1,12 @@
 package uk.ac.kent.recommendations;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * @author norbert
  */
 
-@Entity(name = "SalaryIncreaseRecommendation")
-@SuppressWarnings({"ClassWithoutLogger", "PublicConstructor", "unused", "MethodReturnOfConcreteClass", "MethodParameterOfConcreteClass", "ParameterHidesMemberVariable", "ClassHasNoToStringMethod", "PublicMethodNotExposedInInterface", "InstanceVariableMayNotBeInitialized", "FieldNamingConvention", "InstanceVariableOfConcreteClass"})
+@Entity
+@Table(name = "salary_increase_recommendations")
 public class SalaryIncreaseRecommendation extends BaseRecommendation {}
