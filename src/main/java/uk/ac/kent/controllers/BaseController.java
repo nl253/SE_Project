@@ -11,7 +11,8 @@ abstract class BaseController {
 
     private static final Logger log = Logger.getAnonymousLogger();
 
-    protected EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CRM");
+    protected EntityManagerFactory entityManagerFactory = Persistence
+            .createEntityManagerFactory("CRM");
 
     private Stage stage;
     @SuppressWarnings("PackageVisibleField")

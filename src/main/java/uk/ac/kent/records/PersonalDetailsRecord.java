@@ -10,41 +10,51 @@ import javax.persistence.Entity;
  */
 
 @Entity(name = "PersonalDetailsRecord")
-@SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor"})
-public class PersonalDetailsRecord {
-
+@SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
+public final class PersonalDetailsRecord {
 
     private final String surname;
     private String address;
     private String email;
     private final String name;
+    private String nextOfKin;
 
-    public PersonalDetailsRecord(final String surname, final String name) {
+    public PersonalDetailsRecord(final String surname, final String address, final String email, final String nextOfKin, final String name) {
         this.surname = surname;
+        this.address = address;
+        this.email = email;
+        this.nextOfKin = nextOfKin;
         this.name = name;
     }
 
-    final String getAddress() { return address; }
 
-    final void setAddress(final String address) { this.address = address; }
+    public String getNextOfKin() { return nextOfKin; }
 
-    final String getEmail() { return email; }
+    public void setNextOfKin(final String nextOfKin) {
+        this.nextOfKin = nextOfKin;
+    }
 
-    final void setEmail(final String email) { this.email = email; }
+    String getAddress() { return address; }
 
-    final String getName() { return name; }
+    void setAddress(final String address) { this.address = address; }
 
-    final String getSurname() { return surname; }
+    String getEmail() { return email; }
+
+    void setEmail(final String email) { this.email = email; }
+
+    String getName() { return name; }
+
+    String getSurname() { return surname; }
 
     @SuppressWarnings("WeakerAccess")
     @Column(name = "fullname")
-    final String getFullName() {
+    String getFullName() {
         return MessageFormat.format("{0} {1}", name, surname);
     }
 
     @SuppressWarnings("DesignForExtension")
     @Override
-    public final String toString() {
+    public String toString() {
         return MessageFormat
                 .format("{0}<{1}: {2}>", getClass().getName(), getFullName());
     }

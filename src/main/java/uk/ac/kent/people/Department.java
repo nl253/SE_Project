@@ -4,10 +4,10 @@ package uk.ac.kent.people;
  * @author norbert
  */
 
-@SuppressWarnings({"unused", "SpellCheckingInspection" })
+@SuppressWarnings({"unused", "SpellCheckingInspection"})
 public enum Department {
 
-    HR, IT, MARKETING, OTHER;
+    ADMINISTRATION, HR, IT, SALESANDMARKETING, BI, MANAGEMENTCONSULATANCY, OTHER;
 
     @Override
     public String toString() {

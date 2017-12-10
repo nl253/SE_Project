@@ -2,6 +2,7 @@ package uk.ac.kent.records;
 
 import java.text.MessageFormat;
 import javax.persistence.Entity;
+import uk.ac.kent.recommendations.BaseRecommendation;
 
 /**
  * @author norbert
@@ -13,17 +14,20 @@ public final class AnnualReviewRecord extends BaseRecord {
 
     private AnnualReviewRecord previousAnnualReview;
 
-    public AnnualReviewRecord getPreviousAnnualReview() {
-        return previousAnnualReview;
+    @SuppressWarnings("FieldCanBeLocal")
+    private final BaseRecommendation recommendation;
+
+    public AnnualReviewRecord(final BaseRecommendation recommendation) {
+        this.recommendation = recommendation;
     }
 
-    public void setPreviousAnnualReview(final AnnualReviewRecord previousAnnualReview) {
-        this.previousAnnualReview = previousAnnualReview;
+    public AnnualReviewRecord getPreviousAnnualReview() {
+        return previousAnnualReview;
     }
 
     @Override
     public String toString() {
         return MessageFormat
-                .format("AnnualReviewRecord<{0}>", getEmployee().toString());
+                .format("AnnualReviewRecord<singed={0}>", isSigned());
     }
 }

@@ -1,5 +1,7 @@
 package uk.ac.kent.records;
 
+import java.sql.Blob;
+import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import uk.ac.kent.people.Department;
 
@@ -7,34 +9,49 @@ import uk.ac.kent.people.Department;
  * @author norbert
  */
 
-public class EmploymentDetailsRecord extends BaseRecord {
+@SuppressWarnings("PublicMethodNotExposedInInterface")
+public final class EmploymentDetailsRecord extends BaseRecord {
 
     private final LocalDateTime dateEmployed;
     private long salary;
     private Department department;
+    @SuppressWarnings({"AlibabaLowerCamelCaseVariableNaming", "NonConstantFieldWithUpperCaseName"})
+    private Blob CV;
+    private Blob accountOfInterview;
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(final Position position) {
+        this.position = position;
+    }
+
+    private Position position;
 
     public EmploymentDetailsRecord(final LocalDateTime dateEmployed) {
         this.dateEmployed = dateEmployed;
     }
 
-    final long getSalary() { return salary; }
+    long getSalary() { return salary; }
 
-    final void raiseSalary(final long amount) { salary += amount; }
+    void raiseSalary(final long amount) { salary += amount; }
 
-    final void lowerSalary(final long amount) { salary -= amount; }
+    void lowerSalary(final long amount) { salary -= amount; }
 
-    final void setSalary(final long salary) { this.salary = salary; }
+    void setSalary(final long salary) { this.salary = salary; }
 
-    final LocalDateTime getDateEmployed() { return dateEmployed;}
+    LocalDateTime getDateEmployed() { return dateEmployed;}
 
-    final Department getDepartment() { return department; }
+    Department getDepartment() { return department; }
 
-    final void setDepartment(final Department department) {
+    void setDepartment(final Department department) {
         this.department = department;
     }
 
     @Override
-    public final String toString() {
-        return super.toString();
+    public String toString() {
+        return MessageFormat
+                .format("EmploymentDetailsRecord<dateEmployed={0}, salary={1}, department={2}, CV={3}, accountOfInterview={4}, position={5}>", dateEmployed, salary, department, CV, accountOfInterview, position);
     }
 }

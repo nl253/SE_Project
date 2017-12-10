@@ -8,5 +8,5 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "managers")
-public class ProbationRecommendation extends BaseRecommendation {}
+@Table(name = "remain_recommendations")
+public class RemainRecommendation extends BaseRecommendation {}

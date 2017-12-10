@@ -6,12 +6,27 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import uk.ac.kent.records.AnnualReviewRecord;
+import uk.ac.kent.records.EmploymentDetailsRecord;
 import uk.ac.kent.records.PersonalDetailsRecord;
 import uk.ac.kent.records.ProbationRecord;
 import uk.ac.kent.records.SalaryIncreaseRecord;
 import uk.ac.kent.records.TerminationRecord;
 
 /**
+ * Employee class represents all employess working for the company.
+ * This includes Directors and Managers which are subclasses of Employee.
+ * <p>
+ * To avoid data duplication, the employee doesn't store her personal details.
+ * Instead, they are stored in PersonalDetailsRecord which is one of the
+ * documents that the system needs to handle.
+ * <p>
+ * Therefore, modifying an employees details requires you to modify their
+ * PersonalDetailsRecord. The same applies to EmploymentDetailsRecord.
+ * <p>
+ * In some cases someone might not have a certain type of record (eg termination).
+ * This is why getters return Optionals rather than the Object itself to
+ * prevent returning null which isn't safe.
+ *
  * @author norbert
  */
 
@@ -22,20 +37,26 @@ public class Employee {
 
     @Id
     private int id;
-    private PersonalDetailsRecord personalDetailsRecord;
+    private final PersonalDetailsRecord personalDetailsRecord;
+    private final EmploymentDetailsRecord employmentDetailsRecord;
     private ProbationRecord probationRecord;
     private SalaryIncreaseRecord salaryIncreaseRecord;
     private AnnualReviewRecord annualReviewRecord;
     private TerminationRecord terminationRecord;
 
+    public Employee(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
+        this.personalDetailsRecord = personalDetailsRecord;
+        this.employmentDetailsRecord = employmentDetailsRecord;
+    }
+
     final int getId() { return id; }
+
+    public final EmploymentDetailsRecord getEmploymentDetailsRecord() {
+        return employmentDetailsRecord;
+    }
 
     public final PersonalDetailsRecord getPersonalDetailsRecord() {
         return personalDetailsRecord;
-    }
-
-    public final void setPersonalDetailsRecord(final PersonalDetailsRecord personalDetailsRecord) {
-        this.personalDetailsRecord = personalDetailsRecord;
     }
 
     public final Optional<ProbationRecord> getProbationRecord() {
@@ -70,11 +91,9 @@ public class Employee {
         this.annualReviewRecord = annualReviewRecord;
     }
 
-
     @SuppressWarnings("DesignForExtension")
     @Override
     public final String toString() {
         return MessageFormat.format("{0}<{1}: {2}>", getClass().getName(), id);
     }
-
 }
