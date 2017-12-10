@@ -28,6 +28,7 @@ final class LoginController extends BaseController {
 
     LoginController(final Stage stage, final Database database) {
         super(stage, database);
+
     }
 
     @FXML
@@ -43,5 +44,7 @@ final class LoginController extends BaseController {
         getStage().show();
     }
 
-    private boolean authenticate() { return true;}
+    private boolean authenticate() {
+        return true;
+    }
 }

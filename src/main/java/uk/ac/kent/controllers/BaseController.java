@@ -2,12 +2,16 @@ package uk.ac.kent.controllers;
 
 import java.util.logging.Logger;
 import javafx.stage.Stage;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import uk.ac.kent.Database;
 
 @SuppressWarnings({"ClassHasNoToStringMethod", "AbstractClassWithoutAbstractMethods"})
 abstract class BaseController {
 
     private static final Logger log = Logger.getAnonymousLogger();
+
+    protected EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("CRM");
 
     private Stage stage;
     @SuppressWarnings("PackageVisibleField")

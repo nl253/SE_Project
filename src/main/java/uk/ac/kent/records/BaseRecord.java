@@ -9,7 +9,7 @@ import uk.ac.kent.people.Employee;
  */
 
 @SuppressWarnings({"WeakerAccess", "FieldNamingConvention", "unused", "AbstractClassWithoutAbstractMethods", "AbstractClassNeverImplemented", "ClassWithoutLogger", "ParameterHidesMemberVariable", "InstanceVariableMayNotBeInitialized", "FieldNotUsedInToString", "MethodParameterOfConcreteClass", "MethodReturnOfConcreteClass", "InstanceVariableOfConcreteClass", "DesignForExtension"})
-abstract class BaseRecord {
+public abstract class BaseRecord {
 
     private boolean signed;
 

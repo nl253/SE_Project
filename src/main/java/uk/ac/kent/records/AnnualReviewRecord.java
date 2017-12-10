@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 
 @SuppressWarnings("PublicMethodNotExposedInInterface")
 @Entity(name = "AnnualReviewRecord")
-final class AnnualReviewRecord extends BaseRecord {
+public final class AnnualReviewRecord extends BaseRecord {
 
     private AnnualReviewRecord previousAnnualReview;
 
