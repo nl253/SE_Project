@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import uk.ac.kent.Database;
 
 /**
  * @author norbert
@@ -25,11 +26,9 @@ final class LoginController extends BaseController {
     @FXML
     private Button btn;
 
-    LoginController(final Stage stage) {
+    LoginController(final Stage stage, final Database database) {
         super(stage, database);
     }
-
-    // private Sta
 
     @FXML
     private void handleLoginBtnPressed(final ActionEvent event) {
@@ -37,15 +36,12 @@ final class LoginController extends BaseController {
     }
 
     void displayLoginView() throws IOException {
-        final Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("views/login.fxml"));
+        final Parent root = FXMLLoader.load(getClass().getClassLoader()
+                                                    .getResource("views/login.fxml"));
         final Scene scene = new Scene(root, 300.0, 200.0);
         getStage().setScene(scene);
         getStage().show();
     }
 
     private boolean authenticate() { return true;}
-
-    public final PasswordField getPasswordField() { return password;}
-
-    public final TextField getUsernameField() { return username;}
 }

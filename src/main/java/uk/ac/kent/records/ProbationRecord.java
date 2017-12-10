@@ -9,4 +9,4 @@ import javax.persistence.Entity;
 
 @Entity(name = "PersonalDetailsRecord")
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor"})
-public class ProbationRecord {}
+class ProbationRecord {}

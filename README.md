@@ -25,6 +25,11 @@
 
 See [the meetings directory](doc/meetings/).
 
+## Libraries 
+
+- [Hibernate ORM](http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html) for database stuff 
+- [JavaFX](https://docs.oracle.com/javase/8/javafx/get-started-tutorial/get_start_apps.htm#JFXST804) for GUI
+
 -----------------------------------------
 
 [1] https://maven.apache.org/guides/introduction/introduction-to-the-pom.html <br>

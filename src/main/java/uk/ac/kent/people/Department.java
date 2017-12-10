@@ -5,7 +5,7 @@ package uk.ac.kent.people;
  */
 
 @SuppressWarnings({"unused", "SpellCheckingInspection" })
-enum Departament {
+enum Department {
 
     HR, IT, MARKETING, OTHER;
 

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "directors")
 public class Director extends Manager {
 
-    public Director(final String surname, final String name, final LocalDateTime dateEmployed, final Departament departament) {
-        super(surname, name, dateEmployed, departament);
+    Director(final String surname, final String name, final LocalDateTime dateEmployed, final Department department) {
+        super(surname, name, dateEmployed, department);
     }
 }

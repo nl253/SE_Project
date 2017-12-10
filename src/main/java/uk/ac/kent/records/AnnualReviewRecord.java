@@ -1,14 +1,15 @@
 package uk.ac.kent.records;
 
+import java.text.MessageFormat;
 import javax.persistence.Entity;
 
 /**
  * @author norbert
  */
 
+@SuppressWarnings("PublicMethodNotExposedInInterface")
 @Entity(name = "AnnualReviewRecord")
-@SuppressWarnings({"ClassWithoutLogger", "PublicConstructor", "unused", "MethodReturnOfConcreteClass", "MethodParameterOfConcreteClass", "ParameterHidesMemberVariable", "ClassHasNoToStringMethod", "PublicMethodNotExposedInInterface", "InstanceVariableMayNotBeInitialized", "FieldNamingConvention", "InstanceVariableOfConcreteClass"})
-public final class AnnualReviewRecord extends BaseRecord {
+final class AnnualReviewRecord extends BaseRecord {
 
     private AnnualReviewRecord previousAnnualReview;
 
@@ -18,5 +19,11 @@ public final class AnnualReviewRecord extends BaseRecord {
 
     public void setPreviousAnnualReview(final AnnualReviewRecord previousAnnualReview) {
         this.previousAnnualReview = previousAnnualReview;
+    }
+
+    @Override
+    public String toString() {
+        return MessageFormat
+                .format("AnnualReviewRecord<{0}>", getEmployee().toString());
     }
 }

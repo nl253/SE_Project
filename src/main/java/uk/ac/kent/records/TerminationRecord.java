@@ -8,4 +8,4 @@ import javax.persistence.Entity;
 
 @Entity(name = "PersonalDetailsRecord")
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor"})
-public class TerminationRecord extends BaseRecord {}
+class TerminationRecord extends BaseRecord {}
