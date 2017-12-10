@@ -35,6 +35,8 @@ import uk.ac.kent.records.TerminationRecord;
 @Table(name = "employees")
 public class Employee {
 
+    private static int nextId;
+
     @Id
     private int id;
     private final PersonalDetailsRecord personalDetailsRecord;
@@ -44,7 +46,10 @@ public class Employee {
     private AnnualReviewRecord annualReviewRecord;
     private TerminationRecord terminationRecord;
 
-    public Employee(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
+    @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
+    Employee(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
+        id = nextId;
+        nextId++;
         this.personalDetailsRecord = personalDetailsRecord;
         this.employmentDetailsRecord = employmentDetailsRecord;
     }

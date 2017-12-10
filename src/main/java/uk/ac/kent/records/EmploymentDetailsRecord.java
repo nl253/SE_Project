@@ -15,6 +15,17 @@ public final class EmploymentDetailsRecord extends BaseRecord {
     private final LocalDateTime dateEmployed;
     private long salary;
     private Department department;
+
+    @SuppressWarnings("ConstructorWithTooManyParameters")
+    public EmploymentDetailsRecord(final LocalDateTime dateEmployed, final long salary, final Department department, final Blob CV, final Blob accountOfInterview, final Position position) {
+        this.dateEmployed = dateEmployed;
+        this.salary = salary;
+        this.department = department;
+        this.CV = CV;
+        this.accountOfInterview = accountOfInterview;
+        this.position = position;
+    }
+
     @SuppressWarnings({"AlibabaLowerCamelCaseVariableNaming", "NonConstantFieldWithUpperCaseName"})
     private Blob CV;
     private Blob accountOfInterview;

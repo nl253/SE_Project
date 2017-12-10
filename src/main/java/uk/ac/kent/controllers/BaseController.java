@@ -11,12 +11,16 @@ abstract class BaseController {
 
     private static final Logger log = Logger.getAnonymousLogger();
 
+    @SuppressWarnings("ProtectedField")
     protected EntityManagerFactory entityManagerFactory = Persistence
             .createEntityManagerFactory("CRM");
 
     private Stage stage;
+
     @SuppressWarnings("PackageVisibleField")
-    final Database database;
+    private final Database database;
+
+    public final Database getDatabase() { return database; }
 
     BaseController(final Stage stage, final Database database) {
         this.stage = stage;

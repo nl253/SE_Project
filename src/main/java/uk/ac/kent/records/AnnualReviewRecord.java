@@ -2,7 +2,7 @@ package uk.ac.kent.records;
 
 import java.text.MessageFormat;
 import javax.persistence.Entity;
-import uk.ac.kent.recommendations.BaseRecommendation;
+import uk.ac.kent.records.recommendations.BaseRecommendation;
 
 /**
  * @author norbert

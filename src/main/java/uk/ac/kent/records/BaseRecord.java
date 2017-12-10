@@ -19,7 +19,15 @@ public abstract class BaseRecord {
     private boolean signed;
 
     @Id
-    private int id;
+    private final int id;
+
+    private static int nextId;
+
+    @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
+    protected BaseRecord() {
+        id = nextId;
+        nextId++;
+    }
 
     final int getId() { return id; }
 

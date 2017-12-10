@@ -1,4 +1,4 @@
-package uk.ac.kent.recommendations;
+package uk.ac.kent.records.recommendations;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
