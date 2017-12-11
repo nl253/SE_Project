@@ -19,9 +19,6 @@
 
     <name>Software Engineering Project</name>
 
-    <prerequisites>
-        <maven>[3.0.0,)</maven>
-    </prerequisites>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -71,6 +68,10 @@
             </roles>
         </contributor>
     </contributors>
+
+    <prerequisites>
+        <maven>[3.0.0,)</maven>
+    </prerequisites>
 
     <dependencies>
 
@@ -229,7 +230,8 @@
                 <configuration>
                     <validateLinks>true</validateLinks>
                     <doctitle>${project.basedir}</doctitle>
-                    <footer>Copyright ${project.name} ${inceptionYear}</footer>
+                    <footer>Copyright ${project.name} ${project.inceptionYear}
+                    </footer>
                     <header>API documentation for ${project.name}</header>
                     <locale>en_GB</locale>
                     <nodeprecated>true</nodeprecated>

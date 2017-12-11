@@ -1,5 +1,6 @@
 package uk.ac.kent.records;
 
+import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 
@@ -8,7 +9,7 @@ import javax.persistence.Entity;
  */
 
 @Entity(name = "PersonalDetailsRecord")
-@SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor"})
+@SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class SalaryIncreaseRecord extends BaseRecord {
 
     private long newSalary;
@@ -37,6 +38,7 @@ public final class SalaryIncreaseRecord extends BaseRecord {
 
     @Override
     public String toString() {
-        return super.toString();
+        return MessageFormat
+                .format("SalaryIncreaseRecord<newSalary={0}, startDate={1}>", newSalary, startDate);
     }
 }
