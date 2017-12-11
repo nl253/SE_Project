@@ -13,8 +13,8 @@ import javax.persistence.Id;
  * @author norbert
  */
 
-@SuppressWarnings({"WeakerAccess", "FieldNamingConvention", "unused", "AbstractClassWithoutAbstractMethods", "AbstractClassNeverImplemented", "ClassWithoutLogger", "ParameterHidesMemberVariable", "InstanceVariableMayNotBeInitialized", "FieldNotUsedInToString", "MethodParameterOfConcreteClass", "MethodReturnOfConcreteClass", "InstanceVariableOfConcreteClass", "DesignForExtension", "ClassHasNoToStringMethod"})
-public abstract class BaseRecord {
+@SuppressWarnings("ClassHasNoToStringMethod")
+abstract class BaseRecord {
 
     private boolean signed;
 
@@ -24,7 +24,7 @@ public abstract class BaseRecord {
     private static int nextId;
 
     @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
-    protected BaseRecord() {
+    BaseRecord() {
         id = nextId;
         nextId++;
     }
