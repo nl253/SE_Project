@@ -8,10 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class PromotionRecordTest {
 
     @BeforeEach
-    void setUp() {
-    }
+    void setUp() {}
 
     @AfterEach
-    void tearDown() {
-    }
+    void tearDown() {}
 }

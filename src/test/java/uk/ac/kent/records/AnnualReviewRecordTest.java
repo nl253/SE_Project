@@ -9,13 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class AnnualReviewRecordTest {
 
     @BeforeEach
-    void setUp() {
-    }
+    void setUp() {}
 
     @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void getPreviousAnnualReview() {}
+    void tearDown() {}
 }

@@ -8,8 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class SalaryIncreaseRecordTest {
 
     @BeforeEach
-    void setUp() {
-    }
+    void setUp() {}
 
     @AfterEach
     void tearDown() {}

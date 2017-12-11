@@ -4,35 +4,26 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class DatabaseTest {
 
     @BeforeEach
-    void setUp() {
-    }
+    void setUp() {}
 
     @AfterEach
-    void tearDown() {
-    }
+    void tearDown() {}
 
     @Test
-    void query() {
-    }
+    void query() {}
 
     @Test
-    void close() {
-    }
+    void close() {}
 
     @Test
-    void isConnected() {
-    }
+    void isConnected() {}
 
     @Test
-    void getStatement() {
-    }
+    void getStatement() {}
 
     @Test
-    void getConnection() {
-    }
+    void getConnection() {}
 }

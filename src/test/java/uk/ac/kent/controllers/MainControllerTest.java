@@ -9,22 +9,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainControllerTest {
 
     @BeforeEach
-    void setUp() {
-    }
+    void setUp() {}
 
     @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void getDatabase() {
-    }
-
-    @Test
-    void getStage() {
-    }
-
-    @Test
-    void setStage() {
-    }
+    void tearDown() {}
 }
