@@ -30,7 +30,7 @@ public final class ProbationRecord extends BaseRecord {
         this.reason = reason;
     }
 
-    @SuppressWarnings("MagicNumber")
+    @SuppressWarnings({"MagicNumber", "ImplicitNumericConversion"})
     public ProbationRecord() {
         // secure pseudo-random number generator
         final Random random = new SecureRandom();
@@ -48,13 +48,13 @@ public final class ProbationRecord extends BaseRecord {
         // @formatter:on
 
         // get random LocalDate
-        endDate = dateSupplier.get();
-
-        // get random LocalDate
         startDate = dateSupplier.get();
 
         // get random LocalDate
-        reviewDate = dateSupplier.get();
+        endDate = startDate.plusMonths(random.nextInt(50));
+
+        // get random LocalDate
+        reviewDate = endDate.minusMonths(random.nextInt(10));
 
         reason = faker.lorem().paragraph();
     }

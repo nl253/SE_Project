@@ -1,6 +1,5 @@
 package uk.ac.kent.records;
 
-
 import com.github.javafaker.Faker;
 import java.text.MessageFormat;
 import java.util.Locale;
@@ -16,9 +15,9 @@ import javax.persistence.Entity;
 public final class PersonalDetailsRecord extends BaseRecord {
 
     private final String lastname;
+    private final String firstname;
     private String address;
     private String email;
-    private final String firstname;
     private String nextOfKin;
 
     /**

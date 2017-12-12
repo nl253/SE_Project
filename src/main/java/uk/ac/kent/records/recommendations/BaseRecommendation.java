@@ -1,9 +1,7 @@
 package uk.ac.kent.records.recommendations;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Table;
 
 /**
  * Base recommendation is the superclass for all types

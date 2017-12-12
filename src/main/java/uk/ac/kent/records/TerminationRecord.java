@@ -4,7 +4,6 @@ import java.security.SecureRandom;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Random;
-import java.util.function.Supplier;
 import javax.persistence.Entity;
 
 /**
@@ -32,13 +31,14 @@ public final class TerminationRecord extends BaseRecord {
      * Generate TerminationRecord with random data.
      */
 
+    @SuppressWarnings("MagicNumber")
     public TerminationRecord() {
 
         // secure pseudo-random number generator
         final Random random = new SecureRandom();
 
         // @formatter:off
-        final Supplier<LocalDate> dateSupplier = () -> LocalDate.parse(
+        endDate = LocalDate.parse(
                 MessageFormat.format(
                         "201{0}-{1}-{2}",
                         16 + random.nextInt(2),
@@ -46,7 +46,6 @@ public final class TerminationRecord extends BaseRecord {
                         1 + random.nextInt(28)));
         // @formatter:on
 
-        endDate = dateSupplier.get();
         reason = TerminationReason.values()[random
                 .nextInt(TerminationReason.values().length)];
     }
