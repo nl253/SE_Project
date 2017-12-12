@@ -17,4 +17,8 @@ public final class Director extends Employee {
     public Director(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
         super(personalDetailsRecord, employmentDetailsRecord);
     }
+
+    public Director() {
+        super(new PersonalDetailsRecord(), new EmploymentDetailsRecord());
+    }
 }

@@ -1,7 +1,9 @@
 package uk.ac.kent.records;
 
+import com.github.javafaker.Faker;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
+import java.util.Locale;
 import javax.persistence.Entity;
 
 /**
@@ -18,6 +20,14 @@ public final class SalaryIncreaseRecord extends BaseRecord {
     public SalaryIncreaseRecord(final long newSalary, final LocalDateTime startDate) {
         this.newSalary = newSalary;
         this.startDate = startDate;
+    }
+
+    public SalaryIncreaseRecord() {
+
+        // fake data generator
+        final Faker faker = new Faker(new Locale("en-GB"));
+
+        newSalary = faker.number().numberBetween(15_000, 100_000);
     }
 
     public long getNewSalary() {

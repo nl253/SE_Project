@@ -1,6 +1,7 @@
 package uk.ac.kent.records;
 
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
  * Base record is the superclass for all types of records
@@ -13,6 +14,7 @@ import javax.persistence.Id;
  * @author norbert
  */
 
+@MappedSuperclass
 @SuppressWarnings("ClassHasNoToStringMethod")
 abstract class BaseRecord {
 

@@ -1,6 +1,8 @@
 package uk.ac.kent.records.recommendations;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 
 /**
@@ -14,6 +16,17 @@ import javax.persistence.Table;
  * @author norbert
  */
 
-@Entity(name = "Recommendation")
-@Table(name = "recommendations")
-public abstract class BaseRecommendation {}
+@MappedSuperclass
+public abstract class BaseRecommendation {
+
+    @Id
+    private final int id;
+
+    private static int nextId;
+
+    @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
+    BaseRecommendation() {
+        id = nextId;
+        nextId++;
+    }
+}

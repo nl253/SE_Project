@@ -28,13 +28,14 @@ final class LoginController extends BaseController {
 
     LoginController(final Stage stage, final Database database) {
         super(stage, database);
-
     }
 
     @FXML
     private void handleLoginBtnPressed(final ActionEvent event) {
         if (authenticate()) displayMainView();
     }
+
+    private void displayMainView() {}
 
     void displayLoginView() throws IOException {
         final Parent root = FXMLLoader.load(getClass().getClassLoader()

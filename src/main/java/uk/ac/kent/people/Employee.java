@@ -38,7 +38,7 @@ public class Employee {
     private static int nextId;
 
     @Id
-    private int id;
+    private final int id;
     private final PersonalDetailsRecord personalDetailsRecord;
     private final EmploymentDetailsRecord employmentDetailsRecord;
     private ProbationRecord probationRecord;
@@ -52,6 +52,10 @@ public class Employee {
         nextId++;
         this.personalDetailsRecord = personalDetailsRecord;
         this.employmentDetailsRecord = employmentDetailsRecord;
+    }
+
+    public Employee() {
+        this(new PersonalDetailsRecord(), new EmploymentDetailsRecord());
     }
 
     final int getId() { return id; }

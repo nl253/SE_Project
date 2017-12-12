@@ -1,7 +1,9 @@
 package uk.ac.kent.records;
 
 
+import com.github.javafaker.Faker;
 import java.text.MessageFormat;
+import java.util.Locale;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
@@ -11,22 +13,44 @@ import javax.persistence.Entity;
 
 @Entity(name = "PersonalDetailsRecord")
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
-public final class PersonalDetailsRecord {
+public final class PersonalDetailsRecord extends BaseRecord {
 
-    private final String surname;
+    private final String lastname;
     private String address;
     private String email;
-    private final String name;
+    private final String firstname;
     private String nextOfKin;
 
-    public PersonalDetailsRecord(final String surname, final String address, final String email, final String nextOfKin, final String name) {
-        this.surname = surname;
+    /**
+     * @param lastname surname
+     * @param address full address
+     * @param email email address
+     * @param nextOfKin full name of relative
+     * @param firstname first name
+     */
+
+    public PersonalDetailsRecord(final String lastname, final String address, final String email, final String nextOfKin, final String firstname) {
+        this.lastname = lastname;
         this.address = address;
         this.email = email;
         this.nextOfKin = nextOfKin;
-        this.name = name;
+        this.firstname = firstname;
     }
 
+    /**
+     * Empty constructor to create dummy objects.
+     */
+
+    public PersonalDetailsRecord() {
+        // fake data generator
+        final Faker faker = new Faker(new Locale("en-GB"));
+
+        firstname = faker.name().name();
+        lastname = faker.name().lastName();
+        address = faker.address().fullAddress();
+        email = faker.internet().emailAddress();
+        nextOfKin = faker.name().fullName();
+    }
 
     public String getNextOfKin() { return nextOfKin; }
 
@@ -42,14 +66,14 @@ public final class PersonalDetailsRecord {
 
     void setEmail(final String email) { this.email = email; }
 
-    String getName() { return name; }
+    String getFirstname() { return firstname; }
 
-    String getSurname() { return surname; }
+    String getLastname() { return lastname; }
 
     @SuppressWarnings("WeakerAccess")
     @Column(name = "fullname")
     String getFullName() {
-        return MessageFormat.format("{0} {1}", name, surname);
+        return MessageFormat.format("{0} {1}", firstname, lastname);
     }
 
     @SuppressWarnings("DesignForExtension")
@@ -58,5 +82,4 @@ public final class PersonalDetailsRecord {
         return MessageFormat
                 .format("{0}<{1}: {2}>", getClass().getName(), getFullName());
     }
-
 }

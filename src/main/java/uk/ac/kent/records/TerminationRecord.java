@@ -1,7 +1,10 @@
 package uk.ac.kent.records;
 
+import java.security.SecureRandom;
 import java.text.MessageFormat;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Random;
+import java.util.function.Supplier;
 import javax.persistence.Entity;
 
 /**
@@ -13,28 +16,48 @@ import javax.persistence.Entity;
 public final class TerminationRecord extends BaseRecord {
 
     private TerminationReason reason;
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
-    public TerminationRecord(final TerminationReason reason, final LocalDateTime endDate) {
+    /**
+     * @param reason termination reason
+     * @param endDate end date
+     */
+
+    public TerminationRecord(final TerminationReason reason, final LocalDate endDate) {
         this.reason = reason;
         this.endDate = endDate;
     }
 
-    public TerminationReason getReason() {
-        return reason;
+    /**
+     * Generate TerminationRecord with random data.
+     */
+
+    public TerminationRecord() {
+
+        // secure pseudo-random number generator
+        final Random random = new SecureRandom();
+
+        // @formatter:off
+        final Supplier<LocalDate> dateSupplier = () -> LocalDate.parse(
+                MessageFormat.format(
+                        "201{0}-{1}-{2}",
+                        16 + random.nextInt(2),
+                        1 + random.nextInt(12),
+                        1 + random.nextInt(28)));
+        // @formatter:on
+
+        endDate = dateSupplier.get();
+        reason = TerminationReason.values()[random
+                .nextInt(TerminationReason.values().length)];
     }
 
-    public void setReason(final TerminationReason reason) {
-        this.reason = reason;
-    }
+    public TerminationReason getReason() { return reason; }
 
-    public LocalDateTime getEndDate() {
-        return endDate;
-    }
+    public void setReason(final TerminationReason reason) { this.reason = reason; }
 
-    public void setEndDate(final LocalDateTime endDate) {
-        this.endDate = endDate;
-    }
+    public LocalDate getEndDate() { return endDate; }
+
+    public void setEndDate(final LocalDate endDate) { this.endDate = endDate; }
 
     @Override
     public String toString() {

@@ -1,8 +1,13 @@
 package uk.ac.kent.records;
 
+import com.github.javafaker.Faker;
+import java.security.SecureRandom;
 import java.sql.Blob;
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Locale;
+import java.util.Random;
 import uk.ac.kent.people.Department;
 
 /**
@@ -12,12 +17,15 @@ import uk.ac.kent.people.Department;
 @SuppressWarnings("PublicMethodNotExposedInInterface")
 public final class EmploymentDetailsRecord extends BaseRecord {
 
-    private final LocalDateTime dateEmployed;
+    private final LocalDate dateEmployed;
     private long salary;
+    @SuppressWarnings({"AlibabaLowerCamelCaseVariableNaming", "NonConstantFieldWithUpperCaseName"})
+    private Blob CV;
+    private Blob accountOfInterview;
     private Department department;
 
     @SuppressWarnings("ConstructorWithTooManyParameters")
-    public EmploymentDetailsRecord(final LocalDateTime dateEmployed, final long salary, final Department department, final Blob CV, final Blob accountOfInterview, final Position position) {
+    public EmploymentDetailsRecord(final LocalDate dateEmployed, final long salary, final Department department, final Blob CV, final Blob accountOfInterview, final Position position) {
         this.dateEmployed = dateEmployed;
         this.salary = salary;
         this.department = department;
@@ -26,9 +34,30 @@ public final class EmploymentDetailsRecord extends BaseRecord {
         this.position = position;
     }
 
-    @SuppressWarnings({"AlibabaLowerCamelCaseVariableNaming", "NonConstantFieldWithUpperCaseName"})
-    private Blob CV;
-    private Blob accountOfInterview;
+    @SuppressWarnings({"ImplicitNumericConversion", "MagicNumber"})
+    public EmploymentDetailsRecord() {
+
+        // fake data generator
+        final Faker faker = new Faker(new Locale("en-GB"));
+
+        // random number generator
+        final Random random = new SecureRandom();
+
+        // get random position
+        position = Position.values()[random.nextInt(Position.values().length)];
+
+        // @formatter:off
+        // get random LocalDate
+        dateEmployed = LocalDate.parse(
+                MessageFormat
+                        .format("201{0}-{1}-{2}",
+                                16 + random.nextInt(2),
+                                1 + random.nextInt(12),
+                                1 + random.nextInt(28)
+                                ));
+        // @formatter:on
+        salary = faker.number().numberBetween(15_000, 100_000);
+    }
 
     public Position getPosition() {
         return position;
@@ -40,7 +69,7 @@ public final class EmploymentDetailsRecord extends BaseRecord {
 
     private Position position;
 
-    public EmploymentDetailsRecord(final LocalDateTime dateEmployed) {
+    public EmploymentDetailsRecord(final LocalDate dateEmployed) {
         this.dateEmployed = dateEmployed;
     }
 
@@ -52,7 +81,7 @@ public final class EmploymentDetailsRecord extends BaseRecord {
 
     void setSalary(final long salary) { this.salary = salary; }
 
-    LocalDateTime getDateEmployed() { return dateEmployed;}
+    LocalDate getDateEmployed() { return dateEmployed;}
 
     Department getDepartment() { return department; }
 

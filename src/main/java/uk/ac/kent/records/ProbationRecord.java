@@ -1,8 +1,13 @@
 package uk.ac.kent.records;
 
 
+import com.github.javafaker.Faker;
+import java.security.SecureRandom;
 import java.text.MessageFormat;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Locale;
+import java.util.Random;
+import java.util.function.Supplier;
 import javax.persistence.Entity;
 
 /**
@@ -13,26 +18,62 @@ import javax.persistence.Entity;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class ProbationRecord extends BaseRecord {
 
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-    private LocalDateTime reviewDate;
     private String reason;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalDate reviewDate;
 
-    public LocalDateTime getStartDate() { return startDate; }
+    public ProbationRecord(final LocalDate startDate, final LocalDate endDate, final LocalDate reviewDate, final String reason) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.reviewDate = reviewDate;
+        this.reason = reason;
+    }
 
-    public void setStartDate(final LocalDateTime startDate) {
+    @SuppressWarnings("MagicNumber")
+    public ProbationRecord() {
+        // secure pseudo-random number generator
+        final Random random = new SecureRandom();
+
+        // fake data generator
+        final Faker faker = new Faker(new Locale("en-GB"));
+
+        // @formatter:off
+        final Supplier<LocalDate> dateSupplier = () -> LocalDate.parse(
+                MessageFormat.format(
+                        "201{0}-{1}-{2}",
+                        16 + random.nextInt(2),
+                        1 + random.nextInt(12),
+                        1 + random.nextInt(28)));
+        // @formatter:on
+
+        // get random LocalDate
+        endDate = dateSupplier.get();
+
+        // get random LocalDate
+        startDate = dateSupplier.get();
+
+        // get random LocalDate
+        reviewDate = dateSupplier.get();
+
+        reason = faker.lorem().paragraph();
+    }
+
+    public LocalDate getStartDate() { return startDate; }
+
+    public void setStartDate(final LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() { return endDate; }
+    public LocalDate getEndDate() { return endDate; }
 
-    public void setEndDate(final LocalDateTime endDate) {
+    public void setEndDate(final LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public LocalDateTime getReviewDate() { return reviewDate; }
+    public LocalDate getReviewDate() { return reviewDate; }
 
-    public void setReviewDate(final LocalDateTime reviewDate) {
+    public void setReviewDate(final LocalDate reviewDate) {
         this.reviewDate = reviewDate;
     }
 
@@ -42,7 +83,10 @@ public final class ProbationRecord extends BaseRecord {
 
     @Override
     public String toString() {
-        return MessageFormat
-                .format("ProbationRecord<startDate={0}, endDate={1}, reviewDate={2}, reason='{3}'>", startDate, endDate, reviewDate, reason);
+        // @formatter:off
+        return MessageFormat.format(
+                        "ProbationRecord<startDate={0}, endDate={1}, reviewDate={2}, reason='{3}'>",
+                        startDate, endDate, reviewDate, reason);
+        // @formatter:on
     }
 }

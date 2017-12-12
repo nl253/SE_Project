@@ -19,7 +19,6 @@
 
     <name>Software Engineering Project</name>
 
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>4.12</junit.version>
@@ -74,6 +73,13 @@
     </prerequisites>
 
     <dependencies>
+
+        <!--Fake data to populate that database-->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>0.14</version>
+        </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -149,19 +155,20 @@
             <version>8.0.8-dmr</version>
         </dependency>
 
+
+        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.196</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- [> Apache IO utils <] -->
         <!-- <dependency> -->
         <!-- <groupId>commons-io</groupId> -->
         <!-- <artifactId>commons-io</artifactId> -->
         <!-- <version>2.6</version> -->
-        <!-- </dependency> -->
-
-        <!-- local SQLite-like database - for testing  -->
-        <!-- <dependency> -->
-        <!-- <groupId>com.h2database</groupId> -->
-        <!-- <artifactId>h2</artifactId> -->
-        <!-- <version>1.4.196</version> -->
-        <!-- <scope>test</scope> -->
         <!-- </dependency> -->
 
     </dependencies>

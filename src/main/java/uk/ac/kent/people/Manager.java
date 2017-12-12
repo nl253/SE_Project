@@ -19,13 +19,17 @@ class Manager extends Employee {
 
     private final List<Employee> employees;
 
-    Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord, final List<Employee> employees) {
+    public Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord, final List<Employee> employees) {
         super(personalDetailsRecord, employmentDetailsRecord);
         this.employees = employees;
     }
 
-    Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
-        this(personalDetailsRecord, employmentDetailsRecord, new LinkedList<Employee>());
+    public Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
+        this(personalDetailsRecord, employmentDetailsRecord, new LinkedList<>());
+    }
+
+    public Manager() {
+        this(new PersonalDetailsRecord(), new EmploymentDetailsRecord());
     }
 
     final List<Employee> getEmployees() {
