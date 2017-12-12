@@ -1,5 +1,6 @@
 package uk.ac.kent.records.recommendations;
 
+import java.text.MessageFormat;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -26,5 +27,10 @@ public abstract class BaseRecommendation {
     BaseRecommendation() {
         id = nextId;
         nextId++;
+    }
+
+    @Override
+    public String toString() {
+        return MessageFormat.format("BaseRecommendation<id={0}>", id);
     }
 }

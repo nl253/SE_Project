@@ -14,11 +14,45 @@ import javax.persistence.Entity;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class PersonalDetailsRecord extends BaseRecord {
 
+    /**
+     * @author norbert
+     */
+
+    @SuppressWarnings({"InnerClassFieldHidesOuterClassField", "InnerClassMayBeStatic"})
+    private final class Relative {
+
+
+        private final String lastname;
+        private final String firstname;
+        private String phone;
+
+        Relative(final String firstname, final String lastname) {
+            this.lastname = lastname;
+            this.firstname = firstname;
+        }
+
+        Relative(final String lastname, final String firstname, final String phone) {
+            this(firstname, lastname);
+            this.phone = phone;
+        }
+
+        // @formatter:off
+        @Override
+        @SuppressWarnings("ConditionalExpression")
+        public final String toString() {
+            return MessageFormat
+                    .format("Person<lastname={0}, firstname={1}, phone={2}>",
+                            lastname, firstname,
+                            (phone != null) ? phone : "");
+        }
+        // @formatter:on
+    }
+
     private final String lastname;
     private final String firstname;
     private String address;
     private String email;
-    private String nextOfKin;
+    private Relative nextOfKin;
 
     /**
      * @param lastname surname
@@ -28,7 +62,7 @@ public final class PersonalDetailsRecord extends BaseRecord {
      * @param firstname first name
      */
 
-    public PersonalDetailsRecord(final String lastname, final String address, final String email, final String nextOfKin, final String firstname) {
+    public PersonalDetailsRecord(final String lastname, final String address, final String email, final Relative nextOfKin, final String firstname) {
         this.lastname = lastname;
         this.address = address;
         this.email = email;
@@ -48,12 +82,13 @@ public final class PersonalDetailsRecord extends BaseRecord {
         lastname = faker.name().lastName();
         address = faker.address().fullAddress();
         email = faker.internet().emailAddress();
-        nextOfKin = faker.name().fullName();
+        nextOfKin = new Relative(faker.name().firstName(), faker.name()
+                .lastName(), faker.phoneNumber().cellPhone());
     }
 
-    public String getNextOfKin() { return nextOfKin; }
+    public Relative getNextOfKin() { return nextOfKin; }
 
-    public void setNextOfKin(final String nextOfKin) {
+    public void setNextOfKin(final Relative nextOfKin) {
         this.nextOfKin = nextOfKin;
     }
 

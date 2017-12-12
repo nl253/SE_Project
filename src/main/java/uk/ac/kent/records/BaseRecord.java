@@ -1,5 +1,6 @@
 package uk.ac.kent.records;
 
+import java.text.MessageFormat;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -36,4 +37,11 @@ abstract class BaseRecord {
     final boolean isSigned() { return signed; }
 
     final void setSigned(final boolean signed) { this.signed = signed; }
+
+    @SuppressWarnings("DesignForExtension")
+    @Override
+    public String toString() {
+        return MessageFormat.format("{0}<id={1} signed={2}>", getClass()
+                .getName(), id, signed);
+    }
 }
