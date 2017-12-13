@@ -38,8 +38,8 @@ final class LoginController extends BaseController {
     private void displayMainView() {}
 
     void displayLoginView() throws IOException {
-        final Parent root = FXMLLoader.load(getClass().getClassLoader()
-                                                    .getResource("views/login.fxml"));
+        final Parent root = FXMLLoader.load(
+                getClass().getClassLoader().getResource("views/login.fxml"));
         final Scene scene = new Scene(root, 300.0, 200.0);
         getStage().setScene(scene);
         getStage().show();
