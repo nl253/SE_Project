@@ -8,7 +8,5 @@ public enum Position {
     DIRECTOR, EMPLOYEE, MANAGER;
 
     @Override
-    public String toString() {
-        return name();
-    }
+    public String toString() { return name(); }
 }

@@ -40,10 +40,15 @@ public final class PromotionRecord extends BaseRecord {
         this.newSalary = newSalary;
     }
 
-    public PromotionRecord() {}
+    /**
+     * Empty constructor for Hibernate.
+     */
+
+    @SuppressWarnings("ProtectedMemberInFinalClass")
+    protected  PromotionRecord() {}
 
     @Transient
-    @SuppressWarnings({"AlibabaAvoidCommentBehindStatement", "ImplicitNumericConversion", "MagicNumber", "LocalVariableOfConcreteClass"})
+    @SuppressWarnings({"AlibabaAvoidCommentBehindStatement", "ImplicitNumericConversion", "MagicNumber", "LocalVariableOfConcreteClass", "AccessingNonPublicFieldOfAnotherObject"})
     public static PromotionRecord fake() {
 
         final PromotionRecord record = new PromotionRecord();

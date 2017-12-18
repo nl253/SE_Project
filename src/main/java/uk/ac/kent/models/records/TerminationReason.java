@@ -8,7 +8,5 @@ public enum TerminationReason {
     DISMISSAL, RESIGNATION;
 
     @Override
-    public String toString() {
-        return name();
-    }
+    public String toString() { return name(); }
 }

@@ -36,6 +36,11 @@ public final class ProbationRecord extends BaseRecord {
         this.reason = reason;
     }
 
+    /**
+     * Empty constructor for Hibernate.
+     */
+
+    @SuppressWarnings("ProtectedMemberInFinalClass")
     public ProbationRecord() {}
 
     @Transient

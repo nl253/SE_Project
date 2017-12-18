@@ -37,10 +37,14 @@ public final class PersonalDetailsRecord extends BaseRecord {
         private String firstName;
 
         @Id
-        @GeneratedValue(strategy= GenerationType.IDENTITY)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer id;
 
         private String phoneNumber;
+
+        /**
+         * Empty constructor for Hibernate.
+         */
 
         @SuppressWarnings("ProtectedMemberInFinalClass")
         protected Relative() {}
@@ -53,8 +57,12 @@ public final class PersonalDetailsRecord extends BaseRecord {
             // fake data generator
             final Faker faker = new Faker(new Locale("en-GB"));
 
-            return new Relative(faker.name().firstName(), faker.name()
-                    .lastName(), faker.phoneNumber().cellPhone());
+            // @formatter:off
+            return new Relative(
+                    faker.name().firstName(),
+                    faker.name().lastName(),
+                    faker.phoneNumber().cellPhone());
+            // @formatter:on
         }
 
         Relative(final String name, final String surname) {
@@ -128,12 +136,15 @@ public final class PersonalDetailsRecord extends BaseRecord {
     }
 
     String getAddress() { return address; }
+
     void setAddress(final String address) { this.address = address; }
 
     String getEmail() { return email; }
+
     void setEmail(final String email) { this.email = email; }
 
     String getFirstname() { return firstname; }
+
     String getLastname() { return lastname; }
 
     @SuppressWarnings("WeakerAccess")

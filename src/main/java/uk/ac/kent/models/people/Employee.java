@@ -75,7 +75,12 @@ public class Employee {
         this.employmentDetailsRecord = employmentDetailsRecord;
     }
 
-    public Employee() {}
+    /**
+     * Empty constructor for Hibernate.
+     */
+
+    @SuppressWarnings("ProtectedMemberInFinalClass")
+    protected Employee() {}
 
     public static Employee fake() {
         return new Employee(new PersonalDetailsRecord(), new EmploymentDetailsRecord());

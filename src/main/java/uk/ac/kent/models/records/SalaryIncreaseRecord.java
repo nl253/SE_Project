@@ -26,6 +26,11 @@ public final class SalaryIncreaseRecord extends BaseRecord {
         this.startDate = startDate;
     }
 
+    /**
+     * Empty constructor for Hibernate.
+     */
+
+    @SuppressWarnings("ProtectedMemberInFinalClass")
     public SalaryIncreaseRecord() {}
 
     @Transient

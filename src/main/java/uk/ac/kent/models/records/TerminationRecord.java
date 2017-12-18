@@ -36,26 +36,37 @@ public final class TerminationRecord extends BaseRecord {
     }
 
     /**
+     * Empty constructor for Hibernate.
+     */
+
+    @SuppressWarnings({"MagicNumber", "ProtectedMemberInFinalClass"})
+    protected TerminationRecord() {}
+
+    /**
      * Generate TerminationRecord with random data.
      */
 
-    @SuppressWarnings("MagicNumber")
-    public TerminationRecord() {
+    @SuppressWarnings({"AccessingNonPublicFieldOfAnotherObject", "LocalVariableOfConcreteClass", "MagicNumber"})
+    public static TerminationRecord fake() {
+
+        final TerminationRecord record = new TerminationRecord();
 
         // secure pseudo-random number generator
         final Random random = new SecureRandom();
 
         // @formatter:off
-        endDate = LocalDate.parse(
+        record.endDate = LocalDate.parse(
                 MessageFormat.format(
                         "201{0}-{1}-{2}",
                         16 + random.nextInt(2),
                         1 + random.nextInt(12),
                         1 + random.nextInt(28)));
-        // @formatter:on
 
-        reason = TerminationReason.values()[random
-                .nextInt(TerminationReason.values().length)];
+        // get random value from TerminationReason enum
+        record.reason = TerminationReason.values()[random.nextInt(TerminationReason.values().length)];
+
+        // @formatter:on
+        return record;
     }
 
     public TerminationReason getReason() { return reason; }

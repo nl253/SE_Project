@@ -1,11 +1,16 @@
 package uk.ac.kent.models.people;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,28 +24,30 @@ import uk.ac.kent.models.records.PersonalDetailsRecord;
 @SuppressWarnings({"NonBooleanMethodNameMayNotStartWithQuestion", "MethodParameterNamingConvention", "WeakerAccess", "PublicConstructorInNonPublicClass", "MethodOverridesStaticMethodOfSuperclass"})
 @Entity
 @Table(name = "managers")
-class Manager extends Employee {
+@Access(AccessType.FIELD)
+public class Manager extends Employee {
 
     /**
      * A group of {@link Employee}s that the manger has been assigned.
      */
 
-    @OneToMany
-    private List<Employee> employees;
+    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Employee> employees = new ArrayList<>(15);
 
-    public Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord, final List<Employee> employees) {
+    public Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord, final Iterable<Employee> employees) {
         super(personalDetailsRecord, employmentDetailsRecord);
-        this.employees = employees;
+        employees.forEach(this::addEmployee);
     }
-
-    public Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
-        this(personalDetailsRecord, employmentDetailsRecord, new LinkedList<>());
-    }
-
-    public Manager() {}
 
     /**
-     * Fake manager.
+     * Empty constructor for Hibernate.
+     */
+
+    @SuppressWarnings("ProtectedMemberInFinalClass")
+    protected Manager() {}
+
+    /**
+     * Fake {@link Manager}. Each fake {@link Manager} will have 15 {@link Employee }s.
      *
      * @return A fake Manager
      */
@@ -50,7 +57,7 @@ class Manager extends Employee {
         return new Manager(
                 PersonalDetailsRecord.fake(),
                 EmploymentDetailsRecord.fake(),
-                IntStream.range(0, 10)
+                IntStream.range(0, 15)
                         .mapToObj(x -> Employee.fake())
                         .collect(Collectors.toList()));
         // @formatter:on
