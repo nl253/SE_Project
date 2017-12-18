@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Random;
 import java.util.function.Supplier;
+import java.util.logging.Logger;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;

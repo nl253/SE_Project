@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.persistence.Access;
@@ -32,11 +33,12 @@ public class Manager extends Employee {
      */
 
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Employee> employees = new ArrayList<>(15);
+    private final List<Employee> employees;
 
     public Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord, final Iterable<Employee> employees) {
         super(personalDetailsRecord, employmentDetailsRecord);
         employees.forEach(this::addEmployee);
+        this.employees = new ArrayList<>(15);
     }
 
     /**
@@ -44,7 +46,7 @@ public class Manager extends Employee {
      */
 
     @SuppressWarnings("ProtectedMemberInFinalClass")
-    protected Manager() {}
+    protected Manager() {employees = new ArrayList<>(15);}
 
     /**
      * Fake {@link Manager}. Each fake {@link Manager} will have 15 {@link Employee }s.

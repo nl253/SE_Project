@@ -1,6 +1,7 @@
 package uk.ac.kent.models.records;
 
 import java.text.MessageFormat;
+import java.util.logging.Logger;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,9 @@ import javax.persistence.Transient;
 @Table(name = "records")
 @Access(AccessType.FIELD)
 abstract class BaseRecord {
+
+    /** Logger for the class */
+    protected static final Logger log = Logger.getAnonymousLogger();
 
     private boolean signed;
 
