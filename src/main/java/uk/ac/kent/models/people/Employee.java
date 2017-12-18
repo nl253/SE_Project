@@ -2,6 +2,7 @@ package uk.ac.kent.models.people;
 
 import java.text.MessageFormat;
 import java.util.Optional;
+import java.util.logging.Logger;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -41,6 +42,9 @@ import uk.ac.kent.models.records.TerminationRecord;
 @Table(name = "employees")
 @Access(AccessType.FIELD)
 public class Employee {
+
+    /** Logger for the class */
+    protected static final Logger log = Logger.getAnonymousLogger();
 
     private static int nextId;
 

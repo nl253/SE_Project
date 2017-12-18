@@ -1,6 +1,7 @@
 package uk.ac.kent;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,9 @@ import javafx.stage.Stage;
 
 @SuppressWarnings({"PublicMethodNotExposedInInterface", "ClassHasNoToStringMethod"})
 public final class Main extends Application {
+
+    /** Logger for the class */
+    private static final Logger log = Logger.getAnonymousLogger();
 
     private Stage stage;
 
