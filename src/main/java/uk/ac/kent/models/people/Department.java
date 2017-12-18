@@ -10,7 +10,5 @@ public enum Department {
     ADMINISTRATION, HR, IT, SALESANDMARKETING, BI, MANAGEMENTCONSULATANCY, OTHER;
 
     @Override
-    public String toString() {
-        return name();
-    }
+    public String toString() { return name(); }
 }

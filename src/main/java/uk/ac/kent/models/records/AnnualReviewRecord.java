@@ -37,7 +37,12 @@ public final class AnnualReviewRecord extends BaseRecord {
         this.recommendation = recommendation;
     }
 
-    public AnnualReviewRecord() {}
+    /**
+     * Empty constructor for Hibernate.
+     */
+
+    @SuppressWarnings("ProtectedMemberInFinalClass")
+    protected AnnualReviewRecord() {}
 
     /**
      * Produces a fake AnnualReviewRecord. For testing.

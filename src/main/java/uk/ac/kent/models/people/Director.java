@@ -17,11 +17,20 @@ import uk.ac.kent.models.records.PersonalDetailsRecord;
 @Access(AccessType.FIELD)
 public final class Director extends Employee {
 
+    @SuppressWarnings("WeakerAccess")
     public Director(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
         super(personalDetailsRecord, employmentDetailsRecord);
     }
 
-    public Director() {
-        super(new PersonalDetailsRecord(), new EmploymentDetailsRecord());
+    /**
+     * Empty constructor for Hibernate.
+     */
+
+    @SuppressWarnings("ProtectedMemberInFinalClass")
+    public Director() {}
+
+    @SuppressWarnings("MethodOverridesStaticMethodOfSuperclass")
+    public static Director fake() {
+        return new Director(PersonalDetailsRecord.fake(), EmploymentDetailsRecord.fake());
     }
 }

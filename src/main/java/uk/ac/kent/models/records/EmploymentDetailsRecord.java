@@ -7,6 +7,7 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Random;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -37,8 +38,38 @@ public final class EmploymentDetailsRecord extends BaseRecord {
     @Enumerated(EnumType.STRING)
     private Department department;
 
+    /**
+     * @param position
+     * @param department
+     * @param salary
+     */
+
+    public EmploymentDetailsRecord(final Position position, final Department department, final long salary) {
+        this(position, department, LocalDate.now(), salary, null, null);
+    }
+
+    /**
+     * @param position
+     * @param department
+     * @param dateEmployed
+     * @param salary
+     */
+
+    public EmploymentDetailsRecord(final Position position, final Department department, final LocalDate dateEmployed, final long salary) {
+        this(position, department, dateEmployed, salary, null, null);
+    }
+
+    /**
+     * @param position
+     * @param department
+     * @param dateEmployed
+     * @param salary
+     * @param cv
+     * @param accountOfInterview
+     */
+
     @SuppressWarnings("ConstructorWithTooManyParameters")
-    public EmploymentDetailsRecord(final LocalDate dateEmployed, final long salary, final Department department, final Blob cv, final Blob accountOfInterview, final Position position) {
+    public EmploymentDetailsRecord(final Position position, final Department department, final LocalDate dateEmployed, final long salary, final Blob cv, final Blob accountOfInterview) {
         this.dateEmployed = dateEmployed;
         this.salary = salary;
         this.department = department;
@@ -47,7 +78,13 @@ public final class EmploymentDetailsRecord extends BaseRecord {
         this.position = position;
     }
 
-    @SuppressWarnings({"ImplicitNumericConversion", "MagicNumber"})
+    /**
+     * Empty constructor for Hibernate.
+     */
+
+    public EmploymentDetailsRecord() {}
+
+    @SuppressWarnings({"ImplicitNumericConversion", "MagicNumber", "LocalVariableOfConcreteClass", "AccessingNonPublicFieldOfAnotherObject"})
     public static EmploymentDetailsRecord fake() {
 
         final EmploymentDetailsRecord record = new EmploymentDetailsRecord();
@@ -77,8 +114,6 @@ public final class EmploymentDetailsRecord extends BaseRecord {
         return record;
     }
 
-    public EmploymentDetailsRecord() {}
-
     public Position getPosition() { return position;}
 
     public void setPosition(final Position position) {
@@ -106,6 +141,18 @@ public final class EmploymentDetailsRecord extends BaseRecord {
 
     void setDepartment(final Department department) {
         this.department = department;
+    }
+
+    public Optional<Blob> getCv() { return Optional.ofNullable(cv); }
+
+    public void setCv(final Blob cv) { this.cv = cv; }
+
+    public Optional<Blob> getAccountOfInterview() {
+        return Optional.ofNullable(accountOfInterview);
+    }
+
+    public void setAccountOfInterview(final Blob accountOfInterview) {
+        this.accountOfInterview = accountOfInterview;
     }
 
     @SuppressWarnings("StringConcatenation")

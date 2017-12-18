@@ -37,6 +37,10 @@ abstract class BaseRecord {
     @Transient
     private static int nextId;
 
+    /**
+     * Empty constructor for Hibernate.
+     */
+
     @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
     BaseRecord() {
         id = nextId;
