@@ -10,6 +10,8 @@ import java.util.function.Supplier;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import uk.ac.kent.models.people.Department;
@@ -24,7 +26,9 @@ import uk.ac.kent.models.people.Department;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class PromotionRecord extends BaseRecord {
 
+    @Enumerated(EnumType.STRING)
     private Department newDepartament;
+    @Enumerated(EnumType.STRING)
     private Position newPosition;
     private LocalDate startDate;
     private long newSalary;

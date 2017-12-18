@@ -5,6 +5,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -27,6 +29,7 @@ import javax.persistence.Transient;
 public abstract class Recommendation {
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private final int id;
 
     @Transient

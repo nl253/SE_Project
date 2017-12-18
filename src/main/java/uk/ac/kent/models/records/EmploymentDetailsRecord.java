@@ -5,11 +5,15 @@ import java.security.SecureRandom;
 import java.sql.Blob;
 import java.text.MessageFormat;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Random;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import uk.ac.kent.models.people.Department;
 
@@ -26,16 +30,19 @@ public final class EmploymentDetailsRecord extends BaseRecord {
     private LocalDate dateEmployed;
     private long salary;
     @SuppressWarnings({"AlibabaLowerCamelCaseVariableNaming", "NonConstantFieldWithUpperCaseName"})
-    private Blob CV;
+    @Lob
+    private Blob cv;
+    @Lob
     private Blob accountOfInterview;
+    @Enumerated(EnumType.STRING)
     private Department department;
 
     @SuppressWarnings("ConstructorWithTooManyParameters")
-    public EmploymentDetailsRecord(final LocalDate dateEmployed, final long salary, final Department department, final Blob CV, final Blob accountOfInterview, final Position position) {
+    public EmploymentDetailsRecord(final LocalDate dateEmployed, final long salary, final Department department, final Blob cv, final Blob accountOfInterview, final Position position) {
         this.dateEmployed = dateEmployed;
         this.salary = salary;
         this.department = department;
-        this.CV = CV;
+        this.cv = cv;
         this.accountOfInterview = accountOfInterview;
         this.position = position;
     }
@@ -52,7 +59,8 @@ public final class EmploymentDetailsRecord extends BaseRecord {
         final Random random = new SecureRandom();
 
         // get random position
-        record.position = Position.values()[random.nextInt(Position.values().length)];
+        record.position = Position.values()[random
+                .nextInt(Position.values().length)];
 
         // @formatter:off
         // get random LocalDate
@@ -71,14 +79,13 @@ public final class EmploymentDetailsRecord extends BaseRecord {
 
     public EmploymentDetailsRecord() {}
 
-    public Position getPosition() {
-        return position;
-    }
+    public Position getPosition() { return position;}
 
     public void setPosition(final Position position) {
         this.position = position;
     }
 
+    @Enumerated(EnumType.STRING)
     private Position position;
 
     public EmploymentDetailsRecord(final LocalDate dateEmployed) {
@@ -101,9 +108,23 @@ public final class EmploymentDetailsRecord extends BaseRecord {
         this.department = department;
     }
 
+    @SuppressWarnings("StringConcatenation")
     @Override
     public String toString() {
-        return MessageFormat
-                .format("EmploymentDetailsRecord<dateEmployed={0}, salary={1}, department={2}, CV={3}, accountOfInterview={4}, position={5}>", dateEmployed, salary, department, CV, accountOfInterview, position);
+        // @formatter:off
+        return MessageFormat.format("EmploymentDetailsRecord<" +
+                                            "dateEmployed={0}, " +
+                                            "salary={1}, " +
+                                            "department={2}, " +
+                                            "CV={3}, " +
+                                            "accountOfInterview={4}, " +
+                                            "position={5}>",
+                                    dateEmployed.toString(),
+                                    salary,
+                                    department.toString(),
+                                    Arrays.toString(new Blob[]{cv}),
+                                    Arrays.toString(new Blob[]{accountOfInterview}),
+                                    position.toString());
+        // @formatter:on
     }
 }

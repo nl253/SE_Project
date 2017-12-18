@@ -3,6 +3,8 @@ package uk.ac.kent.models.records;
 import java.text.MessageFormat;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
@@ -29,6 +31,7 @@ abstract class BaseRecord {
 
     @SuppressWarnings({"WeakerAccess", "ProtectedField"})
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected final int id;
 
     @Transient
