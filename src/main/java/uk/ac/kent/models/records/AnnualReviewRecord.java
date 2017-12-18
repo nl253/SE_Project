@@ -39,6 +39,12 @@ public final class AnnualReviewRecord extends BaseRecord {
 
     public AnnualReviewRecord() {}
 
+    /**
+     * Produces a fake AnnualReviewRecord. For testing.
+     *
+     * @return a fake AnnualReviewRecord
+     */
+
     @Transient
     @SuppressWarnings("LocalVariableOfConcreteClass")
     public static AnnualReviewRecord fake() {

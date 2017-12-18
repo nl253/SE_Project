@@ -5,6 +5,8 @@ import java.util.Optional;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -43,22 +45,19 @@ public class Employee {
     private static int nextId;
 
     @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
     @OneToOne(targetEntity = PersonalDetailsRecord.class)
-    @JoinColumn(name = "", referencedColumnName = "ID_OF_GENRE_TABLE")
     private PersonalDetailsRecord personalDetailsRecord;
 
     @OneToOne(targetEntity = EmploymentDetailsRecord.class)
-    @JoinColumn(name = "GENRE_FK_COLUMN_NAME_IN_MOVIE_TABLE", referencedColumnName = "ID_OF_GENRE_TABLE")
     private EmploymentDetailsRecord employmentDetailsRecord;
 
     @OneToOne(targetEntity = ProbationRecord.class)
-    @JoinColumn(name = "GENRE_FK_COLUMN_NAME_IN_MOVIE_TABLE", referencedColumnName = "ID_OF_GENRE_TABLE")
     private ProbationRecord probationRecord;
 
     @OneToOne(targetEntity = SalaryIncreaseRecord.class)
-    @JoinColumn(name = "GENRE_FK_COLUMN_NAME_IN_MOVIE_TABLE", referencedColumnName = "ID_OF_GENRE_TABLE")
     private SalaryIncreaseRecord salaryIncreaseRecord;
 
     @OneToOne(targetEntity = AnnualReviewRecord.class)
@@ -66,7 +65,6 @@ public class Employee {
     private AnnualReviewRecord annualReviewRecord;
 
     @OneToOne(targetEntity = TerminationRecord.class)
-    @JoinColumn(name = "GENRE_FK_COLUMN_NAME_IN_MOVIE_TABLE", referencedColumnName = "ID_OF_GENRE_TABLE")
     private TerminationRecord terminationRecord;
 
     @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")

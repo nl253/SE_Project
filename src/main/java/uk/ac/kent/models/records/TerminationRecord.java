@@ -7,6 +7,8 @@ import java.util.Random;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 /**
@@ -19,6 +21,7 @@ import javax.persistence.Table;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class TerminationRecord extends BaseRecord {
 
+    @Enumerated(EnumType.STRING)
     private TerminationReason reason;
     private LocalDate endDate;
 

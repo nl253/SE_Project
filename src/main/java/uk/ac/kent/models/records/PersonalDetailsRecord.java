@@ -7,6 +7,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -18,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "personal_details")
 @Access(AccessType.FIELD)
-@SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface", "ReturnOfInnerClass"})
+@SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface", "ReturnOfInnerClass", "WeakerAccess"})
 public final class PersonalDetailsRecord extends BaseRecord {
 
     /**
@@ -35,15 +37,19 @@ public final class PersonalDetailsRecord extends BaseRecord {
         private String firstName;
 
         @Id
+        @GeneratedValue(strategy= GenerationType.IDENTITY)
         private Integer id;
 
         private String phoneNumber;
 
-        @SuppressWarnings("PublicConstructorInNonPublicClass")
-        public Relative() {}
+        @SuppressWarnings("ProtectedMemberInFinalClass")
+        protected Relative() {}
+
+        /**
+         * @return Fake {@link Relative}
+         */
 
         static Relative fake() {
-
             // fake data generator
             final Faker faker = new Faker(new Locale("en-GB"));
 
@@ -73,8 +79,8 @@ public final class PersonalDetailsRecord extends BaseRecord {
         // @formatter:on
     }
 
-    private final String lastname;
-    private final String firstname;
+    private String lastname;
+    private String firstname;
     private String address;
     private String email;
     @OneToOne(targetEntity = Relative.class)
@@ -88,7 +94,7 @@ public final class PersonalDetailsRecord extends BaseRecord {
      * @param firstname first name
      */
 
-    public PersonalDetailsRecord(final String lastname, final String address, final String email, final Relative nextOfKin, final String firstname) {
+    public PersonalDetailsRecord(final String firstname, final String lastname, final String email, final String address, final Relative nextOfKin) {
         this.lastname = lastname;
         this.address = address;
         this.email = email;
@@ -96,20 +102,23 @@ public final class PersonalDetailsRecord extends BaseRecord {
         this.firstname = firstname;
     }
 
-    /**
-     * Empty constructor to create dummy objects.
-     */
+    public PersonalDetailsRecord() {}
 
-    public PersonalDetailsRecord() {
+    public static PersonalDetailsRecord fake() {
         // fake data generator
         final Faker faker = new Faker(new Locale("en-GB"));
 
-        firstname = faker.name().name();
-        lastname = faker.name().lastName();
-        address = faker.address().fullAddress();
-        email = faker.internet().emailAddress();
-        nextOfKin = new Relative(faker.name().firstName(), faker.name()
-                .lastName(), faker.phoneNumber().cellPhone());
+        // @formatter:off
+        return new PersonalDetailsRecord(
+                faker.name().firstName(),
+                faker.name().lastName(),
+                faker.internet().emailAddress(),
+                faker.address().fullAddress(),
+                new Relative(
+                        faker.name().firstName(),
+                        faker.name().lastName(),
+                        faker.phoneNumber().cellPhone()));
+        // @formatter:on
     }
 
     public Relative getNextOfKin() { return nextOfKin; }
@@ -119,15 +128,12 @@ public final class PersonalDetailsRecord extends BaseRecord {
     }
 
     String getAddress() { return address; }
-
     void setAddress(final String address) { this.address = address; }
 
     String getEmail() { return email; }
-
     void setEmail(final String email) { this.email = email; }
 
     String getFirstname() { return firstname; }
-
     String getLastname() { return lastname; }
 
     @SuppressWarnings("WeakerAccess")
@@ -139,7 +145,7 @@ public final class PersonalDetailsRecord extends BaseRecord {
     @SuppressWarnings("DesignForExtension")
     @Override
     public String toString() {
-        return MessageFormat
-                .format("{0}<{1}: {2}>", getClass().getName(), getFullName());
+        return MessageFormat.format("{0}<{1}, {2}>", getClass()
+                .getName(), firstname, lastname);
     }
 }

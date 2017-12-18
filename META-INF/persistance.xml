@@ -2,28 +2,28 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
+    <!--MySQL database aka dragon.kent.ac.uk-->
     <persistence-unit name="nl253" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
-            <property name="javax.persistence.jdbc.driver"
-                      value="com.mysql.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306"/>
+
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://dragon.kent.ac.uk:3306"/>
+            <!--I am using my credentials-->
             <property name="javax.persistence.jdbc.user" value="nl253"/>
-            <property name="javax.persistence.jdbc.password"
-                      value="ngan-dt"/>
+            <property name="javax.persistence.jdbc.password" value="ngan-dt"/>
 
             <!--Hibernate properties-->
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="false"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <property name="hibernate.dialect"
-                      value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
 
         </properties>
     </persistence-unit>
 
+    <!--Test database - to discuss-->
     <persistence-unit name="dev" transaction-type="RESOURCE_LOCAL">
         <properties>
             <property name="javax.persistence.jdbc.driver"
