@@ -10,7 +10,7 @@ import uk.ac.kent.models.people.Director;
 import uk.ac.kent.models.people.Manager;
 
 /**
- * @author nl253
+ * @author norbert
  */
 
 @SuppressWarnings({"WeakerAccess", "AlibabaCommentsMustBeJavadocFormat", "PublicMethodNotExposedInInterface", "FieldCanBeLocal", "ClassHasNoToStringMethod"})

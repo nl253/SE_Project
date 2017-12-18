@@ -6,6 +6,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import uk.ac.kent.Database;
 
+/**
+ * @author norbert
+ */
+
 @SuppressWarnings({"ClassHasNoToStringMethod", "AbstractClassWithoutAbstractMethods"})
 abstract class BaseController {
 
