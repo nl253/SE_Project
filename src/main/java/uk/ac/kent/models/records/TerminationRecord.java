@@ -23,7 +23,7 @@ public final class TerminationRecord extends BaseRecord {
 
     @Enumerated(EnumType.STRING)
     private TerminationReason reason;
-    private LocalDate endDate;
+    private LocalDate endDate = LocalDate.now();
 
     /**
      * @param reason termination reason

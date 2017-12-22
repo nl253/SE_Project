@@ -8,8 +8,11 @@
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
 
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://dragon.kent.ac.uk:3306"/>
+            <property name="javax.persistence.jdbc.driver"
+                      value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://dragon.kent.ac.uk:3306"/>
+
             <!--I am using my credentials-->
             <property name="javax.persistence.jdbc.user" value="nl253"/>
             <property name="javax.persistence.jdbc.password" value="ngan-dt"/>
@@ -18,7 +21,8 @@
             <property name="hibernate.show_sql" value="false"/>
             <property name="hibernate.format_sql" value="false"/>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.dialect"
+                      value="org.hibernate.dialect.MySQLDialect"/>
 
         </properties>
     </persistence-unit>
@@ -26,16 +30,22 @@
     <!--Test database - to discuss-->
     <persistence-unit name="dev" transaction-type="RESOURCE_LOCAL">
         <properties>
+
             <property name="javax.persistence.jdbc.driver"
                       value="org.h2.Driver"/>
             <property name="javax.persistence.jdbc.url"
                       value="jdbc:h2:mem:test"/>
+
+            <!--Local database - no credentials needed-->
             <property name="javax.persistence.jdbc.user" value=""/>
             <property name="javax.persistence.jdbc.password" value=""/>
+
+            <!--Hibernate properties-->
+            <property name="show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="false"/>
+            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
             <property name="hibernate.dialect"
                       value="org.hibernate.dialect.H2Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
-            <property name="show_sql" value="true"/>
             <property name="hibernate.temp.use_jdbc_metadata_defaults"
                       value="false"/>
         </properties>
