@@ -5,6 +5,7 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,14 +23,16 @@ import javax.persistence.Table;
 @Access(AccessType.FIELD)
 public final class Relative {
 
-    @Column(name = "last_name")
+    @Basic(optional = false)
+    @Column(name = "last_name", nullable = false)
     private String lastName;
-    @Column(name = "first_name")
+    @Basic(optional = false)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @Column(name = "phone_number")
     private String phoneNumber;

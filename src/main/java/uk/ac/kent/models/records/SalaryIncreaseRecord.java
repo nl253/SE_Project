@@ -2,12 +2,15 @@ package uk.ac.kent.models.records;
 
 import com.github.javafaker.Faker;
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
@@ -15,16 +18,18 @@ import javax.persistence.Transient;
  */
 
 @Entity(name = "PersonalDetailsRecord")
+@Table(name = "personal_details")
 @Access(AccessType.FIELD)
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class SalaryIncreaseRecord extends BaseRecord {
 
-    @Column(name = "new_salary")
+    @Basic(optional = false)
+    @Column(name = "new_salary", nullable = false)
     private long newSalary;
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private LocalDate startDate = LocalDate.now();
 
-    public SalaryIncreaseRecord(final long newSalary, final LocalDateTime startDate) {
+    public SalaryIncreaseRecord(final long newSalary, final LocalDate startDate) {
         this.newSalary = newSalary;
         this.startDate = startDate;
     }
@@ -55,11 +60,11 @@ public final class SalaryIncreaseRecord extends BaseRecord {
         this.newSalary = newSalary;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(final LocalDateTime startDate) {
+    public void setStartDate(final LocalDate startDate) {
         this.startDate = startDate;
     }
 

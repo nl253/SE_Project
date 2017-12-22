@@ -135,6 +135,7 @@
         </dependency>
 
         <!-- Apache standard library -->
+        <!--We might not need it-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -142,6 +143,7 @@
         </dependency>
 
         <!-- Google core libraries - graphs, collections, functional patterns -->
+        <!--We might not need it-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -155,8 +157,8 @@
             <version>8.0.8-dmr</version>
         </dependency>
 
-
-        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <!--Testing database-->
+        <!--We might not need it-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -165,6 +167,7 @@
         </dependency>
 
         <!-- [> Apache IO utils <] -->
+        <!--We might not need it-->
         <!-- <dependency> -->
         <!-- <groupId>commons-io</groupId> -->
         <!-- <artifactId>commons-io</artifactId> -->

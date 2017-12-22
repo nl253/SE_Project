@@ -3,7 +3,6 @@ package uk.ac.kent.models.people;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.persistence.Access;
