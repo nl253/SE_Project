@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 import javafx.stage.Stage;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Transient;
 import uk.ac.kent.Database;
 
 /**
@@ -13,6 +14,7 @@ import uk.ac.kent.Database;
 @SuppressWarnings({"ClassHasNoToStringMethod", "AbstractClassWithoutAbstractMethods"})
 abstract class BaseController {
 
+    @Transient
     private static final Logger log = Logger.getAnonymousLogger();
 
     @SuppressWarnings("ProtectedField")

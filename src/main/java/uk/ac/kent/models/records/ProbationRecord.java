@@ -11,9 +11,12 @@ import java.util.function.Supplier;
 import java.util.logging.Logger;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  * @author norbert
@@ -25,9 +28,13 @@ import javax.persistence.Transient;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class ProbationRecord extends BaseRecord {
 
+    @Basic(optional = false)
     private String reason;
+    @Column(name = "start_date")
     private LocalDate startDate;
+    @Column(name = "end_date")
     private LocalDate endDate;
+    @Column(name = "review_date")
     private LocalDate reviewDate;
 
     public ProbationRecord(final LocalDate startDate, final LocalDate endDate, final LocalDate reviewDate, final String reason) {

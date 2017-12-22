@@ -5,11 +5,10 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -23,91 +22,36 @@ import javax.persistence.Table;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface", "ReturnOfInnerClass", "WeakerAccess"})
 public final class PersonalDetailsRecord extends BaseRecord {
 
-    /**
-     * @author norbert
-     */
+    @Basic(optional = false)
+    @Column(name = "last_name")
+    private String lastName;
 
-    @SuppressWarnings({"InnerClassFieldHidesOuterClassField", "InnerClassMayBeStatic", "NonStaticInnerClassInSecureContext"})
-    @Entity
-    @Table(name = "relative")
-    @Access(AccessType.FIELD)
-    private static final class Relative {
+    @Basic(optional = false)
+    @Column(name = "first_name")
+    private String firstName;
 
-        private String lastName;
-        private String firstName;
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, targetEntity = Address.class)
+    private Address address;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Integer id;
-
-        private String phoneNumber;
-
-        /**
-         * Empty constructor for Hibernate.
-         */
-
-        @SuppressWarnings("ProtectedMemberInFinalClass")
-        protected Relative() {}
-
-        /**
-         * @return Fake {@link Relative}
-         */
-
-        static Relative fake() {
-            // fake data generator
-            final Faker faker = new Faker(new Locale("en-GB"));
-
-            // @formatter:off
-            return new Relative(
-                    faker.name().firstName(),
-                    faker.name().lastName(),
-                    faker.phoneNumber().cellPhone());
-            // @formatter:on
-        }
-
-        Relative(final String name, final String surname) {
-            lastName = surname;
-            firstName = name;
-        }
-
-        Relative(final String name, final String surname, final String phone) {
-            this(name, surname);
-            phoneNumber = phone;
-        }
-
-        // @formatter:off
-        @Override
-        @SuppressWarnings("ConditionalExpression")
-        public final String toString() {
-            return MessageFormat
-                    .format("Person<lastname={0}, firstname={1}, phone={2}>",
-                            lastName, firstName,
-                            (phoneNumber != null) ? phoneNumber : "");
-        }
-        // @formatter:on
-    }
-
-    private String lastname;
-    private String firstname;
-    private String address;
     private String email;
-    @OneToOne(targetEntity = Relative.class)
-    private Relative nextOfKin;
+
+    @OneToOne(targetEntity = Relative.class, orphanRemoval = true, cascade = CascadeType.ALL)
+    private Relative relative;
 
     /**
-     * @param lastname surname
+     * @param lastName surname
      * @param address full address
      * @param email email address
      * @param nextOfKin full name of relative
-     * @param firstname first name
+     * @param firstName first name
      */
 
-    public PersonalDetailsRecord(final String firstname, final String lastname, final String email, final String address, final Relative nextOfKin) {
-        this.lastname = lastname;
+    public PersonalDetailsRecord(final String firstName, final String lastName, final String email, final Address address, final Relative nextOfKin) {
+        this.lastName = lastName;
         this.address = address;
         this.email = email;
-        this.nextOfKin = nextOfKin;
-        this.firstname = firstname;
+        relative = nextOfKin;
+        this.firstName = firstName;
     }
 
     public PersonalDetailsRecord() {}
@@ -121,7 +65,7 @@ public final class PersonalDetailsRecord extends BaseRecord {
                 faker.name().firstName(),
                 faker.name().lastName(),
                 faker.internet().emailAddress(),
-                faker.address().fullAddress(),
+                Address.fake(),
                 new Relative(
                         faker.name().firstName(),
                         faker.name().lastName(),
@@ -129,34 +73,48 @@ public final class PersonalDetailsRecord extends BaseRecord {
         // @formatter:on
     }
 
-    public Relative getNextOfKin() { return nextOfKin; }
-
-    public void setNextOfKin(final Relative nextOfKin) {
-        this.nextOfKin = nextOfKin;
+    public Relative getRelative() {
+        return relative;
     }
 
-    String getAddress() { return address; }
+    public void setRelative(final Relative nextOfKin) {
+        relative = nextOfKin;
+    }
 
-    void setAddress(final String address) { this.address = address; }
+    Address getAddress() {
+        return address;
+    }
 
-    String getEmail() { return email; }
+    void setAddress(final Address address) {
+        this.address = address;
+    }
 
-    void setEmail(final String email) { this.email = email; }
+    String getEmail() {
+        return email;
+    }
 
-    String getFirstname() { return firstname; }
+    void setEmail(final String email) {
+        this.email = email;
+    }
 
-    String getLastname() { return lastname; }
+    String getFirstName() {
+        return firstName;
+    }
+
+    String getLastName() {
+        return lastName;
+    }
 
     @SuppressWarnings("WeakerAccess")
     @Column(name = "fullname")
     String getFullName() {
-        return MessageFormat.format("{0} {1}", firstname, lastname);
+        return MessageFormat.format("{0} {1}", firstName, lastName);
     }
 
     @SuppressWarnings("DesignForExtension")
     @Override
     public String toString() {
         return MessageFormat.format("{0}<{1}, {2}>", getClass()
-                .getName(), firstname, lastname);
+                .getName(), firstName, lastName);
     }
 }

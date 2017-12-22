@@ -5,13 +5,14 @@ import java.util.Optional;
 import java.util.logging.Logger;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import uk.ac.kent.models.records.AnnualReviewRecord;
 import uk.ac.kent.models.records.EmploymentDetailsRecord;
 import uk.ac.kent.models.records.PersonalDetailsRecord;
@@ -44,39 +45,46 @@ import uk.ac.kent.models.records.TerminationRecord;
 public class Employee {
 
     /** Logger for the class */
+    @Transient
     protected static final Logger log = Logger.getAnonymousLogger();
 
+    @Transient
     private static int nextId;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(targetEntity = PersonalDetailsRecord.class)
-    private PersonalDetailsRecord personalDetailsRecord;
+    @OneToOne(targetEntity = PersonalDetailsRecord.class, optional = false)
+    @Column(name = "personal_details")
+    private PersonalDetailsRecord personalDetails;
 
-    @OneToOne(targetEntity = EmploymentDetailsRecord.class)
-    private EmploymentDetailsRecord employmentDetailsRecord;
+    @OneToOne(targetEntity = EmploymentDetailsRecord.class, optional = false)
+    @Column(name = "employment_details")
+    private EmploymentDetailsRecord employmentDetails;
 
     @OneToOne(targetEntity = ProbationRecord.class)
+    @Column(name = "probation_record")
     private ProbationRecord probationRecord;
 
     @OneToOne(targetEntity = SalaryIncreaseRecord.class)
+    @Column(name = "salary_increase_record")
     private SalaryIncreaseRecord salaryIncreaseRecord;
 
     @OneToOne(targetEntity = AnnualReviewRecord.class)
-    @JoinColumn(name = "previous_review", referencedColumnName = "id")
-    private AnnualReviewRecord annualReviewRecord;
+    @Column(name = "annual_review")
+    private AnnualReviewRecord annualReview;
 
     @OneToOne(targetEntity = TerminationRecord.class)
+    @Column(name = "termination_reason")
     private TerminationRecord terminationRecord;
 
     @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
-    Employee(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
+    Employee(final PersonalDetailsRecord personalDetailsRec, final EmploymentDetailsRecord employmentDetailsRec) {
         id = nextId;
         nextId++;
-        this.personalDetailsRecord = personalDetailsRecord;
-        this.employmentDetailsRecord = employmentDetailsRecord;
+        personalDetails = personalDetailsRec;
+        employmentDetails = employmentDetailsRec;
     }
 
     /**
@@ -86,18 +94,26 @@ public class Employee {
     @SuppressWarnings("ProtectedMemberInFinalClass")
     protected Employee() {}
 
+    /**
+     * Generate a fake {@link Employee}.
+     *
+     * @return a fake Employee
+     */
+
     public static Employee fake() {
         return new Employee(new PersonalDetailsRecord(), new EmploymentDetailsRecord());
     }
 
-    final int getId() { return id; }
-
-    public final EmploymentDetailsRecord getEmploymentDetailsRecord() {
-        return employmentDetailsRecord;
+    final int getId() {
+        return id;
     }
 
-    public final PersonalDetailsRecord getPersonalDetailsRecord() {
-        return personalDetailsRecord;
+    public final EmploymentDetailsRecord getEmploymentDetails() {
+        return employmentDetails;
+    }
+
+    public final PersonalDetailsRecord getPersonalDetails() {
+        return personalDetails;
     }
 
     public final Optional<ProbationRecord> getProbationRecord() {
@@ -124,12 +140,12 @@ public class Employee {
         this.terminationRecord = terminationRecord;
     }
 
-    public final Optional<AnnualReviewRecord> getAnnualReviewRecord() {
-        return Optional.ofNullable(annualReviewRecord);
+    public final Optional<AnnualReviewRecord> getAnnualReview() {
+        return Optional.ofNullable(annualReview);
     }
 
-    public final void setAnnualReviewRecord(final AnnualReviewRecord annualReviewRecord) {
-        this.annualReviewRecord = annualReviewRecord;
+    public final void setAnnualReview(final AnnualReviewRecord newReview) {
+        annualReview = newReview;
     }
 
     @SuppressWarnings("DesignForExtension")

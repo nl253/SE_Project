@@ -1,15 +1,17 @@
 package uk.ac.kent.models.records.recommendations;
 
 import java.text.MessageFormat;
+import java.time.LocalDate;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  * Base recommendation is the superclass for all types
@@ -29,7 +31,7 @@ import javax.persistence.Transient;
 public abstract class Recommendation {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private final int id;
 
     @Transient
@@ -39,6 +41,18 @@ public abstract class Recommendation {
     protected Recommendation() {
         id = nextId;
         nextId++;
+    }
+
+    @Column(name = "modified_date")
+    @UpdateTimestamp
+    private LocalDate modifiedDate;
+
+    public final LocalDate getModifiedDate() {
+        return modifiedDate;
+    }
+
+    public final void setModifiedDate(final LocalDate modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 
     @SuppressWarnings("DesignForExtension")

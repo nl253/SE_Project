@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.Optional;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -15,14 +16,15 @@ import uk.ac.kent.models.records.recommendations.RemainRecommendation;
  * @author norbert
  */
 
-@SuppressWarnings("PublicMethodNotExposedInInterface")
+@SuppressWarnings({"PublicMethodNotExposedInInterface", "AccessingNonPublicFieldOfAnotherObject"})
 @Entity
 @Table(name = "annual_reviews")
 @Access(AccessType.FIELD)
 public final class AnnualReviewRecord extends BaseRecord {
 
     @OneToOne(targetEntity = AnnualReviewRecord.class)
-    private AnnualReviewRecord previousAnnualReview;
+    @Column(name = "previous_review")
+    private AnnualReviewRecord previousReview;
 
     @SuppressWarnings("FieldCanBeLocal")
     @OneToOne(targetEntity = Recommendation.class)
@@ -30,7 +32,7 @@ public final class AnnualReviewRecord extends BaseRecord {
 
     public AnnualReviewRecord(final AnnualReviewRecord previousAnnualReview, final Recommendation recommendation) {
         this.recommendation = recommendation;
-        this.previousAnnualReview = previousAnnualReview;
+        previousReview = previousAnnualReview;
     }
 
     public AnnualReviewRecord(final Recommendation recommendation) {
@@ -58,8 +60,8 @@ public final class AnnualReviewRecord extends BaseRecord {
         return review;
     }
 
-    public void setPreviousAnnualReview(final AnnualReviewRecord previousAnnualReview) {
-        this.previousAnnualReview = previousAnnualReview;
+    public void setPreviousReview(final AnnualReviewRecord previousAnnualReview) {
+        previousReview = previousAnnualReview;
     }
 
     public void setRecommendation(final Recommendation recommendation) {
@@ -70,13 +72,13 @@ public final class AnnualReviewRecord extends BaseRecord {
         return Optional.ofNullable(recommendation);
     }
 
-    public Optional<AnnualReviewRecord> getPreviousAnnualReview() {
-        return Optional.ofNullable(previousAnnualReview);
+    public Optional<AnnualReviewRecord> getPreviousReview() {
+        return Optional.ofNullable(previousReview);
     }
 
     @Override
     public String toString() {
         return MessageFormat
-                .format("AnnualReviewRecord<singed={0}>", isSigned());
+                .format("AnnualReviewRecord<singed={0}>", getSigned());
     }
 }
