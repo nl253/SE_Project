@@ -77,6 +77,8 @@ See [the meetings directory](doc/meetings/).
 mvn test
 ```
 
+Test reports will appear in [./target/surefire-reports](target/surefire-reports).
+
 ## Building
 
 ### Jar
@@ -85,7 +87,7 @@ mvn test
 mvn package
 ```
 
-The jar will appear in the `./target` directory.
+The jar will appear in the [./target](./target).
 
 ### Compile to class files
 
@@ -93,13 +95,14 @@ The jar will appear in the `./target` directory.
 mvn compile
 ```
 
-The classes will appear in the `./target/classes` directory.
+The classes will appear in the [./target/classes](./target/classes).
 
 ## Libraries and Dependencies
 
 - [Hibernate ORM](http://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html) for database stuff 
 - [JavaFX](https://docs.oracle.com/javase/8/javafx/get-started-tutorial/get_start_apps.htm#JFXST804) for GUI
 - build tool [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html)
+- [JUnit5](http://junit.org/junit5/) for testing
 
 -----------------------------------------
 

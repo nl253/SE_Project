@@ -1,13 +1,16 @@
 package uk.ac.kent;
 
-import java.util.TimeZone;
+import java.text.MessageFormat;
+import java.util.List;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.Transient;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import uk.ac.kent.models.people.Director;
 import uk.ac.kent.models.people.Manager;
 
@@ -15,26 +18,30 @@ import uk.ac.kent.models.people.Manager;
  * @author norbert
  */
 
-@SuppressWarnings({"WeakerAccess", "AlibabaCommentsMustBeJavadocFormat", "PublicMethodNotExposedInInterface", "FieldCanBeLocal", "ClassHasNoToStringMethod"})
+@SuppressWarnings({"WeakerAccess", "AlibabaCommentsMustBeJavadocFormat", "PublicMethodNotExposedInInterface", "FieldCanBeLocal", "ClassHasNoToStringMethod", "NonBooleanMethodNameMayNotStartWithQuestion"})
 public final class Database {
 
     /** Logger for the class */
     @Transient
     private static final Logger log = Logger.getAnonymousLogger();
 
-    private static final SessionFactory sessionFactory = new Configuration()
-            .buildSessionFactory();
+    private final EntityManagerFactory sessionFactory;
+    private EntityManager session;
 
-    // cannot be instantiated
-    private Database() {}
+    public Database() {
+        // the name corresponds to a persistance-unit name in persistance.xml
+        sessionFactory = Persistence
+                .createEntityManagerFactory("dragon.kent.ac.uk");
+    }
 
-    /**
-     * @return Session
-     */
+    private void beginTransaction() {
+        session = sessionFactory.createEntityManager();
+        session.getTransaction().begin();
+    }
 
-    public static Session getSession() {
-        return sessionFactory.withOptions()
-                .jdbcTimeZone(TimeZone.getTimeZone("UTC")).openSession();
+    private void finishTransaction() {
+        session.getTransaction().commit();
+        session.close();
     }
 
     /**
@@ -45,8 +52,46 @@ public final class Database {
      */
 
     @SuppressWarnings({"rawtypes", "LawOfDemeter"})
-    public static Stream query(final String queryString) {
-        return getSession().createQuery(queryString).getResultStream();
+    public List query(final String queryString) {
+        beginTransaction();
+        final List result = session.createNativeQuery(queryString)
+                .getResultList();
+        finishTransaction();
+        return result;
+    }
+
+    /**
+     * @param funct function (a query) to execute
+     * @return results of the query
+     */
+
+    @SuppressWarnings({"rawtypes", "LawOfDemeter"})
+    public List query(final Supplier<List> funct) {
+        beginTransaction();
+        final List results = funct.get();
+        finishTransaction();
+        return results;
+    }
+
+    /**
+     * @param funct
+     */
+
+    @SuppressWarnings({"rawtypes", "LawOfDemeter"})
+    public void query(final Runnable funct) {
+        beginTransaction();
+        funct.run();
+        finishTransaction();
+    }
+
+    /**
+     * @param entity
+     */
+
+    public void remove(final Object entity) {
+        beginTransaction();
+        session.remove(entity);
+        finishTransaction();
     }
 
     /**
@@ -55,8 +100,10 @@ public final class Database {
      * @param entity Object to be saved
      */
 
-    public static void save(final Object entity) {
-        getSession().persist(entity);
+    public void save(final Object entity) {
+        beginTransaction();
+        session.persist(entity);
+        finishTransaction();
     }
 
     /**
@@ -66,10 +113,25 @@ public final class Database {
      * This includes {@link uk.ac.kent.models.records.PersonalDetailsRecord} and {@link uk.ac.kent.models.records.EmploymentDetailsRecord}.
      */
 
-    public static void populate() {
+    public void populate() {
         // Make Directors
         IntStream.range(0, 4).forEach(x -> save(Director.fake()));
         // Make Managers
         IntStream.range(0, 25).forEach(x -> save(Manager.fake()));
+    }
+
+    /**
+     * String representation of this Database. Gives info about all properties and tells if there's a session running.
+     *
+     * @return
+     */
+
+    @Override
+    public String toString() {
+        return MessageFormat
+                .format("Database<open={0}, properties={1}>", (session != null) && session
+                        .isOpen(), sessionFactory.getProperties().values()
+                                .stream().map(Object::toString)
+                                .collect(Collectors.joining(", ")));
     }
 }

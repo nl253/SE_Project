@@ -3,7 +3,7 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
     <!--MySQL database aka dragon.kent.ac.uk-->
-    <persistence-unit name="nl253" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="dragon.kent.ac.uk" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
@@ -29,6 +29,8 @@
 
     <!--Test database - to discuss-->
     <persistence-unit name="dev" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
 
             <property name="javax.persistence.jdbc.driver"
