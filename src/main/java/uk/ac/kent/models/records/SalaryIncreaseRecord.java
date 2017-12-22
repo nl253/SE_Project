@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
@@ -18,7 +19,9 @@ import javax.persistence.Transient;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class SalaryIncreaseRecord extends BaseRecord {
 
+    @Column(name = "new_salary")
     private long newSalary;
+    @Column(name = "start_date")
     private LocalDateTime startDate;
 
     public SalaryIncreaseRecord(final long newSalary, final LocalDateTime startDate) {

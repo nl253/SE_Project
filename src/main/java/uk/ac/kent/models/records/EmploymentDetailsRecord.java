@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.Random;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,12 +29,14 @@ import uk.ac.kent.models.people.Department;
 @Access(AccessType.FIELD)
 public final class EmploymentDetailsRecord extends BaseRecord {
 
-    private LocalDate dateEmployed;
+    @Column(name = "date_employed")
+    private LocalDate dateEmployed = LocalDate.now();
     private long salary;
     @SuppressWarnings({"AlibabaLowerCamelCaseVariableNaming", "NonConstantFieldWithUpperCaseName"})
     @Lob
     private Blob cv;
     @Lob
+    @Column(name = "account_of_interview")
     private Blob accountOfInterview;
     @Enumerated(EnumType.STRING)
     private Department department;

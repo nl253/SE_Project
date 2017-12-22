@@ -1,8 +1,10 @@
 package uk.ac.kent;
 
+import java.util.TimeZone;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import javax.persistence.Transient;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -17,9 +19,11 @@ import uk.ac.kent.models.people.Manager;
 public final class Database {
 
     /** Logger for the class */
+    @Transient
     private static final Logger log = Logger.getAnonymousLogger();
 
-    private static final SessionFactory sessionFactory = new Configuration().buildSessionFactory();
+    private static final SessionFactory sessionFactory = new Configuration()
+            .buildSessionFactory();
 
     // cannot be instantiated
     private Database() {}
@@ -29,7 +33,8 @@ public final class Database {
      */
 
     public static Session getSession() {
-        return sessionFactory.openSession();
+        return sessionFactory.withOptions()
+                .jdbcTimeZone(TimeZone.getTimeZone("UTC")).openSession();
     }
 
     /**
