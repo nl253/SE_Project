@@ -28,16 +28,16 @@
         <junit.platform.version>1.0.2</junit.platform.version>
     </properties>
 
-    <contributors>
-        <contributor>
+    <developers>
+        <developer>
             <email>nl253@kent.ac.uk</email>
             <name>Norbert Logiewa</name>
             <organization>Kent Univerity</organization>
             <roles>
                 <role>coding</role>
             </roles>
-        </contributor>
-        <contributor>
+        </developer>
+        <developer>
             <email>ch678@kent.ac.uk</email>
             <name>Charlotte Hollman</name>
             <organization>Kent University</organization>
@@ -45,8 +45,8 @@
                 <role>UML</role>
                 <role>coding</role>
             </roles>
-        </contributor>
-        <contributor>
+        </developer>
+        <developer>
             <email>bf84@kent.ac.uk</email>
             <name>Bradley Fuller</name>
             <organization>Kent University</organization>
@@ -54,8 +54,8 @@
                 <role>documentation</role>
                 <role>UML</role>
             </roles>
-        </contributor>
-        <contributor>
+        </developer>
+        <developer>
             <email>if50@kent.ac.uk</email>
             <name>Imaan Fakim</name>
             <organization>Kent University</organization>
@@ -65,8 +65,8 @@
                 <role>UML</role>
                 <role>reports</role>
             </roles>
-        </contributor>
-    </contributors>
+        </developer>
+    </developers>
 
     <prerequisites>
         <maven>[3.0.0,)</maven>
