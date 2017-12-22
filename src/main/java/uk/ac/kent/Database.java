@@ -16,6 +16,8 @@ import uk.ac.kent.models.people.Manager;
 
 /**
  * @author norbert
+ * <p>
+ * For details about the API see <a href="http://docs.jboss.org/hibernate/orm/5.2/quickstart/html_single/#hibernate-gsg-tutorial-basic-mapping">Hibernate Quick Start</a>.
  */
 
 @SuppressWarnings({"WeakerAccess", "AlibabaCommentsMustBeJavadocFormat", "PublicMethodNotExposedInInterface", "FieldCanBeLocal", "ClassHasNoToStringMethod", "NonBooleanMethodNameMayNotStartWithQuestion"})

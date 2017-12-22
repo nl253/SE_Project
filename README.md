@@ -104,6 +104,10 @@ The classes will appear in the [./target/classes](./target/classes).
 - build tool [Maven](https://maven.apache.org/guides/introduction/introduction-to-the-pom.html)
 - [JUnit5](http://junit.org/junit5/) for testing
 
+## See the website for more info
+
+[link here](https://nl253.github.io/Software-Engineering-Project/)
+
 -----------------------------------------
 
 [1] https://maven.apache.org/guides/introduction/introduction-to-the-pom.html <br>
