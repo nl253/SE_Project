@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -53,27 +54,27 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne(targetEntity = PersonalDetailsRecord.class, optional = false)
-    @JoinColumn(name = "personal_details", unique = true)
+    @OneToOne(targetEntity = PersonalDetailsRecord.class, optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "personal_details", unique = true, nullable = false)
     private PersonalDetailsRecord personalDetails;
 
-    @OneToOne(targetEntity = EmploymentDetailsRecord.class, optional = false)
-    @JoinColumn(name = "employment_details")
+    @OneToOne(targetEntity = EmploymentDetailsRecord.class, optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
+    @JoinColumn(name = "employment_details", nullable = false)
     private EmploymentDetailsRecord employmentDetails;
 
-    @OneToMany(targetEntity = ProbationRecord.class)
+    @OneToMany(targetEntity = ProbationRecord.class, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "probation_record")
     private List<ProbationRecord> probationRecords;
 
-    @OneToMany(targetEntity = SalaryIncreaseRecord.class)
+    @OneToMany(targetEntity = SalaryIncreaseRecord.class, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "salary_increase_record")
     private List<SalaryIncreaseRecord> salaryIncreaseRecords;
 
     @JoinColumn(name = "annual_review")
-    @OneToMany(targetEntity = AnnualReviewRecord.class)
+    @OneToMany(targetEntity = AnnualReviewRecord.class, orphanRemoval = true, cascade = CascadeType.ALL)
     private List<AnnualReviewRecord> annualReviewRecords;
 
-    @OneToOne(targetEntity = TerminationRecord.class)
+    @OneToOne(targetEntity = TerminationRecord.class, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "termination_reason")
     private TerminationRecord terminationRecord;
 

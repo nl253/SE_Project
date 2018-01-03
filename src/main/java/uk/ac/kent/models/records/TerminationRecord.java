@@ -14,7 +14,8 @@ import javax.persistence.Table;
 /**
  * Each {@link uk.ac.kent.models.people.Employee} <em>may</em> have a single
  * {@link TerminationRecord}.
- * Even though after receiveing such a record she would no longer employed,
+ * <p>
+ * Even though after receiving such a record she would no longer employed,
  * the data remains in the system.
  *
  * @author norbert

@@ -1,6 +1,7 @@
 package uk.ac.kent.models.people;
 
 import com.github.javafaker.Faker;
+import com.github.javafaker.Name;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Optional;
@@ -106,23 +107,23 @@ public final class Relative {
     public static Relative fake() {
         // fake data generator
         final Faker faker = new Faker(new Locale("en-GB"));
+        final Name nameFaker = faker.name();
 
         // @formatter:off
         return new Relative(
-                faker.name().firstName(),
-                faker.name().lastName(),
+                nameFaker.firstName(),
+                nameFaker.lastName(),
                 faker.phoneNumber().cellPhone());
         // @formatter:on
     }
 
-    // @formatter:off
     @Override
     @SuppressWarnings("ConditionalExpression")
     public final String toString() {
+        // @formatter:off
         return MessageFormat.format("Person<name={0} {1}, phone={2}>",
-                                    firstName,
-                                    lastName,
+                                    firstName, lastName,
                                     getPhoneNumber().orElse(""));
+        // @formatter:on
     }
-    // @formatter:on
 }

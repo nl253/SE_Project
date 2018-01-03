@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.Optional;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,7 +26,7 @@ import uk.ac.kent.models.records.recommendations.RemainBaseRecommendation;
 public final class AnnualReviewRecord extends BaseRecord {
 
     @SuppressWarnings("FieldCanBeLocal")
-    @OneToOne(targetEntity = BaseRecommendation.class)
+    @OneToOne(targetEntity = BaseRecommendation.class, optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
     private BaseRecommendation baseRecommendation;
 
     /**

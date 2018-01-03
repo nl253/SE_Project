@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -35,7 +36,7 @@ public final class Manager extends Employee {
      */
 
     @SuppressWarnings("FieldMayBeFinal")
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, targetEntity = Employee.class)
     private List<Employee> employees = new ArrayList<>(15);
 
     /**
