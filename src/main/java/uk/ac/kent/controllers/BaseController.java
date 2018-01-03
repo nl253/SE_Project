@@ -1,43 +1,61 @@
 package uk.ac.kent.controllers;
 
-import java.util.logging.Logger;
+import java.io.IOException;
+import java.text.MessageFormat;
 import javafx.stage.Stage;
-import javax.persistence.Transient;
 import uk.ac.kent.Database;
 
 /**
- * @author norbert
+ * Base class for all controllers.
+ *
+ * @author Norbert
  */
 
-@SuppressWarnings({"ClassHasNoToStringMethod", "AbstractClassWithoutAbstractMethods"})
+@SuppressWarnings({"ConstructorNotProtectedInAbstractClass", "PublicMethodNotExposedInInterface", "WeakerAccess"})
 public abstract class BaseController {
 
-    @Transient
-    private static final Logger log = Logger.getAnonymousLogger();
+    private final Stage stage;
+    private Stage parent;
+    private final Database database;
 
-    @SuppressWarnings("PackageVisibleField")
-    private Database database;
+    /**
+     * Display the first,  main view associated with this {@link BaseController}.
+     *
+     * @throws IOException when fxml file cannot be found
+     */
 
-    private Stage stage;
+    public abstract void displayMainView() throws IOException;
 
-    @SuppressWarnings({"ConstructorNotProtectedInAbstractClass", "PublicConstructorInNonPublicClass"})
-    public BaseController() {}
+    /**
+     * @param database a reference to the {@link Database}
+     * @param parent a reference to the parent {@link Stage}
+     */
 
-    @SuppressWarnings({"PublicConstructorInNonPublicClass", "ConstructorNotProtectedInAbstractClass"})
-    public BaseController(final Stage stage, final Database database) {
-        this.stage = stage;
+    public BaseController(final Database database, final Stage parent) {
         this.database = database;
+        this.parent = parent;
+        stage = new Stage();
     }
 
-    final Database getDatabase() {
-        return database;
+    public final Stage getParent() {
+        return parent;
     }
 
-    final Stage getStage() {
+    public final void setParent(final Stage parent) {
+        this.parent = parent;
+    }
+
+    public final Stage getStage() {
         return stage;
     }
 
-    final void setStage(final Stage stage) {
-        this.stage = stage;
+    public final Database getDatabase() {
+        return database;
+    }
+
+    @SuppressWarnings("DesignForExtension")
+    @Override
+    public String toString() {
+        return MessageFormat.format("{0}", getClass().getName());
     }
 }

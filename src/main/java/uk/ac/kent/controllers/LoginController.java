@@ -13,7 +13,9 @@ import javafx.stage.Stage;
 import uk.ac.kent.Database;
 
 /**
- * @author norbert
+ * Manages the login view.
+ *
+ * @author Norbert
  */
 
 @SuppressWarnings("ClassHasNoToStringMethod")
@@ -21,31 +23,88 @@ public final class LoginController extends BaseController {
 
     @FXML
     private PasswordField password;
+
     @FXML
     private TextField username;
+
     @FXML
     private Button btn;
 
-    public LoginController() {}
+    /**
+     * @param database a reference to the {@link Database}
+     * @param parent parent {@link Stage}
+     */
 
-    public LoginController(final Stage stage, final Database database) {
-        super(stage, database);
+    public LoginController(final Database database, final Stage parent) {
+        super(database, parent);
     }
 
-    private void displayMainView() {}
+    /**
+     * @throws IOException
+     */
 
-    void displayLoginView() throws IOException {
+    @SuppressWarnings("ConstantConditions")
+    private void displayLoginView() throws IOException {
         final Parent root = FXMLLoader.load(getClass().getClassLoader()
                                                     .getResource("views/login.fxml"));
-        final Scene scene = new Scene(root, 300.0, 200.0);
+        final Scene scene = new Scene(root);
         getStage().setScene(scene);
         getStage().show();
     }
 
-    @SuppressWarnings({"LawOfDemeter", "PublicMethodNotExposedInInterface"})
-    public void handleLoginButtonClicked(final MouseEvent mouseEvent) {
-        getDatabase()
-                .query("SELECT COUNT(*) FROM users WHERE username = :username AND PASSWORD = :password", username, password);
+    /**
+     * @throws IOException
+     */
 
+    @SuppressWarnings("ConstantConditions")
+    private void displayBadCredentialsView() throws IOException {
+        final Parent root = FXMLLoader.load(getClass().getClassLoader()
+                                                    .getResource("views/badCredentials.fxml"));
+        final Scene scene = new Scene(root);
+        getStage().setScene(scene);
+        getStage().show();
+    }
+
+    /**
+     * @param mouseEvent mouse event (click)
+     * @throws IOException
+     */
+
+    @SuppressWarnings({"LawOfDemeter", "PublicMethodNotExposedInInterface"})
+    public void handleLoginButtonClicked(final MouseEvent mouseEvent) throws IOException {
+        if (authenticate()) displayDashboardView();
+        else displayBadCredentialsView();
+    }
+
+    /**
+     * @throws IOException
+     */
+
+    private void displayDashboardView() throws IOException {
+        new DashboardController(getDatabase(), getStage()).displayMainView();
+        getStage().close();
+    }
+
+    /**
+     * Authenticate a user based on credentials in the fields (username and password).
+     *
+     * @return true if a user record matching these credentials exists
+     */
+
+    private boolean authenticate() {
+        return !getDatabase()
+                .query("SELECT COUNT(*) FROM users WHERE username = :username AND PASSWORD = :password", username, password)
+                .isEmpty();
+    }
+
+    /**
+     * Display the first,  main view associated with this {@link BaseController}.
+     *
+     * @throws IOException
+     */
+
+    @Override
+    public void displayMainView() throws IOException {
+        displayLoginView();
     }
 }

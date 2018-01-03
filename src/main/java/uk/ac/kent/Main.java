@@ -1,56 +1,39 @@
 package uk.ac.kent;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import uk.ac.kent.controllers.LoginController;
 
 /**
  * The entry point into the application.
  *
- * @author norbert
+ * @author Norbert
  */
 
-@SuppressWarnings({"PublicMethodNotExposedInInterface", "ClassHasNoToStringMethod", "ConstantConditions"})
+@SuppressWarnings({"PublicMethodNotExposedInInterface", "ClassHasNoToStringMethod", "ConstantConditions", "ResultOfObjectAllocationIgnored"})
 public final class Main extends Application {
-
-    private static final double WIDTH = 300.0;
-    private static final double HEIGHT = 200.0;
 
     /** Logger for the class */
     private static final Logger log = Logger.getAnonymousLogger();
 
-    private Stage stage;
+    /**
+     * JavaFX will pass a {@link Stage} instance into this method.
+     *
+     * @param stage top level window
+     */
 
     @Override
-    public final void start(final Stage stage) throws java.io.IOException {
-        this.stage = stage;
-        displayLoginView();
+    public final void start(final Stage stage) {
+        new LoginController(new Database(), stage);
     }
 
-    @FXML
-    private void displayLoginView() throws IOException {
-        final Parent root = FXMLLoader.load(getClass().getClassLoader()
-                                                    .getResource("views/login.fxml"));
-        final Scene scene = new Scene(root, 300.0, 200.0);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    @FXML
-    private void displayMainView() throws IOException {
-        final Parent root = FXMLLoader.load(getClass().getClassLoader()
-                                                    .getResource("views/main.fxml"));
-        stage.setScene(new Scene(root, WIDTH, HEIGHT));
-        stage.show();
-    }
+    /**
+     * @param args command line args
+     */
 
     public static void main(final String[] args) {
-        new Database().populate();
+        // new Database().populate();
         launch(args);
     }
 }

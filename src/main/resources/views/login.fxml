@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.VBox?>
-<VBox prefHeight="300.0" prefWidth="300.0" spacing="10"
+<VBox prefHeight="200.0" prefWidth="300.0" spacing="10"
       xmlns="http://javafx.com/javafx/8.0.121"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="uk.ac.kent.controllers.LoginController">
