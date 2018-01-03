@@ -1,4 +1,4 @@
-package uk.ac.kent.models.people;
+package uk.ac.kent.models.yuconz;
 
 import java.text.MessageFormat;
 

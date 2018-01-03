@@ -1,4 +1,4 @@
-package uk.ac.kent.models.records;
+package uk.ac.kent.models.people;
 
 import com.github.javafaker.Faker;
 import java.text.MessageFormat;
@@ -12,8 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import uk.ac.kent.models.records.PersonalDetailsRecord;
 
 /**
  * Used in {@link PersonalDetailsRecord}. A {@link Relative} is the "next of kin"

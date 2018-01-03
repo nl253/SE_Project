@@ -12,6 +12,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import uk.ac.kent.models.other.Address;
+import uk.ac.kent.models.people.Relative;
 
 /**
  * A {@link BaseRecord} of an {@link uk.ac.kent.models.people.Employee}'s personal details.

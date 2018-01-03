@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import uk.ac.kent.models.records.EmploymentDetailsRecord;
 import uk.ac.kent.models.records.PersonalDetailsRecord;
+import uk.ac.kent.models.yuconz.Department;
 
 /**
  * A {@link Manager} is an {@link Employee} that in addition to all the

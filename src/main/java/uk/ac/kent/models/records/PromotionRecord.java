@@ -14,7 +14,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import uk.ac.kent.models.people.Department;
+import uk.ac.kent.models.yuconz.Department;
+import uk.ac.kent.models.yuconz.Position;
 
 /**
  * @author norbert

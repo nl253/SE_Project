@@ -14,7 +14,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.Table;
-import uk.ac.kent.models.people.Department;
+import uk.ac.kent.models.yuconz.Department;
+import uk.ac.kent.models.yuconz.Position;
 
 /**
  * Each {@link uk.ac.kent.models.people.Employee} has a single {@link EmploymentDetailsRecord} associated with her.
