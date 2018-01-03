@@ -14,7 +14,7 @@
             <property name="javax.persistence.jdbc.url"
                       value="jdbc:mysql://dragon.kent.ac.uk:3306"/>
 
-            <!--I am using my credentials-->
+            <!--I am using my credentials - Norbert-->
             <property name="javax.persistence.jdbc.user" value="nl253"/>
             <property name="javax.persistence.jdbc.password" value="ngan-dt"/>
 
