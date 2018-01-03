@@ -27,14 +27,26 @@ import uk.ac.kent.models.people.Department;
 public final class PromotionRecord extends BaseRecord {
 
     @Enumerated(EnumType.STRING)
-    private Department newDepartament;
+    private Department newDepartment;
+
     @Enumerated(EnumType.STRING)
     private Position newPosition;
+
     private LocalDate startDate;
+
     private long newSalary;
 
+    /**
+     * Create a new {@link PromotionRecord}.
+     *
+     * @param newDepartament new department the employee is assigned to
+     * @param newPosition new position of the employee
+     * @param startDate start
+     * @param newSalary new salary
+     */
+
     public PromotionRecord(final Department newDepartament, final Position newPosition, final LocalDate startDate, final long newSalary) {
-        this.newDepartament = newDepartament;
+        this.newDepartment = newDepartament;
         this.newPosition = newPosition;
         this.startDate = startDate;
         this.newSalary = newSalary;
@@ -45,7 +57,11 @@ public final class PromotionRecord extends BaseRecord {
      */
 
     @SuppressWarnings("ProtectedMemberInFinalClass")
-    protected  PromotionRecord() {}
+    protected PromotionRecord() {}
+
+    /**
+     * @return a fake {@link PromotionRecord}
+     */
 
     @Transient
     @SuppressWarnings({"AlibabaAvoidCommentBehindStatement", "ImplicitNumericConversion", "MagicNumber", "LocalVariableOfConcreteClass", "AccessingNonPublicFieldOfAnotherObject"})
@@ -59,7 +75,7 @@ public final class PromotionRecord extends BaseRecord {
         // secure pseudo-random number generator
         final Random random = new SecureRandom();
 
-        record.newDepartament = Department.values()[random
+        record.newDepartment = Department.values()[random
                 .nextInt(Department.values().length)];
         record.newPosition = Position.values()[random
                 .nextInt(Position.values().length)];
@@ -79,31 +95,39 @@ public final class PromotionRecord extends BaseRecord {
         return record;
     }
 
-    public Department getNewDepartament() { return newDepartament; }
-
-    public void setNewDepartament(final Department newDepartament) {
-        this.newDepartament = newDepartament;
+    public Department getNewDepartment() {
+        return newDepartment;
     }
 
-    public Position getNewPosition() { return newPosition; }
+    public void setNewDepartment(final Department newDepartament) {
+        this.newDepartment = newDepartament;
+    }
+
+    public Position getNewPosition() {
+        return newPosition;
+    }
 
     public void setNewPosition(final Position newPosition) {
         this.newPosition = newPosition;
     }
 
-    public LocalDate getStartDate() { return startDate; }
+    public LocalDate getStartDate() {
+        return startDate;
+    }
 
     public void setStartDate(final LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public long getNewSalary() { return newSalary; }
+    public long getNewSalary() {
+        return newSalary;
+    }
 
     public void setNewSalary(final long newSalary) { this.newSalary = newSalary; }
 
     @Override
     public String toString() {
         return MessageFormat
-                .format("PromotionRecord'{'newDepartament={0}, newPosition={1}, newSalary={2}, startDate={3}'}'", newDepartament, newPosition, newSalary, startDate);
+                .format("PromotionRecord<newDepartament={0}, newPosition={1}, newSalary={2}, startDate={3}>", newDepartment, newPosition, newSalary, startDate);
     }
 }

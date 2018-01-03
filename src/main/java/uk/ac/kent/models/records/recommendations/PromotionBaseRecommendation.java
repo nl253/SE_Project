@@ -12,4 +12,4 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "promotion_recommendations")
 @Access(AccessType.FIELD)
-public class PromotionRecommendation extends Recommendation {}
+public class PromotionBaseRecommendation extends BaseRecommendation {}

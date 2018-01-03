@@ -10,6 +10,6 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name = "termination_recommendations")
+@Table(name = "remain_recommendations")
 @Access(AccessType.FIELD)
-public class TerminationRecommendation extends Recommendation {}
+public class RemainBaseRecommendation extends BaseRecommendation {}

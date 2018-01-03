@@ -9,6 +9,7 @@ import javax.persistence.Basic;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -16,21 +17,18 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 /**
- * Base record is the superclass for all types of records
- * kept in the system.
+ * Base record is the superclass for all types of records kept in the system.
  * <p>
- * It equips all subclasses with basic fields and
- * getters / setters. Because it is abstract, it cannot
- * be directly instantiated.
+ * It equips all subclasses with basic fields and getters / setters.
  *
  * @author norbert
  */
 
-@SuppressWarnings("ClassHasNoToStringMethod")
+@SuppressWarnings({"ClassHasNoToStringMethod", "PublicMethodNotExposedInInterface"})
 @MappedSuperclass
 @Table(name = "records")
 @Access(AccessType.FIELD)
-abstract class BaseRecord {
+public abstract class BaseRecord {
 
     /** Logger for the class */
     @Transient
@@ -39,7 +37,7 @@ abstract class BaseRecord {
     @Basic(optional = false)
     private boolean signed;
 
-    // @Column(name = "modified_date")
+    @JoinColumn(name = "modified_date")
     @UpdateTimestamp
     private LocalDate modifiedDate;
 
@@ -48,7 +46,7 @@ abstract class BaseRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected final int id;
 
-    // @Column(name = "date_created", updatable = false)
+    @JoinColumn(name = "date_created", updatable = false)
     @Basic(optional = false)
     @CreationTimestamp
     private LocalDate dateCreated = LocalDate.now();
@@ -94,10 +92,10 @@ abstract class BaseRecord {
         this.dateCreated = dateCreated;
     }
 
-    @SuppressWarnings("DesignForExtension")
+    @SuppressWarnings({"DesignForExtension", "ConditionalExpression"})
     @Override
     public String toString() {
-        return MessageFormat.format("{0}<id={1} signed={2}>", getClass()
-                .getName(), id, signed);
+        return MessageFormat.format("{0}<id={1}, {2}>", getClass()
+                .getName(), id, signed ? "signed" : "unsigned");
     }
 }

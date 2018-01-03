@@ -5,11 +5,11 @@ import java.util.Optional;
 import java.util.logging.Logger;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -21,19 +21,15 @@ import uk.ac.kent.models.records.SalaryIncreaseRecord;
 import uk.ac.kent.models.records.TerminationRecord;
 
 /**
- * Employee class represents all employess working for the company.
- * This includes Directors and Managers which are subclasses of Employee.
+ * {@link Employee} class represents all {@link Employee}s working for the company.
+ * This includes {@link Director}s and {@link Manager}s which are subclasses of {@link Employee}.
  * <p>
- * To avoid data duplication, the employee doesn't store her personal details.
- * Instead, they are stored in PersonalDetailsRecord which is one of the
+ * To avoid data duplication, the {@link Employee} doesn't store her personal details.
+ * Instead, they are stored in {@link PersonalDetailsRecord} which is one of the
  * documents that the system needs to handle.
  * <p>
- * Therefore, modifying an employees details requires you to modify their
- * PersonalDetailsRecord. The same applies to EmploymentDetailsRecord.
- * <p>
- * In some cases someone might not have a certain type of record (eg termination).
- * This is why getters return Optionals rather than the Object itself to
- * prevent returning null which isn't safe.
+ * Therefore, modifying an {@link Employee}'s details requires you to modify their
+ * {@link PersonalDetailsRecord}. The same applies to {@link EmploymentDetailsRecord}.
  *
  * @author norbert
  */
@@ -56,28 +52,33 @@ public class Employee {
     private int id;
 
     @OneToOne(targetEntity = PersonalDetailsRecord.class, optional = false)
-    // @Column(name = "personal_details")
+    @JoinColumn(name = "personal_details")
     private PersonalDetailsRecord personalDetails;
 
     @OneToOne(targetEntity = EmploymentDetailsRecord.class, optional = false)
-    // @Column(name = "employment_details")
+    @JoinColumn(name = "employment_details")
     private EmploymentDetailsRecord employmentDetails;
 
     @OneToOne(targetEntity = ProbationRecord.class)
-    // @Column(name = "probation_record")
+    @JoinColumn(name = "probation_record")
     private ProbationRecord probationRecord;
 
     @OneToOne(targetEntity = SalaryIncreaseRecord.class)
-    // @Column(name = "salary_increase_record")
+    @JoinColumn(name = "salary_increase_record")
     private SalaryIncreaseRecord salaryIncreaseRecord;
 
-    // @Column(name = "annual_review")
+    @JoinColumn(name = "annual_review")
     @OneToOne(targetEntity = AnnualReviewRecord.class)
     private AnnualReviewRecord annualReview;
 
     @OneToOne(targetEntity = TerminationRecord.class)
-    // @Column(name = "termination_reason")
+    @JoinColumn(name = "termination_reason")
     private TerminationRecord terminationRecord;
+
+    /**
+     * @param personalDetailsRec a {@link PersonalDetailsRecord}
+     * @param employmentDetailsRec an {@link EmploymentDetailsRecord}
+     */
 
     @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
     Employee(final PersonalDetailsRecord personalDetailsRec, final EmploymentDetailsRecord employmentDetailsRec) {
@@ -95,9 +96,7 @@ public class Employee {
     protected Employee() {}
 
     /**
-     * Generate a fake {@link Employee}.
-     *
-     * @return a fake Employee
+     * @return a fake {@link Employee}
      */
 
     public static Employee fake() {
@@ -150,7 +149,7 @@ public class Employee {
 
     @SuppressWarnings("DesignForExtension")
     @Override
-    public final String toString() {
+    public String toString() {
         return MessageFormat.format("{0}<{1}: {2}>", getClass().getName(), id);
     }
 }

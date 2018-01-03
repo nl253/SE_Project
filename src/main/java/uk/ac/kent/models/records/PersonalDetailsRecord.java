@@ -7,11 +7,18 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
+ * A {@link BaseRecord} of an {@link uk.ac.kent.models.people.Employee}'s personal details.
+ * This is how the system stores personal info about all {@link uk.ac.kent.models.people.Employee}s -
+ * not in the {@link uk.ac.kent.models.people.Employee} class but rather in a {@link PersonalDetailsRecord}.
+ * <p>
+ * This class makes use of (is associated with) {@link Address} and {@link Relative}.
+ *
  * @author norbert
  */
 
@@ -22,11 +29,11 @@ import javax.persistence.Table;
 public final class PersonalDetailsRecord extends BaseRecord {
 
     @Basic(optional = false)
-    // @Column(name = "last_name")
+    @Column(name = "last_name")
     private String lastName;
 
     @Basic(optional = false)
-    // @Column(name = "first_name")
+    @Column(name = "first_name")
     private String firstName;
 
     @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, targetEntity = Address.class)
@@ -55,6 +62,10 @@ public final class PersonalDetailsRecord extends BaseRecord {
 
     public PersonalDetailsRecord() {}
 
+    /**
+     * @return a fake {@link PersonalDetailsRecord}
+     */
+
     public static PersonalDetailsRecord fake() {
         // fake data generator
         final Faker faker = new Faker(new Locale("en-GB"));
@@ -80,33 +91,33 @@ public final class PersonalDetailsRecord extends BaseRecord {
         relative = nextOfKin;
     }
 
-    Address getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    void setAddress(final Address address) {
+    public void setAddress(final Address address) {
         this.address = address;
     }
 
-    String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    void setEmail(final String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
-    String getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    String getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
     @SuppressWarnings("WeakerAccess")
-        // @Column(name = "fullname")
-    String getFullName() {
+    // @Column(name = "fullname")
+    public String getFullName() {
         return MessageFormat.format("{0} {1}", firstName, lastName);
     }
 

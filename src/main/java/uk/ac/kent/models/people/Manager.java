@@ -1,5 +1,6 @@
 package uk.ac.kent.models.people;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +15,11 @@ import uk.ac.kent.models.records.EmploymentDetailsRecord;
 import uk.ac.kent.models.records.PersonalDetailsRecord;
 
 /**
+ * A {@link Manager} is an {@link Employee} that in addition to all the
+ * properties of an {@link Employee} has a set of additional privileges and responsibilities.
+ * Each {@link Department} has many {@link Manager}s and each one of those
+ * {@link Manager}s has a {@link java.util.Collection} of {@link Employee}s that she is responsible for.
+ *
  * @author norbert
  */
 
@@ -21,14 +27,21 @@ import uk.ac.kent.models.records.PersonalDetailsRecord;
 @Entity
 @Table(name = "managers")
 @Access(AccessType.FIELD)
-public class Manager extends Employee {
+public final class Manager extends Employee {
 
     /**
      * A group of {@link Employee}s that the manger has been assigned.
      */
 
+    @SuppressWarnings("FieldMayBeFinal")
     @OneToMany
     private List<Employee> employees = new ArrayList<>(15);
+
+    /**
+     * @param personalDetailsRecord a {@link PersonalDetailsRecord}
+     * @param employmentDetailsRecord an {@link EmploymentDetailsRecord}
+     * @param employees an {@link Iterable} of {@link Employee}s
+     */
 
     public Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord, final Iterable<Employee> employees) {
         super(personalDetailsRecord, employmentDetailsRecord);
@@ -43,9 +56,7 @@ public class Manager extends Employee {
     protected Manager() {}
 
     /**
-     * Fake {@link Manager}. Each fake {@link Manager} will have 15 {@link Employee }s.
-     *
-     * @return A fake Manager
+     * @return A fake {@link Manager}
      */
 
     public static Manager fake() {
@@ -70,5 +81,11 @@ public class Manager extends Employee {
 
     final void removeEmployee(final Employee e) {
         employees.remove(e);
+    }
+
+    @Override
+    public String toString() {
+        return MessageFormat
+                .format("Manager<employees={0}>", getEmployees().toString());
     }
 }

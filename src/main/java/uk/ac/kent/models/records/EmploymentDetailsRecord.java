@@ -1,25 +1,25 @@
 package uk.ac.kent.models.records;
 
-import com.github.javafaker.Faker;
 import java.security.SecureRandom;
 import java.sql.Blob;
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Random;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import uk.ac.kent.models.people.Department;
 
 /**
+ * Each {@link uk.ac.kent.models.people.Employee} has a single {@link EmploymentDetailsRecord} associated with her.
+ * It stores all information about the <em>current</em> employment details.
+ *
  * @author norbert
  */
 
@@ -29,22 +29,29 @@ import uk.ac.kent.models.people.Department;
 @Access(AccessType.FIELD)
 public final class EmploymentDetailsRecord extends BaseRecord {
 
-    // @Column(name = "date_employed")
+    @JoinColumn(name = "date_employed")
     private LocalDate dateEmployed = LocalDate.now();
+
     private long salary;
+
     @SuppressWarnings({"AlibabaLowerCamelCaseVariableNaming", "NonConstantFieldWithUpperCaseName"})
     @Lob
     private Blob cv;
+
+    @JoinColumn(name = "account_of_interview")
     @Lob
-    // @Column(name = "account_of_interview")
     private Blob accountOfInterview;
+
     @Enumerated(EnumType.STRING)
     private Department department;
 
+    @Enumerated(EnumType.STRING)
+    private Position position;
+
     /**
-     * @param position
-     * @param department
-     * @param salary
+     * @param position position of an {@link uk.ac.kent.models.people.Employee}
+     * @param department department of an {@link uk.ac.kent.models.people.Employee}
+     * @param salary salary of an {@link uk.ac.kent.models.people.Employee}
      */
 
     public EmploymentDetailsRecord(final Position position, final Department department, final long salary) {
@@ -52,10 +59,10 @@ public final class EmploymentDetailsRecord extends BaseRecord {
     }
 
     /**
-     * @param position
-     * @param department
-     * @param dateEmployed
-     * @param salary
+     * @param position position of an {@link uk.ac.kent.models.people.Employee}
+     * @param department department of an {@link uk.ac.kent.models.people.Employee}
+     * @param dateEmployed starting date of employment of an {@link uk.ac.kent.models.people.Employee}
+     * @param salary salary of an {@link uk.ac.kent.models.people.Employee}
      */
 
     public EmploymentDetailsRecord(final Position position, final Department department, final LocalDate dateEmployed, final long salary) {
@@ -63,12 +70,12 @@ public final class EmploymentDetailsRecord extends BaseRecord {
     }
 
     /**
-     * @param position
-     * @param department
-     * @param dateEmployed
-     * @param salary
-     * @param cv
-     * @param accountOfInterview
+     * @param position position of an {@link uk.ac.kent.models.people.Employee}
+     * @param department department of an {@link uk.ac.kent.models.people.Employee}
+     * @param dateEmployed starting date of employment of an {@link uk.ac.kent.models.people.Employee}
+     * @param salary salary of an {@link uk.ac.kent.models.people.Employee}
+     * @param cv (a document) CV of an {@link uk.ac.kent.models.people.Employee}
+     * @param accountOfInterview (a document) account of the interview of an {@link uk.ac.kent.models.people.Employee}
      */
 
     @SuppressWarnings("ConstructorWithTooManyParameters")
@@ -87,24 +94,26 @@ public final class EmploymentDetailsRecord extends BaseRecord {
 
     public EmploymentDetailsRecord() {}
 
+    /**
+     * @return a fake {@link EmploymentDetailsRecord}.
+     */
+
     @SuppressWarnings({"ImplicitNumericConversion", "MagicNumber", "LocalVariableOfConcreteClass", "AccessingNonPublicFieldOfAnotherObject"})
     public static EmploymentDetailsRecord fake() {
-
-        final EmploymentDetailsRecord record = new EmploymentDetailsRecord();
-
-        // fake data generator
-        final Faker faker = new Faker(new Locale("en-GB"));
 
         // random number generator
         final Random random = new SecureRandom();
 
         // get random position
-        record.position = Position.values()[random
+        final Position position = Position.values()[random
                 .nextInt(Position.values().length)];
+
+        final Department department = Department.values()[random
+                .nextInt(Department.values().length)];
 
         // @formatter:off
         // get random LocalDate
-        record.dateEmployed = LocalDate.parse(
+        final LocalDate date = LocalDate.parse(
                 MessageFormat
                         .format("20{0}-{1}-{2}",
                                 16 + random.nextInt(2),
@@ -112,43 +121,54 @@ public final class EmploymentDetailsRecord extends BaseRecord {
                                 1 + random.nextInt(28)
                                 ));
         // @formatter:on
-        record.salary = faker.number().numberBetween(15_000, 100_000);
+        final long salary = 15_000 + random.nextInt(30_000);
 
-        return record;
+        return new EmploymentDetailsRecord(position, department, date, salary);
     }
 
-    public Position getPosition() { return position;}
+    public Position getPosition() {
+        return position;
+    }
 
     public void setPosition(final Position position) {
         this.position = position;
     }
 
-    @Enumerated(EnumType.STRING)
-    private Position position;
-
-    public EmploymentDetailsRecord(final LocalDate dateEmployed) {
-        this.dateEmployed = dateEmployed;
+    public long getSalary() {
+        return salary;
     }
 
-    long getSalary() { return salary; }
+    public void raiseSalary(final long amount) {
+        salary += amount;
+    }
 
-    void raiseSalary(final long amount) { salary += amount; }
+    public void lowerSalary(final long amount) {
+        salary -= amount;
+    }
 
-    void lowerSalary(final long amount) { salary -= amount; }
+    public void setSalary(final long salary) {
+        this.salary = salary;
+    }
 
-    void setSalary(final long salary) { this.salary = salary; }
+    public LocalDate getDateEmployed() {
+        return dateEmployed;
+    }
 
-    LocalDate getDateEmployed() { return dateEmployed;}
-
-    Department getDepartment() { return department; }
+    public Department getDepartment() {
+        return department;
+    }
 
     void setDepartment(final Department department) {
         this.department = department;
     }
 
-    public Optional<Blob> getCv() { return Optional.ofNullable(cv); }
+    public Optional<Blob> getCv() {
+        return Optional.ofNullable(cv);
+    }
 
-    public void setCv(final Blob cv) { this.cv = cv; }
+    public void setCv(final Blob cv) {
+        this.cv = cv;
+    }
 
     public Optional<Blob> getAccountOfInterview() {
         return Optional.ofNullable(accountOfInterview);
@@ -158,7 +178,7 @@ public final class EmploymentDetailsRecord extends BaseRecord {
         this.accountOfInterview = accountOfInterview;
     }
 
-    @SuppressWarnings("StringConcatenation")
+    @SuppressWarnings({"StringConcatenation", "ConditionalExpression", "VariableNotUsedInsideIf"})
     @Override
     public String toString() {
         // @formatter:off
@@ -172,8 +192,8 @@ public final class EmploymentDetailsRecord extends BaseRecord {
                                     dateEmployed.toString(),
                                     salary,
                                     department.toString(),
-                                    Arrays.toString(new Blob[]{cv}),
-                                    Arrays.toString(new Blob[]{accountOfInterview}),
+                                    (cv == null) ? "not uploaded":"uploaded",
+                                    (accountOfInterview == null) ? "not uploaded":"uploaded",
                                     position.toString());
         // @formatter:on
     }

@@ -4,15 +4,18 @@ import java.text.MessageFormat;
 import java.util.Optional;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import uk.ac.kent.models.records.recommendations.Recommendation;
-import uk.ac.kent.models.records.recommendations.RemainRecommendation;
+import uk.ac.kent.models.records.recommendations.BaseRecommendation;
+import uk.ac.kent.models.records.recommendations.RemainBaseRecommendation;
 
 /**
+ * Each {@link uk.ac.kent.models.people.Employee} must have an {@link AnnualReviewRecord} created on a yearly basis.
+ * A part of it is producing a {@link BaseRecommendation}.
+ *
  * @author norbert
  */
 
@@ -23,20 +26,31 @@ import uk.ac.kent.models.records.recommendations.RemainRecommendation;
 public final class AnnualReviewRecord extends BaseRecord {
 
     @OneToOne(targetEntity = AnnualReviewRecord.class)
-    // @Column(name = "previous_review")
+    @JoinColumn(name = "previous_review")
     private AnnualReviewRecord previousReview;
 
     @SuppressWarnings("FieldCanBeLocal")
-    @OneToOne(targetEntity = Recommendation.class)
-    private Recommendation recommendation;
+    @OneToOne(targetEntity = BaseRecommendation.class)
+    private BaseRecommendation baseRecommendation;
 
-    public AnnualReviewRecord(final AnnualReviewRecord previousAnnualReview, final Recommendation recommendation) {
-        this.recommendation = recommendation;
+    /**
+     * @param previousAnnualReview reference to last year's annual review
+     * @param baseRecommendation reference to baseRecommendation associated with this review
+     */
+
+    public AnnualReviewRecord(final AnnualReviewRecord previousAnnualReview, final BaseRecommendation baseRecommendation) {
+        this.baseRecommendation = baseRecommendation;
         previousReview = previousAnnualReview;
     }
 
-    public AnnualReviewRecord(final Recommendation recommendation) {
-        this.recommendation = recommendation;
+    /**
+     * Here we do not pass the previous {@link AnnualReviewRecord} as it is the very firs one.
+     *
+     * @param baseRecommendation reference to baseRecommendation associated with this review
+     */
+
+    public AnnualReviewRecord(final BaseRecommendation baseRecommendation) {
+        this.baseRecommendation = baseRecommendation;
     }
 
     /**
@@ -47,8 +61,6 @@ public final class AnnualReviewRecord extends BaseRecord {
     protected AnnualReviewRecord() {}
 
     /**
-     * Produces a fake AnnualReviewRecord. For testing.
-     *
      * @return a fake AnnualReviewRecord
      */
 
@@ -56,7 +68,7 @@ public final class AnnualReviewRecord extends BaseRecord {
     @SuppressWarnings("LocalVariableOfConcreteClass")
     public static AnnualReviewRecord fake() {
         final AnnualReviewRecord review = new AnnualReviewRecord();
-        review.recommendation = new RemainRecommendation();
+        review.baseRecommendation = new RemainBaseRecommendation();
         return review;
     }
 
@@ -64,12 +76,12 @@ public final class AnnualReviewRecord extends BaseRecord {
         previousReview = previousAnnualReview;
     }
 
-    public void setRecommendation(final Recommendation recommendation) {
-        this.recommendation = recommendation;
+    public void setBaseRecommendation(final BaseRecommendation baseRecommendation) {
+        this.baseRecommendation = baseRecommendation;
     }
 
-    public Optional<Recommendation> getRecommendation() {
-        return Optional.ofNullable(recommendation);
+    public Optional<BaseRecommendation> getBaseRecommendation() {
+        return Optional.ofNullable(baseRecommendation);
     }
 
     public Optional<AnnualReviewRecord> getPreviousReview() {

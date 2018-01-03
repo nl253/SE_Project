@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +27,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Entity
 @Table(name = "recommendations")
 @Access(AccessType.FIELD)
-public abstract class Recommendation {
+public abstract class BaseRecommendation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +37,7 @@ public abstract class Recommendation {
     private static int nextId;
 
     @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
-    protected Recommendation() {
+    protected BaseRecommendation() {
         id = nextId;
         nextId++;
     }

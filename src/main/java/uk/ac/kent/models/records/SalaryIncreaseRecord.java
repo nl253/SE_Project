@@ -1,12 +1,13 @@
 package uk.ac.kent.models.records;
 
-import com.github.javafaker.Faker;
+import java.security.SecureRandom;
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.util.Locale;
+import java.util.Random;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -21,16 +22,26 @@ import javax.persistence.Transient;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class SalaryIncreaseRecord extends BaseRecord {
 
-    // @Column(name = "new_salary", nullable = false)
+    @Column(name = "new_salary", nullable = false)
     @Basic(optional = false)
     private long newSalary;
-    // @Column(name = "start_date")
+
+    @Column(name = "start_date")
     private LocalDate startDate;
+
+    /**
+     * @param newSalary new salary
+     * @param startDate starting data
+     */
 
     public SalaryIncreaseRecord(final long newSalary, final LocalDate startDate) {
         this.newSalary = newSalary;
         this.startDate = startDate;
     }
+
+    /**
+     * @param newSalary new salary
+     */
 
     public SalaryIncreaseRecord(final long newSalary) {
         this(newSalary, LocalDate.now());
@@ -43,15 +54,14 @@ public final class SalaryIncreaseRecord extends BaseRecord {
     @SuppressWarnings("ProtectedMemberInFinalClass")
     public SalaryIncreaseRecord() {}
 
+    /**
+     * @return a fake {@link SalaryIncreaseRecord}
+     */
+
     @Transient
     public static SalaryIncreaseRecord fake() {
-        SalaryIncreaseRecord record = new SalaryIncreaseRecord();
-
-        // fake data generator
-        final Faker faker = new Faker(new Locale("en-GB"));
-
-        record.newSalary = faker.number().numberBetween(15_000, 100_000);
-        return record;
+        final Random random = new SecureRandom();
+        return new SalaryIncreaseRecord(15_000 + random.nextInt(30_000));
     }
 
     public long getNewSalary() {

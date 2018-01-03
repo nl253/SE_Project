@@ -34,6 +34,13 @@ public final class ProbationRecord extends BaseRecord {
     // @Column(name = "review_date")
     private LocalDate reviewDate;
 
+    /**
+     * @param startDate
+     * @param endDate
+     * @param reviewDate
+     * @param reason
+     */
+
     public ProbationRecord(final LocalDate startDate, final LocalDate endDate, final LocalDate reviewDate, final String reason) {
         this.startDate = startDate;
         this.endDate = endDate;

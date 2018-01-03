@@ -12,6 +12,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 /**
+ * Each {@link uk.ac.kent.models.people.Employee} <em>may</em> have a single
+ * {@link TerminationRecord}.
+ * Even though after receiveing such a record she would no longer employed,
+ * the data remains in the system.
+ *
  * @author norbert
  */
 
@@ -23,6 +28,7 @@ public final class TerminationRecord extends BaseRecord {
 
     @Enumerated(EnumType.STRING)
     private TerminationReason reason;
+
     private LocalDate endDate = LocalDate.now();
 
     /**
@@ -43,7 +49,7 @@ public final class TerminationRecord extends BaseRecord {
     protected TerminationRecord() {}
 
     /**
-     * Generate TerminationRecord with random data.
+     * @return a fake {@link TerminationRecord}
      */
 
     @SuppressWarnings({"AccessingNonPublicFieldOfAnotherObject", "LocalVariableOfConcreteClass", "MagicNumber"})
@@ -57,7 +63,7 @@ public final class TerminationRecord extends BaseRecord {
         // @formatter:off
         record.endDate = LocalDate.parse(
                 MessageFormat.format(
-                        "201{0}-{1}-{2}",
+                        "20{0}-{1}-{2}",
                         16 + random.nextInt(2),
                         1 + random.nextInt(12),
                         1 + random.nextInt(28)));
@@ -69,13 +75,21 @@ public final class TerminationRecord extends BaseRecord {
         return record;
     }
 
-    public TerminationReason getReason() { return reason; }
+    public TerminationReason getReason() {
+        return reason;
+    }
 
-    public void setReason(final TerminationReason reason) { this.reason = reason; }
+    public void setReason(final TerminationReason reason) {
+        this.reason = reason;
+    }
 
-    public LocalDate getEndDate() { return endDate; }
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 
-    public void setEndDate(final LocalDate endDate) { this.endDate = endDate; }
+    public void setEndDate(final LocalDate endDate) {
+        this.endDate = endDate;
+    }
 
     @Override
     public String toString() {

@@ -6,7 +6,6 @@ import java.util.function.Supplier;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -16,9 +15,12 @@ import uk.ac.kent.models.people.Director;
 import uk.ac.kent.models.people.Manager;
 
 /**
+ * For details about the API see <a href="http://docs.jboss.org/hibernate/orm/5.2/quickstart/html_single/#hibernate-gsg-tutorial-basic-mapping">
+ * Hibernate Quick Start </a>. Each {@link uk.ac.kent.controllers.BaseController}
+ * stores a reference to this {@link Database} and executes {@link Query} on it.
+ * The result of those is transferred to the GUI.
+ *
  * @author norbert
- * <p>
- * For details about the API see <a href="http://docs.jboss.org/hibernate/orm/5.2/quickstart/html_single/#hibernate-gsg-tutorial-basic-mapping">Hibernate Quick Start</a>.
  */
 
 @SuppressWarnings({"WeakerAccess", "AlibabaCommentsMustBeJavadocFormat", "PublicMethodNotExposedInInterface", "FieldCanBeLocal", "ClassHasNoToStringMethod", "NonBooleanMethodNameMayNotStartWithQuestion"})
@@ -48,10 +50,10 @@ public final class Database {
     }
 
     /**
-     * Pass SQL, return results as {@link Stream}.
+     * Pass SQL (optionally pass parameters), return results as {@link List}.
      *
      * @param queryString SQL
-     * @return Stream of results
+     * @return List of results
      */
 
     @SuppressWarnings({"rawtypes", "LawOfDemeter", "OverloadedVarargsMethod"})
@@ -86,7 +88,7 @@ public final class Database {
     }
 
     /**
-     * @param funct
+     * @param funct a {@link Runnable} to run with an open session
      */
 
     @SuppressWarnings({"rawtypes", "LawOfDemeter"})
@@ -97,7 +99,7 @@ public final class Database {
     }
 
     /**
-     * @param entity
+     * @param entity an entity to remove
      */
 
     public void remove(final Object entity) {
