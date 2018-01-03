@@ -12,7 +12,7 @@ import uk.ac.kent.Database;
  */
 
 @SuppressWarnings({"ParameterHidesMemberVariable", "unused", "FieldNamingConvention"})
-public class MainController extends BaseController {
+public final class MainController extends BaseController {
 
     MainController(final Stage stage, Database database) {
         super(stage, database);

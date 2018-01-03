@@ -5,7 +5,6 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,13 +26,13 @@ public final class Address {
     private int id;
 
     private String street;
-    @Column(name = "phone_number")
+    // @Column(name = "phone_number")
     private String houseNumber;
     private String city;
-    @Column(name = "post_code")
+    // @Column(name = "post_code")
     private String postCode;
 
-    Address(final String street, final String houseNumber, final String postCode, final String city) {
+    public Address(final String street, final String houseNumber, final String postCode, final String city) {
         this.street = street;
         this.houseNumber = houseNumber;
         this.postCode = postCode;
@@ -44,7 +43,7 @@ public final class Address {
      * Empty constructor for Hibernate.
      */
 
-    protected Address() {}
+    public Address() {}
 
     public String getStreet() {
         return street;

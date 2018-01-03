@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.Transient;
 import uk.ac.kent.models.people.Director;
 import uk.ac.kent.models.people.Manager;
@@ -53,12 +54,21 @@ public final class Database {
      * @return Stream of results
      */
 
-    @SuppressWarnings({"rawtypes", "LawOfDemeter"})
-    public List query(final String queryString) {
+    @SuppressWarnings({"rawtypes", "LawOfDemeter", "OverloadedVarargsMethod"})
+    public List query(final String queryString, final Object... params) {
+
         beginTransaction();
-        final List result = session.createNativeQuery(queryString)
-                .getResultList();
+
+        final Query query = session.createNativeQuery(queryString);
+
+        // bind parameters
+        for (int i = 0; i < params.length; i++)
+            query.setParameter(i, params[i]);
+
+        final List result = query.getResultList();
+
         finishTransaction();
+
         return result;
     }
 

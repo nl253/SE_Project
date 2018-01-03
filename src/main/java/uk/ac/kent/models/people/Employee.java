@@ -56,27 +56,27 @@ public class Employee {
     private int id;
 
     @OneToOne(targetEntity = PersonalDetailsRecord.class, optional = false)
-    @Column(name = "personal_details")
+    // @Column(name = "personal_details")
     private PersonalDetailsRecord personalDetails;
 
     @OneToOne(targetEntity = EmploymentDetailsRecord.class, optional = false)
-    @Column(name = "employment_details")
+    // @Column(name = "employment_details")
     private EmploymentDetailsRecord employmentDetails;
 
     @OneToOne(targetEntity = ProbationRecord.class)
-    @Column(name = "probation_record")
+    // @Column(name = "probation_record")
     private ProbationRecord probationRecord;
 
     @OneToOne(targetEntity = SalaryIncreaseRecord.class)
-    @Column(name = "salary_increase_record")
+    // @Column(name = "salary_increase_record")
     private SalaryIncreaseRecord salaryIncreaseRecord;
 
+    // @Column(name = "annual_review")
     @OneToOne(targetEntity = AnnualReviewRecord.class)
-    @Column(name = "annual_review")
     private AnnualReviewRecord annualReview;
 
     @OneToOne(targetEntity = TerminationRecord.class)
-    @Column(name = "termination_reason")
+    // @Column(name = "termination_reason")
     private TerminationRecord terminationRecord;
 
     @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")

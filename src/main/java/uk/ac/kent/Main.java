@@ -15,8 +15,11 @@ import javafx.stage.Stage;
  * @author norbert
  */
 
-@SuppressWarnings({"PublicMethodNotExposedInInterface", "ClassHasNoToStringMethod"})
+@SuppressWarnings({"PublicMethodNotExposedInInterface", "ClassHasNoToStringMethod", "ConstantConditions"})
 public final class Main extends Application {
+
+    private static final double WIDTH = 300.0;
+    private static final double HEIGHT = 200.0;
 
     /** Logger for the class */
     private static final Logger log = Logger.getAnonymousLogger();
@@ -42,9 +45,12 @@ public final class Main extends Application {
     private void displayMainView() throws IOException {
         final Parent root = FXMLLoader.load(getClass().getClassLoader()
                                                     .getResource("views/main.fxml"));
-        stage.setScene(new Scene(root, 300.0, 200.0));
+        stage.setScene(new Scene(root, WIDTH, HEIGHT));
         stage.show();
     }
 
-    public static void main(final String[] args) { launch(args); }
+    public static void main(final String[] args) {
+        new Database().populate();
+        launch(args);
+    }
 }

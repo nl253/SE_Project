@@ -7,7 +7,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -23,11 +22,11 @@ import javax.persistence.Table;
 public final class PersonalDetailsRecord extends BaseRecord {
 
     @Basic(optional = false)
-    @Column(name = "last_name")
+    // @Column(name = "last_name")
     private String lastName;
 
     @Basic(optional = false)
-    @Column(name = "first_name")
+    // @Column(name = "first_name")
     private String firstName;
 
     @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, targetEntity = Address.class)
@@ -106,7 +105,7 @@ public final class PersonalDetailsRecord extends BaseRecord {
     }
 
     @SuppressWarnings("WeakerAccess")
-    @Column(name = "fullname")
+        // @Column(name = "fullname")
     String getFullName() {
         return MessageFormat.format("{0} {1}", firstName, lastName);
     }

@@ -28,7 +28,7 @@ public class Manager extends Employee {
      */
 
     @OneToMany
-    private final List<Employee> employees = new ArrayList<>(15);
+    private List<Employee> employees = new ArrayList<>(15);
 
     public Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord, final Iterable<Employee> employees) {
         super(personalDetailsRecord, employmentDetailsRecord);

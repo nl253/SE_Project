@@ -6,7 +6,6 @@ import java.util.Locale;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,17 +23,17 @@ import javax.persistence.Table;
 public final class Relative {
 
     @Basic(optional = false)
-    @Column(name = "last_name", nullable = false)
+    // @Column(name = "last_name", nullable = false)
     private String lastName;
     @Basic(optional = false)
-    @Column(name = "first_name", nullable = false)
+    // @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "phone_number")
+    // @Column(name = "phone_number")
     private String phoneNumber;
 
     /**
@@ -42,13 +41,13 @@ public final class Relative {
      */
 
     @SuppressWarnings("ProtectedMemberInFinalClass")
-    protected Relative() {}
+    public Relative() {}
 
     /**
      * @return Fake {@link Relative}
      */
 
-    Relative fake() {
+    public static Relative fake() {
         // fake data generator
         final Faker faker = new Faker(new Locale("en-GB"));
 
@@ -60,12 +59,12 @@ public final class Relative {
         // @formatter:on
     }
 
-    Relative(final String name, final String surname) {
+    public Relative(final String name, final String surname) {
         lastName = surname;
         firstName = name;
     }
 
-    Relative(final String name, final String surname, final String phone) {
+    public Relative(final String name, final String surname, final String phone) {
         this(name, surname);
         phoneNumber = phone;
     }

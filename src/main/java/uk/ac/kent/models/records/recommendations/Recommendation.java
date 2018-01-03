@@ -43,7 +43,7 @@ public abstract class Recommendation {
         nextId++;
     }
 
-    @Column(name = "modified_date")
+    // @Column(name = "modified_date")
     @UpdateTimestamp
     private LocalDate modifiedDate;
 

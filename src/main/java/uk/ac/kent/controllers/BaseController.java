@@ -2,8 +2,6 @@ package uk.ac.kent.controllers;
 
 import java.util.logging.Logger;
 import javafx.stage.Stage;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Transient;
 import uk.ac.kent.Database;
 
@@ -17,23 +15,29 @@ abstract class BaseController {
     @Transient
     private static final Logger log = Logger.getAnonymousLogger();
 
-    @SuppressWarnings("ProtectedField")
-    protected EntityManagerFactory entityManagerFactory = Persistence
-            .createEntityManagerFactory("CRM");
+    @SuppressWarnings("PackageVisibleField")
+    private Database database;
 
     private Stage stage;
 
-    @SuppressWarnings("PackageVisibleField")
-    private final Database database;
+    @SuppressWarnings({"ConstructorNotProtectedInAbstractClass", "PublicConstructorInNonPublicClass"})
+    public BaseController() {}
 
-    public final Database getDatabase() { return database; }
-
-    BaseController(final Stage stage, final Database database) {
+    @SuppressWarnings({"PublicConstructorInNonPublicClass", "ConstructorNotProtectedInAbstractClass"})
+    public BaseController(final Stage stage, final Database database) {
         this.stage = stage;
         this.database = database;
     }
 
-    final Stage getStage() { return stage; }
+    final Database getDatabase() {
+        return database;
+    }
 
-    final void setStage(final Stage stage) { this.stage = stage; }
+    final Stage getStage() {
+        return stage;
+    }
+
+    final void setStage(final Stage stage) {
+        this.stage = stage;
+    }
 }

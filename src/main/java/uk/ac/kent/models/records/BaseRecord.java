@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,7 +39,7 @@ abstract class BaseRecord {
     @Basic(optional = false)
     private boolean signed;
 
-    @Column(name = "modified_date")
+    // @Column(name = "modified_date")
     @UpdateTimestamp
     private LocalDate modifiedDate;
 
@@ -49,9 +48,9 @@ abstract class BaseRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected final int id;
 
+    // @Column(name = "date_created", updatable = false)
     @Basic(optional = false)
     @CreationTimestamp
-    @Column(name = "date_created", updatable = false)
     private LocalDate dateCreated = LocalDate.now();
 
     @Transient
@@ -70,6 +69,7 @@ abstract class BaseRecord {
     public final LocalDate getModifiedDate() {
         return modifiedDate;
     }
+
     public final void setModifiedDate(final LocalDate modifiedDate) {
         this.modifiedDate = modifiedDate;
     }

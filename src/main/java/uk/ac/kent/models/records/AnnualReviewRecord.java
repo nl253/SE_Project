@@ -23,7 +23,7 @@ import uk.ac.kent.models.records.recommendations.RemainRecommendation;
 public final class AnnualReviewRecord extends BaseRecord {
 
     @OneToOne(targetEntity = AnnualReviewRecord.class)
-    @Column(name = "previous_review")
+    // @Column(name = "previous_review")
     private AnnualReviewRecord previousReview;
 
     @SuppressWarnings("FieldCanBeLocal")
