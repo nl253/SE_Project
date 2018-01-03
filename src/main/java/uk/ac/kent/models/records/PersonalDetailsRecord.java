@@ -1,6 +1,7 @@
 package uk.ac.kent.models.records;
 
 import com.github.javafaker.Faker;
+import com.github.javafaker.Name;
 import java.text.MessageFormat;
 import java.util.Locale;
 import javax.persistence.Access;
@@ -69,16 +70,17 @@ public final class PersonalDetailsRecord extends BaseRecord {
     public static PersonalDetailsRecord fake() {
         // fake data generator
         final Faker faker = new Faker(new Locale("en-GB"));
+        final Name nameFaker = faker.name();
 
         // @formatter:off
         return new PersonalDetailsRecord(
-                faker.name().firstName(),
-                faker.name().lastName(),
+                nameFaker.firstName(),
+                nameFaker.lastName(),
                 faker.internet().emailAddress(),
                 Address.fake(),
                 new Relative(
-                        faker.name().firstName(),
-                        faker.name().lastName(),
+                        nameFaker.firstName(),
+                        nameFaker.lastName(),
                         faker.phoneNumber().cellPhone()));
         // @formatter:on
     }
