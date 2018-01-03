@@ -48,10 +48,10 @@ public final class Director extends Employee {
                                     .fake(), EmploymentDetailsRecord.fake());
     }
 
+    @SuppressWarnings("LawOfDemeter")
     @Override
     public String toString() {
         return MessageFormat
-                .format("Director<section={0}>", getEmploymentDetails()
-                        .getDepartment());
+                .format("Director<section={0}>", getEmploymentDetails().getDepartment().toString());
     }
 }

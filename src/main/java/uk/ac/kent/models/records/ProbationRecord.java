@@ -31,20 +31,16 @@ public final class ProbationRecord extends BaseRecord {
     private LocalDate startDate;
     // @Column(name = "end_date")
     private LocalDate endDate;
-    // @Column(name = "review_date")
-    private LocalDate reviewDate;
 
     /**
-     * @param startDate
-     * @param endDate
-     * @param reviewDate
-     * @param reason
+     * @param startDate start date of probation
+     * @param endDate end date of probation
+     * @param reason reason for probation
      */
 
-    public ProbationRecord(final LocalDate startDate, final LocalDate endDate, final LocalDate reviewDate, final String reason) {
+    public ProbationRecord(final LocalDate startDate, final LocalDate endDate, final String reason) {
         this.startDate = startDate;
         this.endDate = endDate;
-        this.reviewDate = reviewDate;
         this.reason = reason;
     }
 
@@ -58,9 +54,6 @@ public final class ProbationRecord extends BaseRecord {
     @Transient
     @SuppressWarnings({"MagicNumber", "ImplicitNumericConversion", "LocalVariableOfConcreteClass", "AccessingNonPublicFieldOfAnotherObject"})
     public static ProbationRecord fake() {
-
-        final ProbationRecord record = new ProbationRecord();
-
         // secure pseudo-random number generator
         final Random random = new SecureRandom();
 
@@ -77,17 +70,14 @@ public final class ProbationRecord extends BaseRecord {
         // @formatter:on
 
         // get random LocalDate
-        record.startDate = dateSupplier.get();
+        final LocalDate start = dateSupplier.get();
 
         // get random LocalDate
-        record.endDate = record.startDate.plusMonths(random.nextInt(50));
+        final LocalDate end = start.plusMonths(random.nextInt(50));
 
-        // get random LocalDate
-        record.reviewDate = record.endDate.minusMonths(random.nextInt(10));
+        final String reason = faker.lorem().paragraph();
 
-        record.reason = faker.lorem().paragraph();
-
-        return record;
+        return new ProbationRecord(start, end, reason);
     }
 
     public LocalDate getStartDate() { return startDate; }
@@ -102,12 +92,6 @@ public final class ProbationRecord extends BaseRecord {
         this.endDate = endDate;
     }
 
-    public LocalDate getReviewDate() { return reviewDate; }
-
-    public void setReviewDate(final LocalDate reviewDate) {
-        this.reviewDate = reviewDate;
-    }
-
     public String getReason() { return reason; }
 
     public void setReason(final String reason) { this.reason = reason; }
@@ -116,8 +100,8 @@ public final class ProbationRecord extends BaseRecord {
     public String toString() {
         // @formatter:off
         return MessageFormat.format(
-                        "ProbationRecord<startDate={0}, endDate={1}, reviewDate={2}, reason='{3}'>",
-                        startDate, endDate, reviewDate, reason);
+                        "ProbationRecord<startDate={0}, endDate={1}, reason={2}>",
+                        startDate, endDate, reason);
         // @formatter:on
     }
 }

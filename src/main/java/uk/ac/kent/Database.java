@@ -11,13 +11,17 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.Transient;
+import uk.ac.kent.controllers.BaseController;
 import uk.ac.kent.models.people.Director;
 import uk.ac.kent.models.people.Manager;
 
 /**
  * For details about the API see <a href="http://docs.jboss.org/hibernate/orm/5.2/quickstart/html_single/#hibernate-gsg-tutorial-basic-mapping">
- * Hibernate Quick Start </a>. Each {@link uk.ac.kent.controllers.BaseController}
- * stores a reference to this {@link Database} and executes {@link Query} on it.
+ * Hibernate Quick Start </a>.
+ * <p>
+ * Each {@link BaseController} stores a reference to this
+ * {@link Database} and executes {@link Query} on it.
+ * <p>
  * The result of those is transferred to the GUI.
  *
  * @author norbert
@@ -61,6 +65,7 @@ public final class Database {
      * Pass SQL (optionally pass parameters), return results as {@link List}.
      *
      * @param queryString SQL
+     * @param params parameters to pass into query
      * @return List of results
      */
 
@@ -141,12 +146,6 @@ public final class Database {
         // Make Managers
         IntStream.range(0, 25).forEach(x -> save(Manager.fake()));
     }
-
-    /**
-     * String representation of this Database. Gives info about all properties and tells if there's a session running.
-     *
-     * @return
-     */
 
     @Override
     public String toString() {

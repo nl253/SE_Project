@@ -245,7 +245,7 @@
                     <header>API documentation for ${project.name}</header>
                     <locale>en_GB</locale>
                     <nodeprecated>true</nodeprecated>
-                    <overview>${project.basedir}/README.md</overview>
+                    <!--<overview>${project.basedir}/README.md</overview>-->
                     <show>private</show>
                     <detectLinks>true</detectLinks>
                     <defaultSince>1.0.0</defaultSince>

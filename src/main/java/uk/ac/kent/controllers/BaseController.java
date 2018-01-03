@@ -10,7 +10,7 @@ import uk.ac.kent.Database;
  */
 
 @SuppressWarnings({"ClassHasNoToStringMethod", "AbstractClassWithoutAbstractMethods"})
-abstract class BaseController {
+public abstract class BaseController {
 
     @Transient
     private static final Logger log = Logger.getAnonymousLogger();
