@@ -1,6 +1,7 @@
 package uk.ac.kent.models.people;
 
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 import javax.persistence.Access;
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -59,13 +61,13 @@ public class Employee {
     @JoinColumn(name = "employment_details")
     private EmploymentDetailsRecord employmentDetails;
 
-    @OneToOne(targetEntity = ProbationRecord.class)
+    @OneToMany(targetEntity = ProbationRecord.class)
     @JoinColumn(name = "probation_record")
-    private ProbationRecord probationRecord;
+    private List<ProbationRecord> probationRecord;
 
-    @OneToOne(targetEntity = SalaryIncreaseRecord.class)
+    @OneToMany(targetEntity = SalaryIncreaseRecord.class)
     @JoinColumn(name = "salary_increase_record")
-    private SalaryIncreaseRecord salaryIncreaseRecord;
+    private List<SalaryIncreaseRecord> salaryIncreaseRecord;
 
     @JoinColumn(name = "annual_review")
     @OneToOne(targetEntity = AnnualReviewRecord.class)
@@ -81,7 +83,7 @@ public class Employee {
      */
 
     @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
-    Employee(final PersonalDetailsRecord personalDetailsRec, final EmploymentDetailsRecord employmentDetailsRec) {
+    public Employee(final PersonalDetailsRecord personalDetailsRec, final EmploymentDetailsRecord employmentDetailsRec) {
         id = nextId;
         nextId++;
         personalDetails = personalDetailsRec;
@@ -93,7 +95,7 @@ public class Employee {
      */
 
     @SuppressWarnings("ProtectedMemberInFinalClass")
-    protected Employee() {}
+    public Employee() {}
 
     /**
      * @return a fake {@link Employee}
@@ -115,19 +117,19 @@ public class Employee {
         return personalDetails;
     }
 
-    public final Optional<ProbationRecord> getProbationRecord() {
+    public final Optional<List<ProbationRecord>> getProbationRecord() {
         return Optional.ofNullable(probationRecord);
     }
 
-    public final void setProbationRecord(final ProbationRecord probationRecord) {
+    public final void setProbationRecord(final List<ProbationRecord> probationRecord) {
         this.probationRecord = probationRecord;
     }
 
-    public final Optional<SalaryIncreaseRecord> getSalaryIncreaseRecord() {
+    public final Optional<List<SalaryIncreaseRecord>> getSalaryIncreaseRecord() {
         return Optional.ofNullable(salaryIncreaseRecord);
     }
 
-    public final void setSalaryIncreaseRecord(final SalaryIncreaseRecord salaryIncreaseRecord) {
+    public final void setSalaryIncreaseRecord(final List<SalaryIncreaseRecord> salaryIncreaseRecord) {
         this.salaryIncreaseRecord = salaryIncreaseRecord;
     }
 
@@ -150,6 +152,7 @@ public class Employee {
     @SuppressWarnings("DesignForExtension")
     @Override
     public String toString() {
-        return MessageFormat.format("{0}<{1}: {2}>", getClass().getName(), id);
+        return MessageFormat.format("{0}<id={1}, name={2}>", getClass()
+                .getName(), id, getPersonalDetails().getFullName());
     }
 }

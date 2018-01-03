@@ -39,10 +39,18 @@ public final class Database {
                 .createEntityManagerFactory("dragon.kent.ac.uk");
     }
 
+    /**
+     * To be run BEFORE interacting with the database. Used internally.
+     */
+
     private void beginTransaction() {
         session = sessionFactory.createEntityManager();
         session.getTransaction().begin();
     }
+
+    /**
+     * To be run AFTER interacting with the database. Used internally.
+     */
 
     private void finishTransaction() {
         session.getTransaction().commit();
