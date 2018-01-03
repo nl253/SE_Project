@@ -5,7 +5,6 @@ import java.util.Optional;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -14,7 +13,7 @@ import uk.ac.kent.models.records.recommendations.RemainBaseRecommendation;
 
 /**
  * Each {@link uk.ac.kent.models.people.Employee} must have an {@link AnnualReviewRecord} created on a yearly basis.
- * A part of it is producing a {@link BaseRecommendation}.
+ * They are associated with a {@link java.util.List} of such {@link AnnualReviewRecord}s.
  *
  * @author norbert
  */
@@ -25,27 +24,11 @@ import uk.ac.kent.models.records.recommendations.RemainBaseRecommendation;
 @Access(AccessType.FIELD)
 public final class AnnualReviewRecord extends BaseRecord {
 
-    @OneToOne(targetEntity = AnnualReviewRecord.class)
-    @JoinColumn(name = "previous_review")
-    private AnnualReviewRecord previousReview;
-
     @SuppressWarnings("FieldCanBeLocal")
     @OneToOne(targetEntity = BaseRecommendation.class)
     private BaseRecommendation baseRecommendation;
 
     /**
-     * @param previousAnnualReview reference to last year's annual review
-     * @param baseRecommendation reference to baseRecommendation associated with this review
-     */
-
-    public AnnualReviewRecord(final AnnualReviewRecord previousAnnualReview, final BaseRecommendation baseRecommendation) {
-        this.baseRecommendation = baseRecommendation;
-        previousReview = previousAnnualReview;
-    }
-
-    /**
-     * Here we do not pass the previous {@link AnnualReviewRecord} as it is the very firs one.
-     *
      * @param baseRecommendation reference to baseRecommendation associated with this review
      */
 
@@ -72,20 +55,12 @@ public final class AnnualReviewRecord extends BaseRecord {
         return review;
     }
 
-    public void setPreviousReview(final AnnualReviewRecord previousAnnualReview) {
-        previousReview = previousAnnualReview;
-    }
-
     public void setBaseRecommendation(final BaseRecommendation baseRecommendation) {
         this.baseRecommendation = baseRecommendation;
     }
 
     public Optional<BaseRecommendation> getBaseRecommendation() {
         return Optional.ofNullable(baseRecommendation);
-    }
-
-    public Optional<AnnualReviewRecord> getPreviousReview() {
-        return Optional.ofNullable(previousReview);
     }
 
     @Override

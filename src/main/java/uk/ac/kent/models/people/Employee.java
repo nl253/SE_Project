@@ -36,7 +36,7 @@ import uk.ac.kent.models.records.TerminationRecord;
  * @author norbert
  */
 
-@SuppressWarnings({"PublicMethodNotExposedInInterface", "NonBooleanMethodNameMayNotStartWithQuestion", "MethodParameterNamingConvention"})
+@SuppressWarnings({"PublicMethodNotExposedInInterface", "NonBooleanMethodNameMayNotStartWithQuestion", "MethodParameterNamingConvention", "WeakerAccess"})
 @Entity
 @Table(name = "employees")
 @Access(AccessType.FIELD)
@@ -54,7 +54,7 @@ public class Employee {
     private int id;
 
     @OneToOne(targetEntity = PersonalDetailsRecord.class, optional = false)
-    @JoinColumn(name = "personal_details")
+    @JoinColumn(name = "personal_details", unique = true)
     private PersonalDetailsRecord personalDetails;
 
     @OneToOne(targetEntity = EmploymentDetailsRecord.class, optional = false)
@@ -63,15 +63,15 @@ public class Employee {
 
     @OneToMany(targetEntity = ProbationRecord.class)
     @JoinColumn(name = "probation_record")
-    private List<ProbationRecord> probationRecord;
+    private List<ProbationRecord> probationRecords;
 
     @OneToMany(targetEntity = SalaryIncreaseRecord.class)
     @JoinColumn(name = "salary_increase_record")
-    private List<SalaryIncreaseRecord> salaryIncreaseRecord;
+    private List<SalaryIncreaseRecord> salaryIncreaseRecords;
 
     @JoinColumn(name = "annual_review")
-    @OneToOne(targetEntity = AnnualReviewRecord.class)
-    private AnnualReviewRecord annualReview;
+    @OneToMany(targetEntity = AnnualReviewRecord.class)
+    private List<AnnualReviewRecord> annualReviewRecords;
 
     @OneToOne(targetEntity = TerminationRecord.class)
     @JoinColumn(name = "termination_reason")
@@ -105,7 +105,7 @@ public class Employee {
         return new Employee(new PersonalDetailsRecord(), new EmploymentDetailsRecord());
     }
 
-    final int getId() {
+    public final int getId() {
         return id;
     }
 
@@ -117,20 +117,20 @@ public class Employee {
         return personalDetails;
     }
 
-    public final Optional<List<ProbationRecord>> getProbationRecord() {
-        return Optional.ofNullable(probationRecord);
+    public final Optional<List<ProbationRecord>> getProbationRecords() {
+        return Optional.ofNullable(probationRecords);
     }
 
-    public final void setProbationRecord(final List<ProbationRecord> probationRecord) {
-        this.probationRecord = probationRecord;
+    public final void setProbationRecords(final List<ProbationRecord> probationRecords) {
+        this.probationRecords = probationRecords;
     }
 
-    public final Optional<List<SalaryIncreaseRecord>> getSalaryIncreaseRecord() {
-        return Optional.ofNullable(salaryIncreaseRecord);
+    public final Optional<List<SalaryIncreaseRecord>> getSalaryIncreaseRecords() {
+        return Optional.ofNullable(salaryIncreaseRecords);
     }
 
-    public final void setSalaryIncreaseRecord(final List<SalaryIncreaseRecord> salaryIncreaseRecord) {
-        this.salaryIncreaseRecord = salaryIncreaseRecord;
+    public final void setSalaryIncreaseRecords(final List<SalaryIncreaseRecord> salaryIncreaseRecords) {
+        this.salaryIncreaseRecords = salaryIncreaseRecords;
     }
 
     public final Optional<TerminationRecord> getTerminationRecord() {
@@ -141,12 +141,12 @@ public class Employee {
         this.terminationRecord = terminationRecord;
     }
 
-    public final Optional<AnnualReviewRecord> getAnnualReview() {
-        return Optional.ofNullable(annualReview);
+    public final Optional<List<AnnualReviewRecord>> getAnnualReviews() {
+        return Optional.ofNullable(annualReviewRecords);
     }
 
-    public final void setAnnualReview(final AnnualReviewRecord newReview) {
-        annualReview = newReview;
+    public final void setAnnualReviewRecords(final List<AnnualReviewRecord> newRecords) {
+        annualReviewRecords = newRecords;
     }
 
     @SuppressWarnings("DesignForExtension")
