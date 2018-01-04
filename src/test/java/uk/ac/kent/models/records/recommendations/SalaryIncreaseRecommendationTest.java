@@ -3,7 +3,9 @@ package uk.ac.kent.models.records.recommendations;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-class TerminationBaseRecommendationTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+class SalaryIncreaseRecommendationTest {
 
     @BeforeEach
     void setUp() {}

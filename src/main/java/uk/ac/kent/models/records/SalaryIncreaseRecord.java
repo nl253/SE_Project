@@ -7,6 +7,7 @@ import java.util.Random;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -21,10 +22,11 @@ import javax.persistence.Transient;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class SalaryIncreaseRecord extends BaseRecord {
 
-    // @Column(name = "new_salary", nullable = false)
+    @Column(name = "new_salary", nullable = false)
     @Basic(optional = false)
     private long newSalary;
-    // @Column(name = "start_date")
+
+    @Column(name = "start_date")
     private LocalDate startDate;
 
     /**

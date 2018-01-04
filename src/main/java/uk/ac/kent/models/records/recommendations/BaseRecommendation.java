@@ -4,10 +4,13 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,15 +26,16 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author norbert
  */
 
-@SuppressWarnings("AlibabaAbstractClassShouldStartWithAbstractNaming")
-@Entity
 @Table(name = "recommendations")
+@SuppressWarnings({"AlibabaAbstractClassShouldStartWithAbstractNaming", "DesignForExtension", "PublicMethodNotExposedInInterface"})
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Access(AccessType.FIELD)
 public abstract class BaseRecommendation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
     @Transient
     private static int nextId;
@@ -42,21 +46,21 @@ public abstract class BaseRecommendation {
         nextId++;
     }
 
-    // @Column(name = "modified_date")
+    @Column(name = "modified_date")
     @UpdateTimestamp
     private LocalDate modifiedDate;
 
-    public final LocalDate getModifiedDate() {
+    public LocalDate getModifiedDate() {
         return modifiedDate;
     }
 
-    public final void setModifiedDate(final LocalDate modifiedDate) {
+    public void setModifiedDate(final LocalDate modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
     @SuppressWarnings("DesignForExtension")
     @Override
     public String toString() {
-        return MessageFormat.format("BaseRecommendation<id={0}>", id);
+        return MessageFormat.format("{0}<id={1}>", getClass().getName(), id);
     }
 }

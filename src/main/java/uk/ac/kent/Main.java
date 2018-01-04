@@ -1,5 +1,6 @@
 package uk.ac.kent;
 
+import java.io.IOException;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -24,8 +25,8 @@ public final class Main extends Application {
      */
 
     @Override
-    public final void start(final Stage stage) {
-        new LoginController(new Database(), stage);
+    public final void start(final Stage stage) throws IOException {
+        new LoginController(new Database(), stage).displayMainView();
     }
 
     /**
@@ -33,7 +34,8 @@ public final class Main extends Application {
      */
 
     public static void main(final String[] args) {
-        // new Database().populate();
-        launch(args);
+        new Database().populate();
+        System.exit(0);
+        // launch(args);
     }
 }

@@ -26,7 +26,7 @@ import uk.ac.kent.models.records.PersonalDetailsRecord;
 public final class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private String street;

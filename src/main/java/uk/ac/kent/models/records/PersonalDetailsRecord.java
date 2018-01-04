@@ -7,7 +7,6 @@ import java.util.Locale;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -39,12 +38,12 @@ public final class PersonalDetailsRecord extends BaseRecord {
     @Column(name = "first_name")
     private String firstName;
 
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL, targetEntity = Address.class)
+    @OneToOne(orphanRemoval = true, targetEntity = Address.class)
     private Address address;
 
     private String email;
 
-    @OneToOne(targetEntity = Relative.class, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Relative.class, orphanRemoval = true)
     private Relative relative;
 
     /**

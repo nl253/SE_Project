@@ -1,16 +1,20 @@
 package uk.ac.kent.models.people;
 
+import java.security.SecureRandom;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.logging.Logger;
+import java.util.stream.IntStream;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -37,10 +41,11 @@ import uk.ac.kent.models.records.TerminationRecord;
  * @author norbert
  */
 
-@SuppressWarnings({"PublicMethodNotExposedInInterface", "NonBooleanMethodNameMayNotStartWithQuestion", "MethodParameterNamingConvention", "WeakerAccess"})
+@SuppressWarnings({"PublicMethodNotExposedInInterface", "NonBooleanMethodNameMayNotStartWithQuestion", "MethodParameterNamingConvention", "WeakerAccess", "DesignForExtension"})
 @Entity
 @Table(name = "employees")
 @Access(AccessType.FIELD)
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Employee {
 
     /** Logger for the class */
@@ -48,33 +53,38 @@ public class Employee {
     protected static final Logger log = Logger.getAnonymousLogger();
 
     @Transient
+    private static final Random random = new SecureRandom();
+
+    private String password;
+
+    @Transient
     private static int nextId;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @OneToOne(targetEntity = PersonalDetailsRecord.class, optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "personal_details", unique = true, nullable = false)
+    @OneToOne(targetEntity = PersonalDetailsRecord.class, optional = false, orphanRemoval = true)
+    @JoinColumn(name = "personal_details", nullable = false)
     private PersonalDetailsRecord personalDetails;
 
-    @OneToOne(targetEntity = EmploymentDetailsRecord.class, optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = EmploymentDetailsRecord.class, optional = false, orphanRemoval = true)
     @JoinColumn(name = "employment_details", nullable = false)
     private EmploymentDetailsRecord employmentDetails;
 
-    @OneToMany(targetEntity = ProbationRecord.class, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = ProbationRecord.class, orphanRemoval = true)
     @JoinColumn(name = "probation_record")
     private List<ProbationRecord> probationRecords;
 
-    @OneToMany(targetEntity = SalaryIncreaseRecord.class, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = SalaryIncreaseRecord.class, orphanRemoval = true)
     @JoinColumn(name = "salary_increase_record")
     private List<SalaryIncreaseRecord> salaryIncreaseRecords;
 
     @JoinColumn(name = "annual_review")
-    @OneToMany(targetEntity = AnnualReviewRecord.class, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity = AnnualReviewRecord.class, orphanRemoval = true)
     private List<AnnualReviewRecord> annualReviewRecords;
 
-    @OneToOne(targetEntity = TerminationRecord.class, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = TerminationRecord.class, orphanRemoval = true)
     @JoinColumn(name = "termination_reason")
     private TerminationRecord terminationRecord;
 
@@ -89,6 +99,8 @@ public class Employee {
         nextId++;
         personalDetails = personalDetailsRec;
         employmentDetails = employmentDetailsRec;
+        password = IntStream.range(0, 10)
+                .collect(String::new, (String s, int i) -> s += ((char) i), (s, s2) -> s += s2);
     }
 
     /**
@@ -106,47 +118,56 @@ public class Employee {
         return new Employee(new PersonalDetailsRecord(), new EmploymentDetailsRecord());
     }
 
-    public final int getId() {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(final String password) {
+        this.password = password;
+    }
+
+
+    public int getId() {
         return id;
     }
 
-    public final EmploymentDetailsRecord getEmploymentDetails() {
+    public EmploymentDetailsRecord getEmploymentDetails() {
         return employmentDetails;
     }
 
-    public final PersonalDetailsRecord getPersonalDetails() {
+    public PersonalDetailsRecord getPersonalDetails() {
         return personalDetails;
     }
 
-    public final Optional<List<ProbationRecord>> getProbationRecords() {
+    public Optional<List<ProbationRecord>> getProbationRecords() {
         return Optional.ofNullable(probationRecords);
     }
 
-    public final void setProbationRecords(final List<ProbationRecord> probationRecords) {
+    public void setProbationRecords(final List<ProbationRecord> probationRecords) {
         this.probationRecords = probationRecords;
     }
 
-    public final Optional<List<SalaryIncreaseRecord>> getSalaryIncreaseRecords() {
+    public Optional<List<SalaryIncreaseRecord>> getSalaryIncreaseRecords() {
         return Optional.ofNullable(salaryIncreaseRecords);
     }
 
-    public final void setSalaryIncreaseRecords(final List<SalaryIncreaseRecord> salaryIncreaseRecords) {
+    public void setSalaryIncreaseRecords(final List<SalaryIncreaseRecord> salaryIncreaseRecords) {
         this.salaryIncreaseRecords = salaryIncreaseRecords;
     }
 
-    public final Optional<TerminationRecord> getTerminationRecord() {
+    public Optional<TerminationRecord> getTerminationRecord() {
         return Optional.ofNullable(terminationRecord);
     }
 
-    public final void setTerminationRecord(final TerminationRecord terminationRecord) {
+    public void setTerminationRecord(final TerminationRecord terminationRecord) {
         this.terminationRecord = terminationRecord;
     }
 
-    public final Optional<List<AnnualReviewRecord>> getAnnualReviews() {
+    public Optional<List<AnnualReviewRecord>> getAnnualReviews() {
         return Optional.ofNullable(annualReviewRecords);
     }
 
-    public final void setAnnualReviewRecords(final List<AnnualReviewRecord> newRecords) {
+    public void setAnnualReviewRecords(final List<AnnualReviewRecord> newRecords) {
         annualReviewRecords = newRecords;
     }
 

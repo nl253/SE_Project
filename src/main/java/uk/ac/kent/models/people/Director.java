@@ -4,6 +4,8 @@ import java.text.MessageFormat;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import uk.ac.kent.models.records.EmploymentDetailsRecord;
 import uk.ac.kent.models.records.PersonalDetailsRecord;
@@ -15,9 +17,9 @@ import uk.ac.kent.models.records.PersonalDetailsRecord;
  * @author norbert
  */
 
+@Table(name = "directors")
 @SuppressWarnings("MethodParameterNamingConvention")
 @Entity
-@Table(name = "directors")
 @Access(AccessType.FIELD)
 public final class Director extends Employee {
 

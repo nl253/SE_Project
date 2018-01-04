@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.Transient;
@@ -22,9 +23,9 @@ import uk.ac.kent.models.people.Manager;
  * Each {@link BaseController} stores a reference to this
  * {@link Database} and executes {@link Query} on it.
  * <p>
- * The result of those is transferred to the GUI.
+ * The result of those is transferred to the GUI which handles presentation.
  *
- * @author norbert
+ * @author Norbert
  */
 
 @SuppressWarnings({"WeakerAccess", "AlibabaCommentsMustBeJavadocFormat", "PublicMethodNotExposedInInterface", "FieldCanBeLocal", "ClassHasNoToStringMethod", "NonBooleanMethodNameMayNotStartWithQuestion"})
@@ -35,29 +36,35 @@ public final class Database {
     private static final Logger log = Logger.getAnonymousLogger();
 
     private final EntityManagerFactory sessionFactory;
+
+    /** current session */
     private EntityManager session;
 
+    /** current transaction */
+    private EntityTransaction transaction;
+
     public Database() {
-        // the name corresponds to a persistance-unit name in persistance.xml
+        // the name `dragon.kent.ac.uk` corresponds to a persistance-unit name in persistance.xml
         sessionFactory = Persistence
                 .createEntityManagerFactory("dragon.kent.ac.uk");
     }
 
     /**
-     * To be run BEFORE interacting with the database. Used internally.
+     * To be run <strong>BEFORE</strong> interacting with the database. Used internally.
      */
 
     private void beginTransaction() {
         session = sessionFactory.createEntityManager();
-        session.getTransaction().begin();
+        transaction = session.getTransaction();
+        transaction.begin();
     }
 
     /**
-     * To be run AFTER interacting with the database. Used internally.
+     * To be run <strong>AFTER</strong> interacting with the database. Used internally.
      */
 
     private void finishTransaction() {
-        session.getTransaction().commit();
+        transaction.commit();
         session.close();
     }
 
@@ -74,7 +81,7 @@ public final class Database {
 
         beginTransaction();
 
-        final Query query = session.createNativeQuery(queryString);
+        final Query query = session.createQuery(queryString);
 
         // bind parameters
         for (int i = 0; i < params.length; i++)
@@ -141,10 +148,22 @@ public final class Database {
      */
 
     public void populate() {
-        // Make Directors
-        IntStream.range(0, 4).forEach(x -> save(Director.fake()));
-        // Make Managers
-        IntStream.range(0, 25).forEach(x -> save(Manager.fake()));
+        beginTransaction();
+        try {
+            // Make Directors
+            IntStream.range(0, 4)
+                    .forEach((int x) -> session.persist(Director.fake()));
+
+            // Make Managers
+            IntStream.range(0, 25)
+                    .forEach((int x) -> session.persist(Manager.fake()));
+
+            finishTransaction();
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            transaction.rollback();
+        }
     }
 
     @Override

@@ -4,11 +4,15 @@ import java.security.SecureRandom;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -30,6 +34,7 @@ public final class TerminationRecord extends BaseRecord {
     @Enumerated(EnumType.STRING)
     private TerminationReason reason;
 
+    @Column(name = "end_date")
     private LocalDate endDate = LocalDate.now();
 
     /**
@@ -53,27 +58,30 @@ public final class TerminationRecord extends BaseRecord {
      * @return a fake {@link TerminationRecord}
      */
 
-    @SuppressWarnings({"AccessingNonPublicFieldOfAnotherObject", "LocalVariableOfConcreteClass", "MagicNumber"})
+    @SuppressWarnings({"AccessingNonPublicFieldOfAnotherObject", "LocalVariableOfConcreteClass", "MagicNumber", "Duplicates"})
     public static TerminationRecord fake() {
-
-        final TerminationRecord record = new TerminationRecord();
 
         // secure pseudo-random number generator
         final Random random = new SecureRandom();
 
         // @formatter:off
-        record.endDate = LocalDate.parse(
-                MessageFormat.format(
-                        "20{0}-{1}-{2}",
-                        16 + random.nextInt(2),
-                        1 + random.nextInt(12),
-                        1 + random.nextInt(28)));
+        final Supplier<LocalDate> randomDateSupplier = () -> {
+            // generate a random integer between those two values and finally
+            // convert it back to a LocalDate
+            final long minDay = LocalDate.of(2013, 1, 1).toEpochDay();
+            final long maxDay = LocalDate.of(2017, 1, 31).toEpochDay();
+            final long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+            return LocalDate.ofEpochDay(randomDay);
+        };
+
+        final TerminationRecord record = new TerminationRecord();
+
 
         // get random value from TerminationReason enum
-        record.reason = TerminationReason.values()[random.nextInt(TerminationReason.values().length)];
+        final TerminationReason reason = TerminationReason.values()[random.nextInt(TerminationReason.values().length)];
 
         // @formatter:on
-        return record;
+        return new TerminationRecord(reason, randomDateSupplier.get());
     }
 
     public TerminationReason getReason() {

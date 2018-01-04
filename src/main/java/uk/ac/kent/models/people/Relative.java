@@ -30,7 +30,7 @@ import uk.ac.kent.models.records.PersonalDetailsRecord;
 public final class Relative {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Basic(optional = false)

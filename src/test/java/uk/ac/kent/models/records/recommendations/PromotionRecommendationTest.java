@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RemainBaseRecommendationTest {
+class PromotionRecommendationTest {
 
     @BeforeEach
     void setUp() {}

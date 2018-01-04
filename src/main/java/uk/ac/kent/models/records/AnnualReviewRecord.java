@@ -6,11 +6,12 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import uk.ac.kent.models.records.recommendations.BaseRecommendation;
-import uk.ac.kent.models.records.recommendations.RemainBaseRecommendation;
+import uk.ac.kent.models.records.recommendations.RemainRecommendation;
 
 /**
  * Each {@link uk.ac.kent.models.people.Employee} must have an {@link AnnualReviewRecord} created on a yearly basis.
@@ -26,6 +27,7 @@ import uk.ac.kent.models.records.recommendations.RemainBaseRecommendation;
 public final class AnnualReviewRecord extends BaseRecord {
 
     @SuppressWarnings("FieldCanBeLocal")
+    @JoinColumn(name = "recommendation")
     @OneToOne(targetEntity = BaseRecommendation.class, optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
     private BaseRecommendation baseRecommendation;
 
@@ -51,9 +53,7 @@ public final class AnnualReviewRecord extends BaseRecord {
     @Transient
     @SuppressWarnings("LocalVariableOfConcreteClass")
     public static AnnualReviewRecord fake() {
-        final AnnualReviewRecord review = new AnnualReviewRecord();
-        review.baseRecommendation = new RemainBaseRecommendation();
-        return review;
+        return new AnnualReviewRecord(new RemainRecommendation());
     }
 
     public void setBaseRecommendation(final BaseRecommendation baseRecommendation) {

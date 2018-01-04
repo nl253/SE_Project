@@ -14,9 +14,9 @@ import uk.ac.kent.Database;
 @SuppressWarnings({"ConstructorNotProtectedInAbstractClass", "PublicMethodNotExposedInInterface", "WeakerAccess"})
 public abstract class BaseController {
 
-    private final Stage stage;
+    private Stage stage;
     private Stage parent;
-    private final Database database;
+    private Database database;
 
     /**
      * Display the first,  main view associated with this {@link BaseController}.
@@ -35,6 +35,14 @@ public abstract class BaseController {
         this.database = database;
         this.parent = parent;
         stage = new Stage();
+    }
+
+    /**
+     * A version of the constructor with parameters supplied.
+     */
+
+    public BaseController() {
+        this(new Database(), new Stage());
     }
 
     public final Stage getParent() {

@@ -4,26 +4,77 @@
 
     <!--MySQL database aka dragon.kent.ac.uk-->
     <!--Use Java Transaction API-->
-    <persistence-unit name="dragon.kent.ac.uk" transaction-type="JTA">
+    <!--<persistence-unit name="dragon.kent.ac.uk" transaction-type="JTA">-->
+    <persistence-unit name="dragon.kent.ac.uk"
+                      transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <!--Records-->
+        <class>uk.ac.kent.models.records.BaseRecord</class>
+        <class>uk.ac.kent.models.records.ProbationRecord</class>
+        <class>uk.ac.kent.models.records.TerminationReason</class>
+        <class>uk.ac.kent.models.records.SalaryIncreaseRecord</class>
+        <class>uk.ac.kent.models.records.PersonalDetailsRecord</class>
+        <class>uk.ac.kent.models.records.EmploymentDetailsRecord</class>
+        <class>uk.ac.kent.models.records.AnnualReviewRecord</class>
+
+        <!--Recommandations-->
+        <class>uk.ac.kent.models.records.recommendations.BaseRecommendation
+        </class>
+        <class>
+            uk.ac.kent.models.records.recommendations.ProbationRecommendation
+        </class>
+        <class>
+            uk.ac.kent.models.records.recommendations.PromotionRecommendation
+        </class>
+        <class>uk.ac.kent.models.records.recommendations.RemainRecommendation
+        </class>
+        <class>
+            uk.ac.kent.models.records.recommendations.SalaryIncreaseRecommendation
+        </class>
+        <class>
+            uk.ac.kent.models.records.recommendations.TerminationRecommendation
+        </class>
+
+        <!--Other-->
+        <class>uk.ac.kent.models.other.Address</class>
+
+        <!--Yuconz-->
+        <class>uk.ac.kent.models.yuconz.Department</class>
+        <class>uk.ac.kent.models.yuconz.Position</class>
+
+        <!--People-->
+        <class>uk.ac.kent.models.people.Employee</class>
+        <class>uk.ac.kent.models.people.Director</class>
+        <class>uk.ac.kent.models.people.Manager</class>
+        <class>uk.ac.kent.models.people.Relative</class>
+
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
+
         <properties>
 
-            <property name="javax.persistence.jdbc.driver"
-                      value="com.mysql.jdbc.Driver"/>
+
+            <!--Apparently deprecated-->
+            <!--<property name="javax.persistence.jdbc.driver"-->
+                      <!--value="com.mysql.jdbc.Driver"/>-->
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://dragon.kent.ac.uk:3306"/>
+                      value="jdbc:mysql://dragon.kent.ac.uk:3306/nl253"/>
+
+            <property value="100" name="connection.pool_size"/>
+
 
             <!--I am using my credentials - Norbert-->
             <property name="javax.persistence.jdbc.user" value="nl253"/>
             <property name="javax.persistence.jdbc.password" value="ngan-dt"/>
 
-            <!--&lt;!&ndash;Hibernate properties&ndash;&gt;-->
-            <!--<property name="hibernate.show_sql" value="false"/>-->
-            <!--<property name="hibernate.format_sql" value="false"/>-->
+            <!--Hibernate properties-->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.connection.autocommit" value="false"/>
             <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
             <!--<property name="hibernate.dialect"-->
-                      <!--value="org.hibernate.dialect.MySQLDialect"/>-->
+            <!--value="org.hibernate.dialect.MySQLDialect"/>-->
 
         </properties>
     </persistence-unit>
@@ -48,9 +99,9 @@
             <!--<property name="hibernate.format_sql" value="false"/>-->
             <!--<property name="hibernate.hbm2ddl.auto" value="create-drop"/>-->
             <!--<property name="hibernate.dialect"-->
-                      <!--value="org.hibernate.dialect.H2Dialect"/>-->
+            <!--value="org.hibernate.dialect.H2Dialect"/>-->
             <!--<property name="hibernate.temp.use_jdbc_metadata_defaults"-->
-                      <!--value="false"/>-->
+            <!--value="false"/>-->
 
         </properties>
     </persistence-unit>

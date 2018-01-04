@@ -6,8 +6,11 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,7 +33,7 @@ import uk.ac.kent.models.yuconz.Position;
 @Access(AccessType.FIELD)
 public final class EmploymentDetailsRecord extends BaseRecord {
 
-    @JoinColumn(name = "date_employed")
+    @Column(name = "date_employed")
     private LocalDate dateEmployed = LocalDate.now();
 
     private long salary;
@@ -39,7 +42,7 @@ public final class EmploymentDetailsRecord extends BaseRecord {
     @Lob
     private Blob cv;
 
-    @JoinColumn(name = "account_of_interview")
+    @Column(name = "account_of_interview")
     @Lob
     private Blob accountOfInterview;
 
@@ -99,7 +102,7 @@ public final class EmploymentDetailsRecord extends BaseRecord {
      * @return a fake {@link EmploymentDetailsRecord}.
      */
 
-    @SuppressWarnings({"ImplicitNumericConversion", "MagicNumber", "LocalVariableOfConcreteClass", "AccessingNonPublicFieldOfAnotherObject"})
+    @SuppressWarnings({"ImplicitNumericConversion", "MagicNumber", "LocalVariableOfConcreteClass", "AccessingNonPublicFieldOfAnotherObject", "Duplicates"})
     public static EmploymentDetailsRecord fake() {
 
         // random number generator
@@ -113,18 +116,20 @@ public final class EmploymentDetailsRecord extends BaseRecord {
                 .nextInt(Department.values().length)];
 
         // @formatter:off
-        // get random LocalDate
-        final LocalDate date = LocalDate.parse(
-                MessageFormat
-                        .format("20{0}-{1}-{2}",
-                                16 + random.nextInt(2),
-                                1 + random.nextInt(12),
-                                1 + random.nextInt(28)
-                                ));
+        final Supplier<LocalDate> randomDateSupplier = () -> {
+            // generate a random integer between those two values and finally
+            // convert it back to a LocalDate
+            final long minDay = LocalDate.of(2013, 1, 1).toEpochDay();
+            final long maxDay = LocalDate.of(2017, 1, 31).toEpochDay();
+            final long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+            return LocalDate.ofEpochDay(randomDay);
+        };
+
         // @formatter:on
         final long salary = 15_000 + random.nextInt(30_000);
 
-        return new EmploymentDetailsRecord(position, department, date, salary);
+        return new EmploymentDetailsRecord(position, department, randomDateSupplier
+                .get(), salary);
     }
 
     public Position getPosition() {

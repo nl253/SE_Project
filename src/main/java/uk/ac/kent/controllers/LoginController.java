@@ -39,6 +39,8 @@ public final class LoginController extends BaseController {
         super(database, parent);
     }
 
+    public LoginController() {}
+
     /**
      * @throws IOException
      */
@@ -71,6 +73,7 @@ public final class LoginController extends BaseController {
      */
 
     @SuppressWarnings({"LawOfDemeter", "PublicMethodNotExposedInInterface"})
+    @FXML
     public void handleLoginButtonClicked(final MouseEvent mouseEvent) throws IOException {
         if (authenticate()) displayDashboardView();
         else displayBadCredentialsView();
@@ -93,7 +96,7 @@ public final class LoginController extends BaseController {
 
     private boolean authenticate() {
         return !getDatabase()
-                .query("SELECT COUNT(*) FROM users WHERE username = :username AND PASSWORD = :password", username, password)
+                .query("SELECT e FROM Employee e WHERE CONCAT(e.personalDetails.lastName, e.id) = ?0 AND e.password = ?1", username, password)
                 .isEmpty();
     }
 

@@ -10,6 +10,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import uk.ac.kent.models.records.EmploymentDetailsRecord;
@@ -25,9 +27,9 @@ import uk.ac.kent.models.yuconz.Department;
  * @author norbert
  */
 
+@Table(name = "managers")
 @SuppressWarnings({"NonBooleanMethodNameMayNotStartWithQuestion", "MethodParameterNamingConvention", "WeakerAccess", "PublicConstructorInNonPublicClass", "MethodOverridesStaticMethodOfSuperclass"})
 @Entity
-@Table(name = "managers")
 @Access(AccessType.FIELD)
 public final class Manager extends Employee {
 
@@ -36,7 +38,7 @@ public final class Manager extends Employee {
      */
 
     @SuppressWarnings("FieldMayBeFinal")
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, targetEntity = Employee.class)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, targetEntity = Employee.class)
     private List<Employee> employees = new ArrayList<>(15);
 
     /**

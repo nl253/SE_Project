@@ -3,13 +3,15 @@ package uk.ac.kent.models.records.recommendations;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 /**
  * @author norbert
  */
 
-@Entity
 @Table(name = "promotion_recommendations")
+@Entity
 @Access(AccessType.FIELD)
-public class PromotionBaseRecommendation extends BaseRecommendation {}
+public class PromotionRecommendation extends BaseRecommendation {}

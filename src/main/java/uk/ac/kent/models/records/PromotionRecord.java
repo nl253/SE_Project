@@ -6,9 +6,11 @@ import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -35,6 +37,7 @@ public final class PromotionRecord extends BaseRecord {
 
     private LocalDate startDate;
 
+    @Column(name = "new_salary")
     private long newSalary;
 
     /**
@@ -65,7 +68,7 @@ public final class PromotionRecord extends BaseRecord {
      */
 
     @Transient
-    @SuppressWarnings({"AlibabaAvoidCommentBehindStatement", "ImplicitNumericConversion", "MagicNumber", "LocalVariableOfConcreteClass", "AccessingNonPublicFieldOfAnotherObject"})
+    @SuppressWarnings({"AlibabaAvoidCommentBehindStatement", "ImplicitNumericConversion", "MagicNumber", "LocalVariableOfConcreteClass", "AccessingNonPublicFieldOfAnotherObject", "Duplicates"})
     public static PromotionRecord fake() {
 
         final PromotionRecord record = new PromotionRecord();
@@ -82,15 +85,16 @@ public final class PromotionRecord extends BaseRecord {
                 .nextInt(Position.values().length)];
 
         // @formatter:off
-        final Supplier<LocalDate> dateSupplier = () -> LocalDate.parse(
-                MessageFormat.format(
-                        "201{0}-{1}-{2}",
-                        16 + random.nextInt(2),
-                        1 + random.nextInt(12),
-                        1 + random.nextInt(28)));
-        // @formatter:on
+        final Supplier<LocalDate> randomDateSupplier = () -> {
+            // generate a random integer between those two values and finally
+            // convert it back to a LocalDate
+            final long minDay = LocalDate.of(2013, 1, 1).toEpochDay();
+            final long maxDay = LocalDate.of(2017, 1, 31).toEpochDay();
+            final long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+            return LocalDate.ofEpochDay(randomDay);
+        };
 
-        record.startDate = dateSupplier.get();
+        record.startDate = randomDateSupplier.get();
 
         record.newSalary = faker.number().numberBetween(15_000, 100_000);
         return record;

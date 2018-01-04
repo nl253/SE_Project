@@ -2,15 +2,18 @@ package uk.ac.kent.models.records;
 
 
 import com.github.javafaker.Faker;
+import com.github.javafaker.Lorem;
 import java.security.SecureRandom;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -27,9 +30,11 @@ public final class ProbationRecord extends BaseRecord {
 
     @Basic(optional = false)
     private String reason;
-    // @Column(name = "start_date")
+
+    @Column(name = "start_date")
     private LocalDate startDate;
-    // @Column(name = "end_date")
+
+    @Column(name = "end_date")
     private LocalDate endDate;
 
     /**
@@ -52,30 +57,34 @@ public final class ProbationRecord extends BaseRecord {
     public ProbationRecord() {}
 
     @Transient
-    @SuppressWarnings({"MagicNumber", "ImplicitNumericConversion", "LocalVariableOfConcreteClass", "AccessingNonPublicFieldOfAnotherObject"})
+    @SuppressWarnings({"MagicNumber", "ImplicitNumericConversion", "LocalVariableOfConcreteClass", "AccessingNonPublicFieldOfAnotherObject", "Duplicates"})
     public static ProbationRecord fake() {
         // secure pseudo-random number generator
         final Random random = new SecureRandom();
 
         // fake data generator
         final Faker faker = new Faker(new Locale("en-GB"));
+        final Lorem loremFaker = faker.lorem();
 
         // @formatter:off
-        final Supplier<LocalDate> dateSupplier = () -> LocalDate.parse(
-                MessageFormat.format(
-                        "20{0}-{1}-{2}",
-                        16 + random.nextInt(2),
-                        1 + random.nextInt(12),
-                        1 + random.nextInt(28)));
+        final Supplier<LocalDate> randomDateSupplier = () -> {
+            // generate a random integer between those two values and finally
+            // convert it back to a LocalDate
+            final long minDay = LocalDate.of(2013, 1, 1).toEpochDay();
+            final long maxDay = LocalDate.of(2017, 1, 31).toEpochDay();
+            final long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+            return LocalDate.ofEpochDay(randomDay);
+        };
+
         // @formatter:on
 
         // get random LocalDate
-        final LocalDate start = dateSupplier.get();
+        final LocalDate start = randomDateSupplier.get();
 
         // get random LocalDate
         final LocalDate end = start.plusMonths(random.nextInt(50));
 
-        final String reason = faker.lorem().paragraph();
+        final String reason = loremFaker.paragraph();
 
         return new ProbationRecord(start, end, reason);
     }

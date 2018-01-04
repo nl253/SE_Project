@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,16 +38,16 @@ public abstract class BaseRecord {
     @Basic(optional = false)
     private boolean signed;
 
-    @JoinColumn(name = "modified_date")
+    @Column(name = "modified_date")
     @UpdateTimestamp
     private LocalDate modifiedDate;
 
     @SuppressWarnings({"WeakerAccess", "ProtectedField"})
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected final int id;
 
-    @JoinColumn(name = "date_created", updatable = false)
+    @Column(name = "date_created", updatable = false)
     @Basic(optional = false)
     @CreationTimestamp
     private LocalDate dateCreated = LocalDate.now();
