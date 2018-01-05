@@ -35,7 +35,6 @@ public abstract class BaseRecord {
     @Transient
     protected static final Logger log = Logger.getAnonymousLogger();
 
-    @Basic(optional = false)
     private boolean signed;
 
     @Column(name = "modified_date")
@@ -48,7 +47,6 @@ public abstract class BaseRecord {
     protected final int id;
 
     @Column(name = "date_created", updatable = false)
-    @Basic(optional = false)
     @CreationTimestamp
     private LocalDate dateCreated = LocalDate.now();
 

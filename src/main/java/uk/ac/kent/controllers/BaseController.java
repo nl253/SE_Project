@@ -2,8 +2,8 @@ package uk.ac.kent.controllers;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Optional;
 import javafx.stage.Stage;
-import uk.ac.kent.Database;
 
 /**
  * Base class for all controllers.
@@ -14,9 +14,8 @@ import uk.ac.kent.Database;
 @SuppressWarnings({"ConstructorNotProtectedInAbstractClass", "PublicMethodNotExposedInInterface", "WeakerAccess"})
 public abstract class BaseController {
 
-    private Stage stage;
+    private final Stage stage;
     private Stage parent;
-    private Database database;
 
     /**
      * Display the first,  main view associated with this {@link BaseController}.
@@ -27,26 +26,16 @@ public abstract class BaseController {
     public abstract void displayMainView() throws IOException;
 
     /**
-     * @param database a reference to the {@link Database}
      * @param parent a reference to the parent {@link Stage}
      */
 
-    public BaseController(final Database database, final Stage parent) {
-        this.database = database;
+    public BaseController(final Stage parent) {
         this.parent = parent;
         stage = new Stage();
     }
 
-    /**
-     * A version of the constructor with parameters supplied.
-     */
-
-    public BaseController() {
-        this(new Database(), new Stage());
-    }
-
-    public final Stage getParent() {
-        return parent;
+    public final Optional<Stage> getParent() {
+        return Optional.ofNullable(parent);
     }
 
     public final void setParent(final Stage parent) {
@@ -55,10 +44,6 @@ public abstract class BaseController {
 
     public final Stage getStage() {
         return stage;
-    }
-
-    public final Database getDatabase() {
-        return database;
     }
 
     @SuppressWarnings("DesignForExtension")

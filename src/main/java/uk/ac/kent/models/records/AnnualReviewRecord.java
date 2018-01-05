@@ -4,7 +4,6 @@ import java.text.MessageFormat;
 import java.util.Optional;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -28,7 +27,7 @@ public final class AnnualReviewRecord extends BaseRecord {
 
     @SuppressWarnings("FieldCanBeLocal")
     @JoinColumn(name = "recommendation")
-    @OneToOne(targetEntity = BaseRecommendation.class, optional = false, orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = BaseRecommendation.class)
     private BaseRecommendation baseRecommendation;
 
     /**

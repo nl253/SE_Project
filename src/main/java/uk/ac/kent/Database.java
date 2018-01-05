@@ -35,25 +35,24 @@ public final class Database {
     @Transient
     private static final Logger log = Logger.getAnonymousLogger();
 
-    private final EntityManagerFactory sessionFactory;
+    // the name `dragon.kent.ac.uk` corresponds to a persistance-unit name in persistance.xml
+    private static final EntityManagerFactory sessionFactory = Persistence
+            .createEntityManagerFactory("dragon.kent.ac.uk");
 
     /** current session */
-    private EntityManager session;
+    private static EntityManager session;
 
     /** current transaction */
-    private EntityTransaction transaction;
+    private static EntityTransaction transaction;
 
-    public Database() {
-        // the name `dragon.kent.ac.uk` corresponds to a persistance-unit name in persistance.xml
-        sessionFactory = Persistence
-                .createEntityManagerFactory("dragon.kent.ac.uk");
-    }
+    /** cannot be instantiated */
+    private Database() {}
 
     /**
      * To be run <strong>BEFORE</strong> interacting with the database. Used internally.
      */
 
-    private void beginTransaction() {
+    private static void beginTransaction() {
         session = sessionFactory.createEntityManager();
         transaction = session.getTransaction();
         transaction.begin();
@@ -63,7 +62,7 @@ public final class Database {
      * To be run <strong>AFTER</strong> interacting with the database. Used internally.
      */
 
-    private void finishTransaction() {
+    private static void finishTransaction() {
         transaction.commit();
         session.close();
     }
@@ -77,7 +76,7 @@ public final class Database {
      */
 
     @SuppressWarnings({"rawtypes", "LawOfDemeter", "OverloadedVarargsMethod"})
-    public List query(final String queryString, final Object... params) {
+    public static List query(final String queryString, final Object... params) {
 
         beginTransaction();
 
@@ -100,7 +99,7 @@ public final class Database {
      */
 
     @SuppressWarnings({"rawtypes", "LawOfDemeter"})
-    public List query(final Supplier<List> funct) {
+    public static List query(final Supplier<List> funct) {
         beginTransaction();
         final List results = funct.get();
         finishTransaction();
@@ -112,7 +111,7 @@ public final class Database {
      */
 
     @SuppressWarnings({"rawtypes", "LawOfDemeter"})
-    public void query(final Runnable funct) {
+    public static void query(final Runnable funct) {
         beginTransaction();
         funct.run();
         finishTransaction();
@@ -122,7 +121,7 @@ public final class Database {
      * @param entity an entity to remove
      */
 
-    public void remove(final Object entity) {
+    public static void remove(final Object entity) {
         beginTransaction();
         session.remove(entity);
         finishTransaction();
@@ -134,7 +133,7 @@ public final class Database {
      * @param entity Object to be saved
      */
 
-    public void save(final Object entity) {
+    public static void save(final Object entity) {
         beginTransaction();
         session.persist(entity);
         finishTransaction();
@@ -147,7 +146,7 @@ public final class Database {
      * This includes {@link uk.ac.kent.models.records.PersonalDetailsRecord} and {@link uk.ac.kent.models.records.EmploymentDetailsRecord}.
      */
 
-    public void populate() {
+    public static void populate() {
         beginTransaction();
         try {
             // Make Directors

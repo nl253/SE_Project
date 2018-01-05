@@ -29,6 +29,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "recommendations")
 @SuppressWarnings({"AlibabaAbstractClassShouldStartWithAbstractNaming", "DesignForExtension", "PublicMethodNotExposedInInterface"})
 @Entity
+
 @Inheritance(strategy = InheritanceType.JOINED)
 @Access(AccessType.FIELD)
 public abstract class BaseRecommendation {

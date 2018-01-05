@@ -31,15 +31,12 @@ public final class LoginController extends BaseController {
     private Button btn;
 
     /**
-     * @param database a reference to the {@link Database}
      * @param parent parent {@link Stage}
      */
 
-    public LoginController(final Database database, final Stage parent) {
-        super(database, parent);
+    public LoginController(final Stage parent) {
+        super(parent);
     }
-
-    public LoginController() {}
 
     /**
      * @throws IOException
@@ -84,7 +81,7 @@ public final class LoginController extends BaseController {
      */
 
     private void displayDashboardView() throws IOException {
-        new DashboardController(getDatabase(), getStage()).displayMainView();
+        new DashboardController(getStage()).displayMainView();
         getStage().close();
     }
 
@@ -95,7 +92,7 @@ public final class LoginController extends BaseController {
      */
 
     private boolean authenticate() {
-        return !getDatabase()
+        return !Database
                 .query("SELECT e FROM Employee e WHERE CONCAT(e.personalDetails.lastName, e.id) = ?0 AND e.password = ?1", username, password)
                 .isEmpty();
     }

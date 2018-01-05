@@ -12,7 +12,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -28,7 +27,6 @@ import javax.persistence.Transient;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class ProbationRecord extends BaseRecord {
 
-    @Basic(optional = false)
     private String reason;
 
     @Column(name = "start_date")
@@ -89,21 +87,29 @@ public final class ProbationRecord extends BaseRecord {
         return new ProbationRecord(start, end, reason);
     }
 
-    public LocalDate getStartDate() { return startDate; }
+    public LocalDate getStartDate() {
+        return startDate;
+    }
 
     public void setStartDate(final LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() { return endDate; }
+    public LocalDate getEndDate() {
+        return endDate;
+    }
 
     public void setEndDate(final LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public String getReason() { return reason; }
+    public String getReason() {
+        return reason;
+    }
 
-    public void setReason(final String reason) { this.reason = reason; }
+    public void setReason(final String reason) {
+        this.reason = reason;
+    }
 
     @Override
     public String toString() {

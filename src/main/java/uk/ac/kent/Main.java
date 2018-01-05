@@ -26,7 +26,7 @@ public final class Main extends Application {
 
     @Override
     public final void start(final Stage stage) throws IOException {
-        new LoginController(new Database(), stage).displayMainView();
+        new LoginController(stage).displayMainView();
     }
 
     /**
@@ -34,7 +34,7 @@ public final class Main extends Application {
      */
 
     public static void main(final String[] args) {
-        new Database().populate();
+        Database.populate();
         System.exit(0);
         // launch(args);
     }

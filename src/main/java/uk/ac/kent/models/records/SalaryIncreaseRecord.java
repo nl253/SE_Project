@@ -22,8 +22,7 @@ import javax.persistence.Transient;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class SalaryIncreaseRecord extends BaseRecord {
 
-    @Column(name = "new_salary", nullable = false)
-    @Basic(optional = false)
+    @Column(name = "new_salary")
     private long newSalary;
 
     @Column(name = "start_date")

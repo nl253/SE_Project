@@ -64,27 +64,27 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @OneToOne(targetEntity = PersonalDetailsRecord.class, optional = false, orphanRemoval = true)
-    @JoinColumn(name = "personal_details", nullable = false)
+    @OneToOne(targetEntity = PersonalDetailsRecord.class)
+    @JoinColumn(name = "personal_details")
     private PersonalDetailsRecord personalDetails;
 
-    @OneToOne(targetEntity = EmploymentDetailsRecord.class, optional = false, orphanRemoval = true)
-    @JoinColumn(name = "employment_details", nullable = false)
+    @OneToOne(targetEntity = EmploymentDetailsRecord.class)
+    @JoinColumn(name = "employment_details")
     private EmploymentDetailsRecord employmentDetails;
 
-    @OneToMany(targetEntity = ProbationRecord.class, orphanRemoval = true)
+    @OneToMany(targetEntity = ProbationRecord.class)
     @JoinColumn(name = "probation_record")
     private List<ProbationRecord> probationRecords;
 
-    @OneToMany(targetEntity = SalaryIncreaseRecord.class, orphanRemoval = true)
+    @OneToMany(targetEntity = SalaryIncreaseRecord.class)
     @JoinColumn(name = "salary_increase_record")
     private List<SalaryIncreaseRecord> salaryIncreaseRecords;
 
     @JoinColumn(name = "annual_review")
-    @OneToMany(targetEntity = AnnualReviewRecord.class, orphanRemoval = true)
+    @OneToMany(targetEntity = AnnualReviewRecord.class)
     private List<AnnualReviewRecord> annualReviewRecords;
 
-    @OneToOne(targetEntity = TerminationRecord.class, orphanRemoval = true)
+    @OneToOne(targetEntity = TerminationRecord.class)
     @JoinColumn(name = "termination_reason")
     private TerminationRecord terminationRecord;
 

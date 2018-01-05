@@ -30,20 +30,18 @@ import uk.ac.kent.models.people.Relative;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface", "ReturnOfInnerClass", "WeakerAccess"})
 public final class PersonalDetailsRecord extends BaseRecord {
 
-    @Basic(optional = false)
     @Column(name = "last_name")
     private String lastName;
 
-    @Basic(optional = false)
     @Column(name = "first_name")
     private String firstName;
 
-    @OneToOne(orphanRemoval = true, targetEntity = Address.class)
+    @OneToOne(targetEntity = Address.class)
     private Address address;
 
     private String email;
 
-    @OneToOne(targetEntity = Relative.class, orphanRemoval = true)
+    @OneToOne(targetEntity = Relative.class)
     private Relative relative;
 
     /**

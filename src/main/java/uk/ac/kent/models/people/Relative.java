@@ -7,7 +7,6 @@ import java.util.Locale;
 import java.util.Optional;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,12 +32,10 @@ public final class Relative {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Basic(optional = false)
-    @Column(name = "last_name", nullable = false)
+    @Column(name = "last_name")
     private String lastName;
 
-    @Basic(optional = false)
-    @Column(name = "first_name", nullable = false)
+    @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "phone_number")

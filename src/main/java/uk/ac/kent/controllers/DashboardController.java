@@ -17,13 +17,12 @@ import uk.ac.kent.Database;
 public class DashboardController extends BaseController {
 
     /**
-     * @param database a reference to the {@link Database}
      * @param parent a reference to the parent {@link Stage}
      */
 
     @SuppressWarnings("WeakerAccess")
-    public DashboardController(final Database database, final Stage parent) {
-        super(database, parent);
+    public DashboardController(final Stage parent) {
+        super(parent);
     }
 
     /**
