@@ -9,6 +9,8 @@
                       transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
+        <!--Turns out persistence classes need to be declared here as well-->
+
         <!--Records-->
         <class>uk.ac.kent.models.records.BaseRecord</class>
         <class>uk.ac.kent.models.records.ProbationRecord</class>
@@ -53,17 +55,13 @@
 
         <properties>
 
-
-            <!--Apparently deprecated-->
-            <!--<property name="javax.persistence.jdbc.driver"-->
-                      <!--value="com.mysql.jdbc.Driver"/>-->
+            <!--I am using my credentials - Norbert-->
+            <!--database URI is protocol://host:port/database-->
             <property name="javax.persistence.jdbc.url"
                       value="jdbc:mysql://dragon.kent.ac.uk:3306/nl253"/>
 
             <property value="100" name="connection.pool_size"/>
 
-
-            <!--I am using my credentials - Norbert-->
             <property name="javax.persistence.jdbc.user" value="nl253"/>
             <property name="javax.persistence.jdbc.password" value="ngan-dt"/>
 
@@ -73,8 +71,6 @@
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.connection.autocommit" value="false"/>
             <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
-            <!--<property name="hibernate.dialect"-->
-            <!--value="org.hibernate.dialect.MySQLDialect"/>-->
 
         </properties>
     </persistence-unit>
