@@ -1,18 +1,11 @@
 package uk.ac.kent.models.records;
 
-import java.security.SecureRandom;
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Supplier;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -31,20 +24,51 @@ import javax.persistence.Table;
 @SuppressWarnings({"ClassWithoutLogger", "unused", "PublicConstructor", "PublicMethodNotExposedInInterface"})
 public final class TerminationRecord extends BaseRecord {
 
-    @Enumerated(EnumType.STRING)
-    private TerminationReason reason;
+    private String reason;
 
-    @Column(name = "end_date")
-    private LocalDate endDate = LocalDate.now();
+    @Column(name = "end_of_employment")
+    private LocalDate endOfEmployment;
 
     /**
-     * @param reason termination reason
-     * @param endDate end date
+     * @param creationDate date of creation ({@link LocalDate})
+     * @param modificationDate date of modification ({@link LocalDate})
+     * @param endOfEmployment last day in work ({@link LocalDate})
+     * @param reason reason for termination ({@link String})
      */
 
-    public TerminationRecord(final TerminationReason reason, final LocalDate endDate) {
+    public TerminationRecord(final LocalDate creationDate, final LocalDate modificationDate, final String reason, final LocalDate endOfEmployment) {
+        super(creationDate, modificationDate);
         this.reason = reason;
-        this.endDate = endDate;
+        this.endOfEmployment = endOfEmployment;
+    }
+
+    /**
+     * @param creationDate date of creation ({@link LocalDate})
+     * @param modificationDate date of modification ({@link LocalDate})
+     * @param endOfEmployment last day in work ({@link LocalDate})
+     */
+
+    public TerminationRecord(final LocalDate creationDate, final LocalDate modificationDate, final LocalDate endOfEmployment) {
+        super(creationDate, modificationDate);
+        this.endOfEmployment = endOfEmployment;
+    }
+
+    /**
+     * @param reason reason for termination ({@link String})
+     * @param endOfEmployment end date
+     */
+
+    public TerminationRecord(final String reason, final LocalDate endOfEmployment) {
+        this.reason = reason;
+        this.endOfEmployment = endOfEmployment;
+    }
+
+    /**
+     * @param reason reason for termination ({@link String})
+     */
+
+    public TerminationRecord(final String reason) {
+        this(reason, LocalDate.now());
     }
 
     /**
@@ -54,55 +78,31 @@ public final class TerminationRecord extends BaseRecord {
     @SuppressWarnings({"MagicNumber", "ProtectedMemberInFinalClass"})
     protected TerminationRecord() {}
 
-    /**
-     * @return a fake {@link TerminationRecord}
-     */
-
-    @SuppressWarnings({"AccessingNonPublicFieldOfAnotherObject", "LocalVariableOfConcreteClass", "MagicNumber", "Duplicates"})
-    public static TerminationRecord fake() {
-
-        // secure pseudo-random number generator
-        final Random random = new SecureRandom();
-
-        // @formatter:off
-        final Supplier<LocalDate> randomDateSupplier = () -> {
-            // generate a random integer between those two values and finally
-            // convert it back to a LocalDate
-            final long minDay = LocalDate.of(2013, 1, 1).toEpochDay();
-            final long maxDay = LocalDate.of(2017, 1, 31).toEpochDay();
-            final long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
-            return LocalDate.ofEpochDay(randomDay);
-        };
-
-        final TerminationRecord record = new TerminationRecord();
-
-
-        // get random value from TerminationReason enum
-        final TerminationReason reason = TerminationReason.values()[random.nextInt(TerminationReason.values().length)];
-
-        // @formatter:on
-        return new TerminationRecord(reason, randomDateSupplier.get());
-    }
-
-    public TerminationReason getReason() {
+    public String getReason() {
         return reason;
     }
 
-    public void setReason(final TerminationReason reason) {
+    public void setReason(final String reason) {
         this.reason = reason;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
+    public LocalDate getEndOfEmployment() {
+        return endOfEmployment;
     }
 
-    public void setEndDate(final LocalDate endDate) {
-        this.endDate = endDate;
+    public void setEndOfEmployment(final LocalDate endOfEmployment) {
+        this.endOfEmployment = endOfEmployment;
     }
 
+    @SuppressWarnings("ConditionalExpression")
     @Override
     public String toString() {
-        return MessageFormat
-                .format("TerminationRecord<reason={0}, endDate={1}>", reason, endDate);
+        // @formatter:off
+        return MessageFormat.format("TerminationRecord<reason={0}, endDate={1}>",
+                                    (reason == null) ? "not available" : reason,
+                                    (endOfEmployment == null) ? "not available" : endOfEmployment.toString(),
+                                    (getCreationDate() == null) ? "not available" : getCreationDate().toString()
+                                   );
+        // @formatter:on
     }
 }

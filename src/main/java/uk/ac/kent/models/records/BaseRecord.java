@@ -5,12 +5,9 @@ import java.time.LocalDate;
 import java.util.logging.Logger;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -25,7 +22,7 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author norbert
  */
 
-@SuppressWarnings({"ClassHasNoToStringMethod", "PublicMethodNotExposedInInterface"})
+@SuppressWarnings({"ClassHasNoToStringMethod", "PublicMethodNotExposedInInterface", "WeakerAccess", "ConstructorNotProtectedInAbstractClass"})
 @MappedSuperclass
 @Table(name = "records")
 @Access(AccessType.FIELD)
@@ -39,43 +36,55 @@ public abstract class BaseRecord {
 
     @Column(name = "modified_date")
     @UpdateTimestamp
-    private LocalDate modifiedDate;
+    private LocalDate modificationDate;
 
     @SuppressWarnings({"WeakerAccess", "ProtectedField"})
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected final int id;
+    @GeneratedValue
+    protected int id;
+
 
     @Column(name = "date_created", updatable = false)
     @CreationTimestamp
-    private LocalDate dateCreated = LocalDate.now();
+    private LocalDate creationDate;
 
-    @Transient
-    private static int nextId;
+    /**
+     * @param creationDate date of creation ({@link LocalDate})
+     * @param modificationDate date of modification ({@link LocalDate})
+     */
+
+    public BaseRecord(final LocalDate creationDate, final LocalDate modificationDate) {
+        this.modificationDate = modificationDate;
+        this.creationDate = creationDate;
+    }
 
     /**
      * Empty constructor for Hibernate.
      */
 
-    @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
-    BaseRecord() {
-        id = nextId;
-        nextId++;
+    public BaseRecord() {}
+
+    public final LocalDate getModificationDate() {
+        return modificationDate;
     }
 
-    public final LocalDate getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public final void setModifiedDate(final LocalDate modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    public final void setModificationDate(final LocalDate modifiedDate) {
+        this.modificationDate = modifiedDate;
     }
 
     final int getId() {
         return id;
     }
 
+    public final void setId(final int id) {
+        this.id = id;
+    }
+
     final boolean getSigned() {
+        return signed;
+    }
+
+    public final boolean isSigned() {
         return signed;
     }
 
@@ -83,18 +92,29 @@ public abstract class BaseRecord {
         this.signed = signed;
     }
 
-    public final LocalDate getDateCreated() {
-        return dateCreated;
+    public final void sign() {
+        signed = true;
     }
 
-    public final void setDateCreated(final LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
+    public final LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public final void setCreationDate(final LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 
     @SuppressWarnings({"DesignForExtension", "ConditionalExpression"})
     @Override
     public String toString() {
-        return MessageFormat.format("{0}<id={1}, {2}>", getClass()
-                .getName(), id, signed ? "signed" : "unsigned");
+        // @formatter:off
+        return MessageFormat.format("{0}<id={1}, signed={2}, modifiedDate={3}, dateCreated={4}>",
+                                    getClass().getName(),
+                                    id,
+                                    signed,
+                                    (modificationDate != null) ? getModificationDate().toString() : "not available",
+                                    (creationDate != null) ? getCreationDate().toString() : "not available"
+                                   );
+        // @formatter:on
     }
 }

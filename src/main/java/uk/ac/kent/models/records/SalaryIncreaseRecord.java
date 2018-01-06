@@ -1,16 +1,12 @@
 package uk.ac.kent.models.records;
 
-import java.security.SecureRandom;
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.util.Random;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * @author norbert
@@ -29,21 +25,25 @@ public final class SalaryIncreaseRecord extends BaseRecord {
     private LocalDate startDate;
 
     /**
-     * @param newSalary new salary
-     * @param startDate starting data
+     * @param dateCreated date of creation ({@link LocalDate})
+     * @param modifiedDate date of modification ({@link LocalDate})
+     * @param newSalary new annual salary
+     * @param startDate start date ({@link LocalDate})
      */
 
-    public SalaryIncreaseRecord(final long newSalary, final LocalDate startDate) {
+    public SalaryIncreaseRecord(final LocalDate dateCreated, final LocalDate modifiedDate, final long newSalary, final LocalDate startDate) {
+        super(dateCreated, modifiedDate);
         this.newSalary = newSalary;
         this.startDate = startDate;
     }
 
     /**
-     * @param newSalary new salary
+     * @param newSalary new annual salary
+     * @param startDate start date ({@link LocalDate})
      */
 
-    public SalaryIncreaseRecord(final long newSalary) {
-        this(newSalary, LocalDate.now());
+    public SalaryIncreaseRecord(final long newSalary, final LocalDate startDate) {
+        this(LocalDate.now(), LocalDate.now(), newSalary, startDate);
     }
 
     /**
@@ -53,15 +53,11 @@ public final class SalaryIncreaseRecord extends BaseRecord {
     @SuppressWarnings("ProtectedMemberInFinalClass")
     public SalaryIncreaseRecord() {}
 
+
     /**
      * @return a fake {@link SalaryIncreaseRecord}
      */
 
-    @Transient
-    public static SalaryIncreaseRecord fake() {
-        final Random random = new SecureRandom();
-        return new SalaryIncreaseRecord(15_000 + random.nextInt(30_000));
-    }
 
     public long getNewSalary() {
         return newSalary;
@@ -79,9 +75,16 @@ public final class SalaryIncreaseRecord extends BaseRecord {
         this.startDate = startDate;
     }
 
+    @SuppressWarnings("ConditionalExpression")
     @Override
     public String toString() {
-        return MessageFormat
-                .format("SalaryIncreaseRecord<newSalary={0}, startDate={1}>", newSalary, startDate);
+        // @formatter:off
+        return MessageFormat.format("SalaryIncreaseRecord<newSalary={0}, startDate={1}, modificationDate={2}, creationDate={3}>",
+                                    newSalary,
+                                    (startDate == null) ? "not available" : startDate.toString(),
+                                    (getModificationDate() == null) ? "not available" : getModificationDate().toString(),
+                                    (getCreationDate() == null) ? "not available" : getCreationDate().toString()
+                                   );
+        // @formatter:on
     }
 }

@@ -7,12 +7,11 @@ import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 /**
@@ -35,28 +34,51 @@ import org.hibernate.annotations.UpdateTimestamp;
 public abstract class BaseRecommendation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
-    @Transient
-    private static int nextId;
-
-    @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
-    protected BaseRecommendation() {
-        id = nextId;
-        nextId++;
-    }
+    @GeneratedValue
+    protected int id;
 
     @Column(name = "modified_date")
     @UpdateTimestamp
-    private LocalDate modifiedDate;
+    private LocalDate modificationDate;
 
-    public LocalDate getModifiedDate() {
-        return modifiedDate;
+    @Column(name = "creation_date")
+    @CreationTimestamp
+    private LocalDate creationDate;
+
+    @SuppressWarnings("ConstructorNotProtectedInAbstractClass")
+    public BaseRecommendation(final LocalDate modificationDate, final LocalDate creationDate) {
+        this.modificationDate = modificationDate;
+        this.creationDate = creationDate;
     }
 
-    public void setModifiedDate(final LocalDate modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    /**
+     * Empty constructor for Hibernate.
+     */
+
+    protected BaseRecommendation() {}
+
+    public LocalDate getModificationDate() {
+        return modificationDate;
+    }
+
+    public LocalDate getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(final LocalDate creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public void setModificationDate(final LocalDate modifiedDate) {
+        this.modificationDate = modifiedDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(final int id) {
+        this.id = id;
     }
 
     @SuppressWarnings("DesignForExtension")

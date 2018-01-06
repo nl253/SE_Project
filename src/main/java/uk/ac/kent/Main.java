@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import uk.ac.kent.controllers.LoginController;
 
 /**
- * The entry point into the application.
+ * The entry point into the application. Must extend {@link Application}.
  *
  * @author Norbert
  */
@@ -21,7 +21,7 @@ public final class Main extends Application {
     /**
      * JavaFX will pass a {@link Stage} instance into this method.
      *
-     * @param stage top level window
+     * @param stage top level window ({@link Stage})
      */
 
     @Override
@@ -34,8 +34,8 @@ public final class Main extends Application {
      */
 
     public static void main(final String[] args) {
-        Database.populate();
+        DatabasePopulator.populate(); // fill the database (testing)
         System.exit(0);
-        // launch(args);
+        launch(args); // launch JavaFX app
     }
 }

@@ -1,14 +1,11 @@
 package uk.ac.kent.models.other;
 
-import com.github.javafaker.Faker;
 import java.text.MessageFormat;
-import java.util.Locale;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import uk.ac.kent.models.records.PersonalDetailsRecord;
@@ -19,14 +16,14 @@ import uk.ac.kent.models.records.PersonalDetailsRecord;
  * @author norbert
  */
 
-@SuppressWarnings({"ProtectedMemberInFinalClass", "PublicMethodNotExposedInInterface"})
+@SuppressWarnings({"ProtectedMemberInFinalClass", "PublicMethodNotExposedInInterface", "WeakerAccess"})
 @Entity
 @Table(name = "addresses")
 @Access(AccessType.FIELD)
 public final class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
 
     private String street;
@@ -58,6 +55,10 @@ public final class Address {
      */
 
     public Address() {}
+
+    public void setId(final int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -95,26 +96,16 @@ public final class Address {
         this.postCode = postCode;
     }
 
-    /**
-     * @return a fake {@link Address}
-     */
-
-    public static Address fake() {
-        // fake data generator
-        final Faker faker = new Faker(new Locale("en-GB"));
-        final com.github.javafaker.Address addressFaker = faker.address();
-
-        // @formatter:off
-        return new Address(addressFaker.streetName(),
-                           addressFaker.buildingNumber(),
-                           addressFaker.zipCode(),
-                           addressFaker.city());
-        // @formatter:on
-    }
-
+    @SuppressWarnings({"MethodWithMoreThanThreeNegations", "ConditionalExpression"})
     @Override
     public final String toString() {
+        // @formatter:off
         return MessageFormat
-                .format("Address<street={0}, houseNumber={1}, city={2}, postCode={3}>", street, houseNumber, city, postCode);
+                .format("Address<street={0}, houseNumber={1}, city={2}, postCode={3}>",
+                        (street != null)      ? street      : "not available",
+                        (houseNumber != null) ? houseNumber : "not available",
+                        (city != null)        ? city        : "not available",
+                        (postCode != null)    ? postCode    : "not available");
+        // @formatter:on
     }
 }

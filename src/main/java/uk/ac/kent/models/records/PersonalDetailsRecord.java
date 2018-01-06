@@ -1,12 +1,9 @@
 package uk.ac.kent.models.records;
 
-import com.github.javafaker.Faker;
-import com.github.javafaker.Name;
 import java.text.MessageFormat;
-import java.util.Locale;
+import java.time.LocalDate;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -36,23 +33,24 @@ public final class PersonalDetailsRecord extends BaseRecord {
     @Column(name = "first_name")
     private String firstName;
 
-    @OneToOne(targetEntity = Address.class)
+    @OneToOne
     private Address address;
 
     private String email;
 
-    @OneToOne(targetEntity = Relative.class)
+    @OneToOne
     private Relative relative;
 
     /**
-     * @param lastName surname
-     * @param address full address
-     * @param email email address
-     * @param nextOfKin full name of relative
-     * @param firstName first name
+     * @param firstName first name ({@link String})
+     * @param lastName surname ({@link String})
+     * @param email email address ({@link String})
+     * @param nextOfKin next of kin ({@link Relative})
+     * @param address full address ({@link Address})
      */
 
     public PersonalDetailsRecord(final String firstName, final String lastName, final String email, final Address address, final Relative nextOfKin) {
+        super(LocalDate.now(), LocalDate.now());
         this.lastName = lastName;
         this.address = address;
         this.email = email;
@@ -60,32 +58,42 @@ public final class PersonalDetailsRecord extends BaseRecord {
         this.firstName = firstName;
     }
 
-    public PersonalDetailsRecord() {}
-
     /**
-     * @return a fake {@link PersonalDetailsRecord}
+     * @param firstName first name ({@link String})
+     * @param lastName surname ({@link String})
+     * @param email email address ({@link String})
      */
 
-    public static PersonalDetailsRecord fake() {
-        // fake data generator
-        final Faker faker = new Faker(new Locale("en-GB"));
-        final Name nameFaker = faker.name();
-
-        // @formatter:off
-        return new PersonalDetailsRecord(
-                nameFaker.firstName(),
-                nameFaker.lastName(),
-                faker.internet().emailAddress(),
-                Address.fake(),
-                new Relative(
-                        nameFaker.firstName(),
-                        nameFaker.lastName(),
-                        faker.phoneNumber().cellPhone()));
-        // @formatter:on
+    public PersonalDetailsRecord(final String firstName, final String lastName, final String email) {
+        this(firstName, lastName, email, null, null);
     }
+
+    /**
+     * @param firstName first name ({@link String})
+     * @param lastName surname ({@link String})
+     */
+
+
+    public PersonalDetailsRecord(final String firstName, final String lastName) {
+        this(firstName, lastName, null);
+    }
+
+    /**
+     * Empty constructor for Hibernate.
+     */
+
+    public PersonalDetailsRecord() {}
 
     public Relative getRelative() {
         return relative;
+    }
+
+    public void setLastName(final String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFirstName(final String firstName) {
+        this.firstName = firstName;
     }
 
     public void setRelative(final Relative nextOfKin) {
@@ -116,16 +124,26 @@ public final class PersonalDetailsRecord extends BaseRecord {
         return lastName;
     }
 
-    @SuppressWarnings("WeakerAccess")
-    // @Column(name = "fullname")
+    @SuppressWarnings({"WeakerAccess", "ConditionalExpression"})
     public String getFullName() {
-        return MessageFormat.format("{0} {1}", firstName, lastName);
+        // @formatter:off
+        return MessageFormat.format("{0} {1}",
+                                    (firstName == null) ? "first name not available" : firstName,
+                                    (lastName == null) ? "last name not available" : lastName);
+        // @formatter:on
     }
 
-    @SuppressWarnings("DesignForExtension")
+    @SuppressWarnings({"DesignForExtension", "ConditionalExpression"})
     @Override
     public String toString() {
-        return MessageFormat.format("{0}<{1}, {2}>", getClass()
-                .getName(), firstName, lastName);
+        // @formatter:off
+        return MessageFormat.format("{0}<firstName={1}, lastName={2}, email={3}, address={4}>",
+                                    getClass().getName(),
+                                    (firstName == null) ? "not available" : firstName,
+                                    (lastName == null) ? "not available" : lastName,
+                                    (email == null) ? "not available" : email,
+                                    (address == null) ? "not available" : address.toString()
+                                   );
+        // @formatter:on
     }
 }

@@ -1,16 +1,14 @@
 package uk.ac.kent.models.records;
 
 import java.text.MessageFormat;
-import java.util.Optional;
+import java.time.LocalDate;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import uk.ac.kent.models.records.recommendations.BaseRecommendation;
-import uk.ac.kent.models.records.recommendations.RemainRecommendation;
 
 /**
  * Each {@link uk.ac.kent.models.people.Employee} must have an {@link AnnualReviewRecord} created on a yearly basis.
@@ -27,8 +25,29 @@ public final class AnnualReviewRecord extends BaseRecord {
 
     @SuppressWarnings("FieldCanBeLocal")
     @JoinColumn(name = "recommendation")
-    @OneToOne(targetEntity = BaseRecommendation.class)
+    @OneToOne
     private BaseRecommendation baseRecommendation;
+
+    /**
+     * @param creationDate date of creation ({@link LocalDate})
+     * @param modificationDate date of modification ({@link LocalDate})
+     * @param baseRecommendation reference to baseRecommendation associated with this review
+     */
+
+    public AnnualReviewRecord(final BaseRecommendation baseRecommendation, final LocalDate modificationDate, final LocalDate creationDate) {
+        super(creationDate, modificationDate);
+        this.baseRecommendation = baseRecommendation;
+    }
+
+    /**
+     * @param creationDate date of creation ({@link LocalDate})
+     * @param baseRecommendation reference to baseRecommendation associated with this review
+     */
+
+    public AnnualReviewRecord(final BaseRecommendation baseRecommendation, final LocalDate creationDate) {
+        super(creationDate, creationDate);
+        this.baseRecommendation = baseRecommendation;
+    }
 
     /**
      * @param baseRecommendation reference to baseRecommendation associated with this review
@@ -42,25 +61,14 @@ public final class AnnualReviewRecord extends BaseRecord {
      * Empty constructor for Hibernate.
      */
 
-    @SuppressWarnings("ProtectedMemberInFinalClass")
-    protected AnnualReviewRecord() {}
-
-    /**
-     * @return a fake AnnualReviewRecord
-     */
-
-    @Transient
-    @SuppressWarnings("LocalVariableOfConcreteClass")
-    public static AnnualReviewRecord fake() {
-        return new AnnualReviewRecord(new RemainRecommendation());
-    }
+    public AnnualReviewRecord() {}
 
     public void setBaseRecommendation(final BaseRecommendation baseRecommendation) {
         this.baseRecommendation = baseRecommendation;
     }
 
-    public Optional<BaseRecommendation> getBaseRecommendation() {
-        return Optional.ofNullable(baseRecommendation);
+    public BaseRecommendation getBaseRecommendation() {
+        return baseRecommendation;
     }
 
     @Override

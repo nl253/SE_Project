@@ -1,11 +1,8 @@
 package uk.ac.kent.models.people;
 
-import java.text.MessageFormat;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import uk.ac.kent.models.records.EmploymentDetailsRecord;
 import uk.ac.kent.models.records.PersonalDetailsRecord;
@@ -24,13 +21,23 @@ import uk.ac.kent.models.records.PersonalDetailsRecord;
 public final class Director extends Employee {
 
     /**
+     * @param password a {@link String} password
+     * @param personalDetails a {@link PersonalDetailsRecord} record
+     * @param employmentDetails an {@link EmploymentDetailsRecord} record
+     */
+
+    public Director(final PersonalDetailsRecord personalDetails, final EmploymentDetailsRecord employmentDetails, final String password) {
+        super(personalDetails, employmentDetails, password);
+    }
+
+    /**
      * @param personalDetailsRecord a {@link PersonalDetailsRecord}
      * @param employmentDetailsRecord an {@link EmploymentDetailsRecord}
      */
 
     @SuppressWarnings("WeakerAccess")
     public Director(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
-        super(personalDetailsRecord, employmentDetailsRecord);
+        this(personalDetailsRecord, employmentDetailsRecord, null);
     }
 
     /**
@@ -39,21 +46,4 @@ public final class Director extends Employee {
 
     @SuppressWarnings("ProtectedMemberInFinalClass")
     public Director() {}
-
-    /**
-     * @return a fake {@link Director}
-     */
-
-    @SuppressWarnings("MethodOverridesStaticMethodOfSuperclass")
-    public static Director fake() {
-        return new Director(PersonalDetailsRecord
-                                    .fake(), EmploymentDetailsRecord.fake());
-    }
-
-    @SuppressWarnings("LawOfDemeter")
-    @Override
-    public String toString() {
-        return MessageFormat
-                .format("Director<section={0}>", getEmploymentDetails().getDepartment().toString());
-    }
 }
