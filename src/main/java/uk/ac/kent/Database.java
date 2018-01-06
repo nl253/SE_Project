@@ -2,7 +2,9 @@ package uk.ac.kent;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.function.Supplier;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -47,6 +49,14 @@ public final class Database {
 
     /** cannot be instantiated */
     private Database() {}
+
+    public static boolean inTransaction() {
+        return (transaction != null) && transaction.isActive();
+    }
+
+    public static boolean openSession() {
+        return (session != null) && session.isOpen();
+    }
 
     /**
      * To be run <strong>BEFORE</strong> interacting with the database. Used internally.
@@ -94,26 +104,26 @@ public final class Database {
     }
 
     /**
-     * @param funct function (a query) to execute
+     * @param funct a custom {@link Function} (a query) that accepts an {@link EntityManager} and returns a {@link List} of results
      * @return results of the query
      */
 
     @SuppressWarnings({"rawtypes", "LawOfDemeter"})
-    public static List query(final Supplier<List> funct) {
+    public static List query(final Function<EntityManager, List> funct) {
         beginTransaction();
-        final List results = funct.get();
+        final List results = funct.apply(session);
         finishTransaction();
         return results;
     }
 
     /**
-     * @param funct a {@link Runnable} to run with an open session
+     * @param funct a {@link Consumer} that accepts an {@link EntityManager} to run with an open session
      */
 
     @SuppressWarnings({"rawtypes", "LawOfDemeter"})
-    public static void query(final Runnable funct) {
+    public static void query(final Consumer<EntityManager> funct) {
         beginTransaction();
-        funct.run();
+        funct.accept(session);
         finishTransaction();
     }
 
@@ -165,12 +175,14 @@ public final class Database {
         }
     }
 
+    @SuppressWarnings("UnnecessarilyQualifiedInnerClassAccess")
     @Override
     public String toString() {
         return MessageFormat
-                .format("Database<open={0}, properties={1}>", (session != null) && session
-                        .isOpen(), sessionFactory.getProperties().values()
-                                .stream().map(Object::toString)
-                                .collect(Collectors.joining(", ")));
+                .format("Database<open={0}, inTransaction={1} properties=[{2}]>", openSession(), inTransaction(), sessionFactory
+                        .getProperties().entrySet().stream()
+                        .map((Map.Entry<String, Object> x) -> MessageFormat
+                                .format("{0}: {1}", x.getKey(), x.getValue()))
+                        .collect(Collectors.joining(", ")));
     }
 }

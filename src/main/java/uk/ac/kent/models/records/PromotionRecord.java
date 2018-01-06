@@ -40,21 +40,21 @@ public final class PromotionRecord extends BaseRecord {
     @Column(name = "new_salary")
     private long newSalary;
 
-    /**
-     * Create a new {@link PromotionRecord}.
-     *
-     * @param newDepartament new department the employee is assigned to
-     * @param newPosition new position of the employee
-     * @param startDate start
-     * @param newSalary new salary
-     */
+    // /**
+    //  * Create a new {@link PromotionRecord}.
+    //  *
+    //  * @param newDepartament new department the employee is assigned to
+    //  * @param newPosition new position of the employee
+    //  * @param startDate start
+    //  * @param newSalary new salary
+    //  */
 
-    public PromotionRecord(final Department newDepartament, final Position newPosition, final LocalDate startDate, final long newSalary) {
-        this.newDepartment = newDepartament;
-        this.newPosition = newPosition;
-        this.startDate = startDate;
-        this.newSalary = newSalary;
-    }
+    // public PromotionRecord(final Department newDepartament, final Position newPosition, final LocalDate startDate, final long newSalary) {
+    //     this.newDepartment = newDepartament;
+    //     this.newPosition = newPosition;
+    //     this.startDate = startDate;
+    //     this.newSalary = newSalary;
+    // }
 
     /**
      * Empty constructor for Hibernate.
@@ -130,9 +130,16 @@ public final class PromotionRecord extends BaseRecord {
 
     public void setNewSalary(final long newSalary) { this.newSalary = newSalary; }
 
+    @SuppressWarnings("ConditionalExpression")
     @Override
     public String toString() {
+        // @formatter:off
         return MessageFormat
-                .format("PromotionRecord<newDepartament={0}, newPosition={1}, newSalary={2}, startDate={3}>", newDepartment, newPosition, newSalary, startDate);
+                .format("PromotionRecord<newDepartament={0}, newPosition={1}, newSalary={2}, startDate={3}>",
+                        (newDepartment == null) ? "not available" : newDepartment.toString(),
+                        (newPosition == null) ? "not available" : newPosition.toString() ,
+                        newSalary,
+                        (startDate == null) ? "not available" : startDate.toString());
+        // @formatter:on
     }
 }

@@ -4,9 +4,10 @@ import java.security.SecureRandom;
 import java.text.MessageFormat;
 import java.time.LocalDate;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.function.Supplier;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -28,23 +29,23 @@ public final class SalaryIncreaseRecord extends BaseRecord {
     @Column(name = "start_date")
     private LocalDate startDate;
 
-    /**
-     * @param newSalary new salary
-     * @param startDate starting data
-     */
-
-    public SalaryIncreaseRecord(final long newSalary, final LocalDate startDate) {
-        this.newSalary = newSalary;
-        this.startDate = startDate;
-    }
-
-    /**
-     * @param newSalary new salary
-     */
-
-    public SalaryIncreaseRecord(final long newSalary) {
-        this(newSalary, LocalDate.now());
-    }
+    // /**
+    //  * @param newSalary new salary
+    //  * @param startDate starting data
+    //  */
+    //
+    // public SalaryIncreaseRecord(final long newSalary, final LocalDate startDate) {
+    //     this.newSalary = newSalary;
+    //     this.startDate = startDate;
+    // }
+    //
+    // /**
+    //  * @param newSalary new salary
+    //  */
+    //
+    // public SalaryIncreaseRecord(final long newSalary) {
+    //     this(newSalary, LocalDate.now());
+    // }
 
     /**
      * Empty constructor for Hibernate.
@@ -57,10 +58,26 @@ public final class SalaryIncreaseRecord extends BaseRecord {
      * @return a fake {@link SalaryIncreaseRecord}
      */
 
+    @SuppressWarnings("Duplicates")
     @Transient
     public static SalaryIncreaseRecord fake() {
         final Random random = new SecureRandom();
-        return new SalaryIncreaseRecord(15_000 + random.nextInt(30_000));
+        final SalaryIncreaseRecord record = new SalaryIncreaseRecord();
+
+        // @formatter:off
+        final Supplier<LocalDate> randomDateSupplier = () -> {
+            // generate a random integer between those two values and finally
+            // convert it back to a LocalDate
+            final long minDay = LocalDate.of(2013, 1, 1).toEpochDay();
+            final long maxDay = LocalDate.of(2017, 1, 31).toEpochDay();
+            final long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+            return LocalDate.ofEpochDay(randomDay);
+        };
+
+        record.setNewSalary(15_000 + random.nextInt(30_000));
+        record.setStartDate(randomDateSupplier.get());
+
+        return record;
     }
 
     public long getNewSalary() {
@@ -79,9 +96,11 @@ public final class SalaryIncreaseRecord extends BaseRecord {
         this.startDate = startDate;
     }
 
+    @SuppressWarnings("ConditionalExpression")
     @Override
     public String toString() {
         return MessageFormat
-                .format("SalaryIncreaseRecord<newSalary={0}, startDate={1}>", newSalary, startDate);
+                .format("SalaryIncreaseRecord<newSalary={0}, startDate={1}>", newSalary, (startDate == null) ? "not available" : startDate
+                        .toString());
     }
 }

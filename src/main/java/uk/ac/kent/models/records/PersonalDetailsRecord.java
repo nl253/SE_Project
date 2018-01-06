@@ -6,7 +6,6 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -36,29 +35,29 @@ public final class PersonalDetailsRecord extends BaseRecord {
     @Column(name = "first_name")
     private String firstName;
 
-    @OneToOne(targetEntity = Address.class)
+    @OneToOne
     private Address address;
 
     private String email;
 
-    @OneToOne(targetEntity = Relative.class)
+    @OneToOne
     private Relative relative;
 
-    /**
-     * @param lastName surname
-     * @param address full address
-     * @param email email address
-     * @param nextOfKin full name of relative
-     * @param firstName first name
-     */
-
-    public PersonalDetailsRecord(final String firstName, final String lastName, final String email, final Address address, final Relative nextOfKin) {
-        this.lastName = lastName;
-        this.address = address;
-        this.email = email;
-        relative = nextOfKin;
-        this.firstName = firstName;
-    }
+    // /**
+    //  * @param lastName surname
+    //  * @param address full address
+    //  * @param email email address
+    //  * @param nextOfKin full name of relative
+    //  * @param firstName first name
+    //  */
+    //
+    // public PersonalDetailsRecord(final String firstName, final String lastName, final String email, final Address address, final Relative nextOfKin) {
+    //     this.lastName = lastName;
+    //     this.address = address;
+    //     this.email = email;
+    //     relative = nextOfKin;
+    //     this.firstName = firstName;
+    // }
 
     public PersonalDetailsRecord() {}
 
@@ -71,21 +70,27 @@ public final class PersonalDetailsRecord extends BaseRecord {
         final Faker faker = new Faker(new Locale("en-GB"));
         final Name nameFaker = faker.name();
 
-        // @formatter:off
-        return new PersonalDetailsRecord(
-                nameFaker.firstName(),
-                nameFaker.lastName(),
-                faker.internet().emailAddress(),
-                Address.fake(),
-                new Relative(
-                        nameFaker.firstName(),
-                        nameFaker.lastName(),
-                        faker.phoneNumber().cellPhone()));
-        // @formatter:on
+        final PersonalDetailsRecord record = new PersonalDetailsRecord();
+
+        record.setAddress(Address.fake());
+        record.setEmail(faker.internet().emailAddress());
+        record.setRelative(Relative.fake());
+        record.setFirstName(nameFaker.firstName());
+        record.setLastName(nameFaker.lastName());
+
+        return record;
     }
 
     public Relative getRelative() {
         return relative;
+    }
+
+    public void setLastName(final String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFirstName(final String firstName) {
+        this.firstName = firstName;
     }
 
     public void setRelative(final Relative nextOfKin) {
@@ -116,16 +121,20 @@ public final class PersonalDetailsRecord extends BaseRecord {
         return lastName;
     }
 
-    @SuppressWarnings("WeakerAccess")
-    // @Column(name = "fullname")
+    @SuppressWarnings({"WeakerAccess", "ConditionalExpression"})
     public String getFullName() {
-        return MessageFormat.format("{0} {1}", firstName, lastName);
+        // @formatter:off
+        return MessageFormat.format("{0} {1}",
+                                    (firstName == null) ? "first name not available" : firstName,
+                                    (lastName == null) ? "last name not available" : lastName);
+        // @formatter:on
     }
 
-    @SuppressWarnings("DesignForExtension")
+    @SuppressWarnings({"DesignForExtension", "ConditionalExpression"})
     @Override
     public String toString() {
-        return MessageFormat.format("{0}<{1}, {2}>", getClass()
-                .getName(), firstName, lastName);
+        return MessageFormat
+                .format("{0}<firstName={1}, lastName={2}>", getClass()
+                        .getName(), (firstName == null) ? "not available" : firstName, (lastName == null) ? "not available" : lastName);
     }
 }

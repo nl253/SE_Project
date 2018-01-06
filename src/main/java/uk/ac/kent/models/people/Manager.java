@@ -10,8 +10,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import uk.ac.kent.models.records.EmploymentDetailsRecord;
@@ -27,30 +25,31 @@ import uk.ac.kent.models.yuconz.Department;
  * @author norbert
  */
 
-@Table(name = "managers")
 @SuppressWarnings({"NonBooleanMethodNameMayNotStartWithQuestion", "MethodParameterNamingConvention", "WeakerAccess", "PublicConstructorInNonPublicClass", "MethodOverridesStaticMethodOfSuperclass"})
+@Table(name = "managers")
 @Entity
 @Access(AccessType.FIELD)
 public final class Manager extends Employee {
 
+    public static final int DEFAULT_NUMBER_OF_EMPLOYEES = 15;
     /**
      * A group of {@link Employee}s that the manger has been assigned.
      */
 
     @SuppressWarnings("FieldMayBeFinal")
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, targetEntity = Employee.class)
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
     private List<Employee> employees = new ArrayList<>(15);
 
-    /**
-     * @param personalDetailsRecord a {@link PersonalDetailsRecord}
-     * @param employmentDetailsRecord an {@link EmploymentDetailsRecord}
-     * @param employees an {@link Iterable} of {@link Employee}s
-     */
+    // /**
+    //  * @param personalDetailsRecord a {@link PersonalDetailsRecord}
+    //  * @param employmentDetailsRecord an {@link EmploymentDetailsRecord}
+    //  * @param employees an {@link Iterable} of {@link Employee}s
+    //  */
 
-    public Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord, final Iterable<Employee> employees) {
-        super(personalDetailsRecord, employmentDetailsRecord);
-        employees.forEach(this::addEmployee);
-    }
+    // public Manager(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord, final Iterable<Employee> employees) {
+    //     super(personalDetailsRecord, employmentDetailsRecord);
+    //     employees.forEach(this::addEmployee);
+    // }
 
     /**
      * Empty constructor for Hibernate.
@@ -65,31 +64,38 @@ public final class Manager extends Employee {
 
     public static Manager fake() {
         // @formatter:off
-        return new Manager(
-                PersonalDetailsRecord.fake(),
-                EmploymentDetailsRecord.fake(),
-                IntStream.range(0, 15)
-                        .mapToObj(x -> Employee.fake())
-                        .collect(Collectors.toList()));
+        final Manager manager = new Manager();
+        manager.setPersonalDetails(PersonalDetailsRecord.fake());
+        manager.setEmploymentDetails(EmploymentDetailsRecord.fake());
+        manager.setEmployees(IntStream.range(0, DEFAULT_NUMBER_OF_EMPLOYEES).mapToObj(x -> Employee.fake()).collect(Collectors.toList()));
+        return manager;
         // @formatter:on
     }
 
     @SuppressWarnings("OptionalContainsCollection")
-    final List<Employee> getEmployees() {
+    List<Employee> getEmployees() {
         return Collections.unmodifiableList(employees);
     }
 
-    final void addEmployee(final Employee e) {
+    void addEmployee(final Employee e) {
         employees.add(e);
     }
 
-    final void removeEmployee(final Employee e) {
+    void removeEmployee(final Employee e) {
         employees.remove(e);
     }
 
+    @SuppressWarnings("PublicMethodNotExposedInInterface")
+    public void setEmployees(final List<Employee> employees) {
+        this.employees = employees;
+    }
+
+    @SuppressWarnings("ConditionalExpression")
     @Override
     public String toString() {
-        return MessageFormat
-                .format("Manager<employees={0}>", getEmployees().toString());
+        return (employees != null) ? MessageFormat
+                .format("Manager<employees={0}>", employees
+                        .toString()) : MessageFormat
+                       .format("Manager<employees={0}>", "not available");
     }
 }

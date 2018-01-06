@@ -35,17 +35,17 @@ public final class ProbationRecord extends BaseRecord {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-    /**
-     * @param startDate start date of probation
-     * @param endDate end date of probation
-     * @param reason reason for probation
-     */
+    // /**
+    //  * @param startDate start date of probation
+    //  * @param endDate end date of probation
+    //  * @param reason reason for probation
+    //  */
 
-    public ProbationRecord(final LocalDate startDate, final LocalDate endDate, final String reason) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.reason = reason;
-    }
+    // public ProbationRecord(final LocalDate startDate, final LocalDate endDate, final String reason) {
+    //     this.startDate = startDate;
+    //     this.endDate = endDate;
+    //     this.reason = reason;
+    // }
 
     /**
      * Empty constructor for Hibernate.
@@ -84,7 +84,11 @@ public final class ProbationRecord extends BaseRecord {
 
         final String reason = loremFaker.paragraph();
 
-        return new ProbationRecord(start, end, reason);
+        final ProbationRecord record = new ProbationRecord();
+        record.setReason(reason);
+        record.setEndDate(end);
+        record.setStartDate(start);
+        return record;
     }
 
     public LocalDate getStartDate() {
@@ -111,12 +115,15 @@ public final class ProbationRecord extends BaseRecord {
         this.reason = reason;
     }
 
+    @SuppressWarnings("ConditionalExpression")
     @Override
     public String toString() {
         // @formatter:off
         return MessageFormat.format(
                         "ProbationRecord<startDate={0}, endDate={1}, reason={2}>",
-                        startDate, endDate, reason);
+                        (startDate == null) ? "not available" : startDate.toString(),
+                        (endDate == null) ? "not available" : endDate.toString(),
+                        (reason == null) ? "not available" : reason.toString());
         // @formatter:on
     }
 }

@@ -7,12 +7,10 @@ import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import org.hibernate.annotations.UpdateTimestamp;
 
 /**
@@ -35,28 +33,27 @@ import org.hibernate.annotations.UpdateTimestamp;
 public abstract class BaseRecommendation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-
-    @Transient
-    private static int nextId;
-
-    @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
-    protected BaseRecommendation() {
-        id = nextId;
-        nextId++;
-    }
+    @GeneratedValue
+    protected int id;
 
     @Column(name = "modified_date")
     @UpdateTimestamp
     private LocalDate modifiedDate;
 
-    public LocalDate getModifiedDate() {
+    public final LocalDate getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(final LocalDate modifiedDate) {
+    public final void setModifiedDate(final LocalDate modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public final int getId() {
+        return id;
+    }
+
+    public final void setId(final int id) {
+        this.id = id;
     }
 
     @SuppressWarnings("DesignForExtension")

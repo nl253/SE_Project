@@ -26,7 +26,7 @@ import uk.ac.kent.models.records.PersonalDetailsRecord;
 public final class Address {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
 
     private String street;
@@ -58,6 +58,10 @@ public final class Address {
      */
 
     public Address() {}
+
+    public void setId(final int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -112,9 +116,16 @@ public final class Address {
         // @formatter:on
     }
 
+    @SuppressWarnings({"MethodWithMoreThanThreeNegations", "ConditionalExpression"})
     @Override
     public final String toString() {
+        // @formatter:off
         return MessageFormat
-                .format("Address<street={0}, houseNumber={1}, city={2}, postCode={3}>", street, houseNumber, city, postCode);
+                .format("Address<street={0}, houseNumber={1}, city={2}, postCode={3}>",
+                        (street != null) ? street : "not available",
+                        (houseNumber != null) ? houseNumber : "not available",
+                        (city != null) ? city : "not available",
+                        (postCode != null) ? postCode : "not available");
+        // @formatter:on
     }
 }

@@ -12,7 +12,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 /**
@@ -37,15 +36,15 @@ public final class TerminationRecord extends BaseRecord {
     @Column(name = "end_date")
     private LocalDate endDate = LocalDate.now();
 
-    /**
-     * @param reason termination reason
-     * @param endDate end date
-     */
+    // /**
+    //  * @param reason termination reason
+    //  * @param endDate end date
+    //  */
 
-    public TerminationRecord(final TerminationReason reason, final LocalDate endDate) {
-        this.reason = reason;
-        this.endDate = endDate;
-    }
+    // public TerminationRecord(final TerminationReason reason, final LocalDate endDate) {
+    //     this.reason = reason;
+    //     this.endDate = endDate;
+    // }
 
     /**
      * Empty constructor for Hibernate.
@@ -64,24 +63,26 @@ public final class TerminationRecord extends BaseRecord {
         // secure pseudo-random number generator
         final Random random = new SecureRandom();
 
-        // @formatter:off
         final Supplier<LocalDate> randomDateSupplier = () -> {
             // generate a random integer between those two values and finally
             // convert it back to a LocalDate
             final long minDay = LocalDate.of(2013, 1, 1).toEpochDay();
             final long maxDay = LocalDate.of(2017, 1, 31).toEpochDay();
-            final long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
+            final long randomDay = ThreadLocalRandom.current()
+                    .nextLong(minDay, maxDay);
             return LocalDate.ofEpochDay(randomDay);
         };
 
         final TerminationRecord record = new TerminationRecord();
 
-
         // get random value from TerminationReason enum
-        final TerminationReason reason = TerminationReason.values()[random.nextInt(TerminationReason.values().length)];
+        final TerminationReason reason = TerminationReason.values()[random
+                .nextInt(TerminationReason.values().length)];
 
-        // @formatter:on
-        return new TerminationRecord(reason, randomDateSupplier.get());
+        record.setReason(reason);
+        record.setEndDate(randomDateSupplier.get());
+
+        return record;
     }
 
     public TerminationReason getReason() {
@@ -100,9 +101,12 @@ public final class TerminationRecord extends BaseRecord {
         this.endDate = endDate;
     }
 
+    @SuppressWarnings("ConditionalExpression")
     @Override
     public String toString() {
         return MessageFormat
-                .format("TerminationRecord<reason={0}, endDate={1}>", reason, endDate);
+                .format("TerminationRecord<reason={0}, endDate={1}>", (reason == null) ? "not available" : reason
+                        .toString(), (endDate == null) ? "not available" : endDate
+                        .toString());
     }
 }

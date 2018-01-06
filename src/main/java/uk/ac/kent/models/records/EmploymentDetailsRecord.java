@@ -4,7 +4,6 @@ import java.security.SecureRandom;
 import java.sql.Blob;
 import java.text.MessageFormat;
 import java.time.LocalDate;
-import java.util.Optional;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
@@ -14,7 +13,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import uk.ac.kent.models.yuconz.Department;
@@ -52,45 +50,45 @@ public final class EmploymentDetailsRecord extends BaseRecord {
     @Enumerated(EnumType.STRING)
     private Position position;
 
-    /**
-     * @param position position of an {@link uk.ac.kent.models.people.Employee}
-     * @param department department of an {@link uk.ac.kent.models.people.Employee}
-     * @param salary salary of an {@link uk.ac.kent.models.people.Employee}
-     */
-
-    public EmploymentDetailsRecord(final Position position, final Department department, final long salary) {
-        this(position, department, LocalDate.now(), salary, null, null);
-    }
-
-    /**
-     * @param position position of an {@link uk.ac.kent.models.people.Employee}
-     * @param department department of an {@link uk.ac.kent.models.people.Employee}
-     * @param dateEmployed starting date of employment of an {@link uk.ac.kent.models.people.Employee}
-     * @param salary salary of an {@link uk.ac.kent.models.people.Employee}
-     */
-
-    public EmploymentDetailsRecord(final Position position, final Department department, final LocalDate dateEmployed, final long salary) {
-        this(position, department, dateEmployed, salary, null, null);
-    }
-
-    /**
-     * @param position position of an {@link uk.ac.kent.models.people.Employee}
-     * @param department department of an {@link uk.ac.kent.models.people.Employee}
-     * @param dateEmployed starting date of employment of an {@link uk.ac.kent.models.people.Employee}
-     * @param salary salary of an {@link uk.ac.kent.models.people.Employee}
-     * @param cv (a document) CV of an {@link uk.ac.kent.models.people.Employee}
-     * @param accountOfInterview (a document) account of the interview of an {@link uk.ac.kent.models.people.Employee}
-     */
-
-    @SuppressWarnings("ConstructorWithTooManyParameters")
-    public EmploymentDetailsRecord(final Position position, final Department department, final LocalDate dateEmployed, final long salary, final Blob cv, final Blob accountOfInterview) {
-        this.dateEmployed = dateEmployed;
-        this.salary = salary;
-        this.department = department;
-        this.cv = cv;
-        this.accountOfInterview = accountOfInterview;
-        this.position = position;
-    }
+    // /**
+    //  * @param position position of an {@link uk.ac.kent.models.people.Employee}
+    //  * @param department department of an {@link uk.ac.kent.models.people.Employee}
+    //  * @param salary salary of an {@link uk.ac.kent.models.people.Employee}
+    //  */
+    //
+    // public EmploymentDetailsRecord(final Position position, final Department department, final long salary) {
+    //     this(position, department, LocalDate.now(), salary, null, null);
+    // }
+    //
+    // /**
+    //  * @param position position of an {@link uk.ac.kent.models.people.Employee}
+    //  * @param department department of an {@link uk.ac.kent.models.people.Employee}
+    //  * @param dateEmployed starting date of employment of an {@link uk.ac.kent.models.people.Employee}
+    //  * @param salary salary of an {@link uk.ac.kent.models.people.Employee}
+    //  */
+    //
+    // public EmploymentDetailsRecord(final Position position, final Department department, final LocalDate dateEmployed, final long salary) {
+    //     this(position, department, dateEmployed, salary, null, null);
+    // }
+    //
+    // /**
+    //  * @param position position of an {@link uk.ac.kent.models.people.Employee}
+    //  * @param department department of an {@link uk.ac.kent.models.people.Employee}
+    //  * @param dateEmployed starting date of employment of an {@link uk.ac.kent.models.people.Employee}
+    //  * @param salary salary of an {@link uk.ac.kent.models.people.Employee}
+    //  * @param cv (a document) CV of an {@link uk.ac.kent.models.people.Employee}
+    //  * @param accountOfInterview (a document) account of the interview of an {@link uk.ac.kent.models.people.Employee}
+    //  */
+    //
+    // @SuppressWarnings("ConstructorWithTooManyParameters")
+    // public EmploymentDetailsRecord(final Position position, final Department department, final LocalDate dateEmployed, final long salary, final Blob cv, final Blob accountOfInterview) {
+    //     this.dateEmployed = dateEmployed;
+    //     this.salary = salary;
+    //     this.department = department;
+    //     this.cv = cv;
+    //     this.accountOfInterview = accountOfInterview;
+    //     this.position = position;
+    // }
 
     /**
      * Empty constructor for Hibernate.
@@ -128,8 +126,14 @@ public final class EmploymentDetailsRecord extends BaseRecord {
         // @formatter:on
         final long salary = 15_000 + random.nextInt(30_000);
 
-        return new EmploymentDetailsRecord(position, department, randomDateSupplier
-                .get(), salary);
+        final EmploymentDetailsRecord record = new EmploymentDetailsRecord();
+
+        record.setPosition(position);
+        record.setDepartment(department);
+        record.setDateEmployed(randomDateSupplier.get());
+        record.setSalary(salary);
+
+        return record;
     }
 
     public Position getPosition() {
@@ -168,20 +172,24 @@ public final class EmploymentDetailsRecord extends BaseRecord {
         this.department = department;
     }
 
-    public Optional<Blob> getCv() {
-        return Optional.ofNullable(cv);
+    public Blob getCv() {
+        return cv;
     }
 
     public void setCv(final Blob cv) {
         this.cv = cv;
     }
 
-    public Optional<Blob> getAccountOfInterview() {
-        return Optional.ofNullable(accountOfInterview);
+    public Blob getAccountOfInterview() {
+        return accountOfInterview;
     }
 
     public void setAccountOfInterview(final Blob accountOfInterview) {
         this.accountOfInterview = accountOfInterview;
+    }
+
+    public void setDateEmployed(final LocalDate dateEmployed) {
+        this.dateEmployed = dateEmployed;
     }
 
     @SuppressWarnings({"StringConcatenation", "ConditionalExpression", "VariableNotUsedInsideIf"})
@@ -195,12 +203,12 @@ public final class EmploymentDetailsRecord extends BaseRecord {
                                             "CV={3}, " +
                                             "accountOfInterview={4}, " +
                                             "position={5}>",
-                                    dateEmployed.toString(),
+                                    (dateEmployed != null) ? dateEmployed.toString() : "not available",
                                     salary,
-                                    department.toString(),
-                                    (cv == null) ? "not uploaded":"uploaded",
-                                    (accountOfInterview == null) ? "not uploaded":"uploaded",
-                                    position.toString());
+                                    (department == null) ? "not available" : department.toString(),
+                                    (cv == null) ? "not uploaded" : "uploaded",
+                                    (accountOfInterview == null) ? "not uploaded" : "uploaded",
+                                    (position == null) ? "not available" : position.toString());
         // @formatter:on
     }
 }

@@ -4,7 +4,6 @@ import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
 import java.text.MessageFormat;
 import java.util.Locale;
-import java.util.Optional;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
@@ -48,28 +47,28 @@ public final class Relative {
     @SuppressWarnings("ProtectedMemberInFinalClass")
     public Relative() {}
 
-    /**
-     * Make a new {@link Relative}.
-     *
-     * @param name first name
-     * @param surname last name
-     */
+    // /**
+    //  * Make a new {@link Relative}.
+    //  *
+    //  * @param name first name
+    //  * @param surname last name
+    //  */
 
-    public Relative(final String name, final String surname) {
-        lastName = surname;
-        firstName = name;
-    }
+    // public Relative(final String name, final String surname) {
+    //     lastName = surname;
+    //     firstName = name;
+    // }
 
-    /**
-     * @param name first name
-     * @param surname last name
-     * @param phone phone number
-     */
+    // /**
+    //  * @param name first name
+    //  * @param surname last name
+    //  * @param phone phone number
+    //  */
 
-    public Relative(final String name, final String surname, final String phone) {
-        this(name, surname);
-        phoneNumber = phone;
-    }
+    // public Relative(final String name, final String surname, final String phone) {
+    //     this(name, surname);
+    //     phoneNumber = phone;
+    // }
 
     public String getLastName() {
         return lastName;
@@ -88,13 +87,20 @@ public final class Relative {
     }
 
     @SuppressWarnings({"WeakerAccess", "ConditionalExpression"})
-    public Optional<String> getPhoneNumber() {
-        return (phoneNumber != null) ? Optional.of(phoneNumber) : Optional
-                .empty();
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public void setPhoneNumber(final String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(final int id) {
+        this.id = id;
     }
 
     /**
@@ -106,21 +112,22 @@ public final class Relative {
         final Faker faker = new Faker(new Locale("en-GB"));
         final Name nameFaker = faker.name();
 
-        // @formatter:off
-        return new Relative(
-                nameFaker.firstName(),
-                nameFaker.lastName(),
-                faker.phoneNumber().cellPhone());
-        // @formatter:on
+        Relative relative = new Relative();
+        relative.setFirstName(nameFaker.firstName());
+        relative.setLastName(nameFaker.lastName());
+        relative.setPhoneNumber(faker.phoneNumber().cellPhone());
+
+        return relative;
     }
 
     @Override
     @SuppressWarnings("ConditionalExpression")
     public final String toString() {
         // @formatter:off
-        return MessageFormat.format("Person<name={0} {1}, phone={2}>",
-                                    firstName, lastName,
-                                    getPhoneNumber().orElse(""));
+        return MessageFormat.format("Person<firstName={0}, lastName={1}, phone={2}>",
+                                    (firstName != null) ? firstName : "not available",
+                                    (lastName != null) ? lastName : "not available",
+                                    (phoneNumber != null) ? phoneNumber : "not available");
         // @formatter:on
     }
 }

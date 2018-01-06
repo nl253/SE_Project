@@ -134,22 +134,6 @@
             <version>5.2.12.Final</version>
         </dependency>
 
-        <!-- Apache standard library -->
-        <!--We might not need it-->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.7</version>
-        </dependency>
-
-        <!-- Google core libraries - graphs, collections, functional patterns -->
-        <!--We might not need it-->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>23.5-jre</version>
-        </dependency>
-
         <!-- MySQL JDBC driver -->
         <dependency>
             <groupId>mysql</groupId>
@@ -157,14 +141,21 @@
             <version>8.0.8-dmr</version>
         </dependency>
 
-        <!--Testing database-->
+        <!-- Apache standard library -->
         <!--We might not need it-->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.196</version>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>org.apache.commons</groupId>-->
+        <!--<artifactId>commons-lang3</artifactId>-->
+        <!--<version>3.7</version>-->
+        <!--</dependency>-->
+
+        <!-- Google core libraries - graphs, collections, functional patterns -->
+        <!--We might not need it-->
+        <!--<dependency>-->
+        <!--<groupId>com.google.guava</groupId>-->
+        <!--<artifactId>guava</artifactId>-->
+        <!--<version>23.5-jre</version>-->
+        <!--</dependency>-->
 
         <!-- [> Apache IO utils <] -->
         <!--We might not need it-->
@@ -297,7 +288,8 @@
                 <version>3.0.2</version>
                 <configuration>
                     <archive>
-                        <manifestFile>${project.basedir}/META-INF/MANIFEST.MF
+                        <manifestFile>
+                            ${project.basedir}/src/main/resources/META-INF/MANIFEST.MF
                         </manifestFile>
                     </archive>
                 </configuration>

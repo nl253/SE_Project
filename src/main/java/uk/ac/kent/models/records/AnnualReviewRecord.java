@@ -1,7 +1,6 @@
 package uk.ac.kent.models.records;
 
 import java.text.MessageFormat;
-import java.util.Optional;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
@@ -27,16 +26,16 @@ public final class AnnualReviewRecord extends BaseRecord {
 
     @SuppressWarnings("FieldCanBeLocal")
     @JoinColumn(name = "recommendation")
-    @OneToOne(targetEntity = BaseRecommendation.class)
+    @OneToOne
     private BaseRecommendation baseRecommendation;
 
-    /**
-     * @param baseRecommendation reference to baseRecommendation associated with this review
-     */
+    // /**
+    //  * @param baseRecommendation reference to baseRecommendation associated with this review
+    //  */
 
-    public AnnualReviewRecord(final BaseRecommendation baseRecommendation) {
-        this.baseRecommendation = baseRecommendation;
-    }
+    // public AnnualReviewRecord(final BaseRecommendation baseRecommendation) {
+    //     this.baseRecommendation = baseRecommendation;
+    // }
 
     /**
      * Empty constructor for Hibernate.
@@ -52,15 +51,17 @@ public final class AnnualReviewRecord extends BaseRecord {
     @Transient
     @SuppressWarnings("LocalVariableOfConcreteClass")
     public static AnnualReviewRecord fake() {
-        return new AnnualReviewRecord(new RemainRecommendation());
+        final AnnualReviewRecord record = new AnnualReviewRecord();
+        record.setBaseRecommendation(new RemainRecommendation());
+        return record;
     }
 
     public void setBaseRecommendation(final BaseRecommendation baseRecommendation) {
         this.baseRecommendation = baseRecommendation;
     }
 
-    public Optional<BaseRecommendation> getBaseRecommendation() {
-        return Optional.ofNullable(baseRecommendation);
+    public BaseRecommendation getBaseRecommendation() {
+        return baseRecommendation;
     }
 
     @Override

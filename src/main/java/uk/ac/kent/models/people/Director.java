@@ -4,8 +4,6 @@ import java.text.MessageFormat;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import uk.ac.kent.models.records.EmploymentDetailsRecord;
 import uk.ac.kent.models.records.PersonalDetailsRecord;
@@ -23,15 +21,15 @@ import uk.ac.kent.models.records.PersonalDetailsRecord;
 @Access(AccessType.FIELD)
 public final class Director extends Employee {
 
-    /**
-     * @param personalDetailsRecord a {@link PersonalDetailsRecord}
-     * @param employmentDetailsRecord an {@link EmploymentDetailsRecord}
-     */
+    // /**
+    //  * @param personalDetailsRecord a {@link PersonalDetailsRecord}
+    //  * @param employmentDetailsRecord an {@link EmploymentDetailsRecord}
+    //  */
 
-    @SuppressWarnings("WeakerAccess")
-    public Director(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
-        super(personalDetailsRecord, employmentDetailsRecord);
-    }
+    // @SuppressWarnings("WeakerAccess")
+    // public Director(final PersonalDetailsRecord personalDetailsRecord, final EmploymentDetailsRecord employmentDetailsRecord) {
+    //     super(personalDetailsRecord, employmentDetailsRecord);
+    // }
 
     /**
      * Empty constructor for Hibernate.
@@ -46,14 +44,22 @@ public final class Director extends Employee {
 
     @SuppressWarnings("MethodOverridesStaticMethodOfSuperclass")
     public static Director fake() {
-        return new Director(PersonalDetailsRecord
-                                    .fake(), EmploymentDetailsRecord.fake());
+        final Director d = new Director();
+        d.setPersonalDetails(PersonalDetailsRecord.fake());
+        d.setEmploymentDetails(EmploymentDetailsRecord.fake());
+        return d;
     }
 
     @SuppressWarnings("LawOfDemeter")
     @Override
     public String toString() {
-        return MessageFormat
-                .format("Director<section={0}>", getEmploymentDetails().getDepartment().toString());
+        try {
+            return MessageFormat
+                    .format("Director<section={0}>", getEmploymentDetails()
+                            .getDepartment().toString());
+        } catch (final Exception ignored) {
+            return MessageFormat
+                    .format("Director<section={0}>", "not available");
+        }
     }
 }

@@ -5,12 +5,9 @@ import java.time.LocalDate;
 import java.util.logging.Logger;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -43,25 +40,13 @@ public abstract class BaseRecord {
 
     @SuppressWarnings({"WeakerAccess", "ProtectedField"})
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected final int id;
+    @GeneratedValue
+    protected int id;
 
     @Column(name = "date_created", updatable = false)
     @CreationTimestamp
     private LocalDate dateCreated = LocalDate.now();
 
-    @Transient
-    private static int nextId;
-
-    /**
-     * Empty constructor for Hibernate.
-     */
-
-    @SuppressWarnings("AssignmentToStaticFieldFromInstanceMethod")
-    BaseRecord() {
-        id = nextId;
-        nextId++;
-    }
 
     public final LocalDate getModifiedDate() {
         return modifiedDate;
@@ -75,7 +60,15 @@ public abstract class BaseRecord {
         return id;
     }
 
+    public final void setId(final int id) {
+        this.id = id;
+    }
+
     final boolean getSigned() {
+        return signed;
+    }
+
+    public final boolean isSigned() {
         return signed;
     }
 
@@ -94,7 +87,7 @@ public abstract class BaseRecord {
     @SuppressWarnings({"DesignForExtension", "ConditionalExpression"})
     @Override
     public String toString() {
-        return MessageFormat.format("{0}<id={1}, {2}>", getClass()
-                .getName(), id, signed ? "signed" : "unsigned");
+        return MessageFormat.format("{0}<id={1}, signed={2}>", getClass()
+                .getName(), id, signed);
     }
 }
