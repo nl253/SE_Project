@@ -63,6 +63,7 @@ public final class TerminationRecord extends BaseRecord {
         this.endOfEmployment = endOfEmployment;
     }
 
+
     /**
      * @param reason reason for termination ({@link String})
      */
@@ -76,7 +77,7 @@ public final class TerminationRecord extends BaseRecord {
      */
 
     @SuppressWarnings({"MagicNumber", "ProtectedMemberInFinalClass"})
-    protected TerminationRecord() {}
+    public TerminationRecord() {}
 
     public String getReason() {
         return reason;

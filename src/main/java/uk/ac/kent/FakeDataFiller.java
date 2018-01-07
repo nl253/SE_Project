@@ -24,6 +24,10 @@ import uk.ac.kent.models.yuconz.Department;
 import uk.ac.kent.models.yuconz.Position;
 
 
+/**
+ * @author Norbert
+ */
+
 @SuppressWarnings({"FeatureEnvy", "ImplicitNumericConversion", "WeakerAccess"})
 public final class FakeDataFiller {
 
@@ -39,8 +43,10 @@ public final class FakeDataFiller {
     private static final com.github.javafaker.GameOfThrones gotFaker = faker
             .gameOfThrones();
 
+    private FakeDataFiller() {}
+
     /**
-     * @param record
+     * @param record a {@link PromotionRecord}
      */
 
     public static void fillPromotionRecord(final PromotionRecord record) {
@@ -53,7 +59,7 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @param relative
+     * @param relative a {@link Relative}
      */
 
     public static void fillRelative(final Relative relative) {
@@ -63,9 +69,9 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @param personalDetails
-     * @param address
-     * @param relative
+     * @param personalDetails a {@link PersonalDetailsRecord}
+     * @param address an {@link Address}
+     * @param relative a {@link Relative}
      */
 
     public static void fillPersonalDetailsRecord(final PersonalDetailsRecord personalDetails, final Address address, final Relative relative) {
@@ -77,7 +83,7 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @return
+     * @return a random quote ({@link String})
      */
 
     @SuppressWarnings("ImplicitNumericConversion")
@@ -86,13 +92,17 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @return
+     * @return a random {@link Department}
      */
 
     @SuppressWarnings("ImplicitNumericConversion")
     private static Department randomDepartment() {
         return Department.values()[random.nextInt(Department.values().length)];
     }
+
+    /**
+     * @param record a {@link TerminationRecord}
+     */
 
     @SuppressWarnings({"AccessingNonPublicFieldOfAnotherObject", "LocalVariableOfConcreteClass", "MagicNumber", "Duplicates"})
     public static void fillTerminationRecord(final TerminationRecord record) {
@@ -103,7 +113,7 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @return
+     * @return a random {@link Position}
      */
 
     @SuppressWarnings("ImplicitNumericConversion")
@@ -112,9 +122,9 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @param lowerBound
-     * @param upperBound
-     * @return
+     * @param lowerBound lower bound of the salary
+     * @param upperBound upper bound of the salary
+     * @return random salary (long)
      */
 
     @SuppressWarnings("ImplicitNumericConversion")
@@ -123,7 +133,7 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @return
+     * @return random salary (long)
      */
 
     private static long randomSalary() {
@@ -131,25 +141,25 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @param employee
-     * @param personalDetails
-     * @param employmentDetails
+     * @param employee an {@link Employee}
+     * @param personalDetails a {@link PersonalDetailsRecord}
+     * @param employmentDetails an {@link EmploymentDetailsRecord}
      */
 
-    public static void fillEmployee(final Employee employee, PersonalDetailsRecord personalDetails, EmploymentDetailsRecord employmentDetails) {
+    public static void fillEmployee(final Employee employee, final PersonalDetailsRecord personalDetails, final EmploymentDetailsRecord employmentDetails) {
         employee.setPassword(Employee.generatePassword());
         employee.setPersonalDetails(personalDetails);
         employee.setEmploymentDetails(employmentDetails);
     }
 
     /**
-     * @param manager
-     * @param personalDetails
-     * @param employmentDetails
-     * @param employees
+     * @param manager a {@link Manager}
+     * @param personalDetails a {@link PersonalDetailsRecord}
+     * @param employmentDetails an {@link EmploymentDetailsRecord}
+     * @param employees a {@link java.util.List} of {@link Employee}s
      */
 
-    public static void fillManager(final Manager manager, PersonalDetailsRecord personalDetails, EmploymentDetailsRecord employmentDetails, Collection<Employee> employees) {
+    public static void fillManager(final Manager manager, final PersonalDetailsRecord personalDetails, final EmploymentDetailsRecord employmentDetails, final Collection<Employee> employees) {
         manager.setPassword(Employee.generatePassword());
         manager.setPersonalDetails(personalDetails);
         manager.setEmploymentDetails(employmentDetails);
@@ -157,12 +167,12 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @param director
-     * @param personalDetails
-     * @param employmentDetails
+     * @param director a {@link Director}
+     * @param personalDetails a {@link PersonalDetailsRecord}
+     * @param employmentDetails an {@link EmploymentDetailsRecord}
      */
 
-    public static void fillDirector(Director director, PersonalDetailsRecord personalDetails, EmploymentDetailsRecord employmentDetails) {
+    public static void fillDirector(final Director director, final PersonalDetailsRecord personalDetails, final EmploymentDetailsRecord employmentDetails) {
         fillEmployee(director, personalDetails, employmentDetails);
     }
 
@@ -205,7 +215,7 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @param record
+     * @param record a {@link BaseRecord}
      */
 
     public static void fillRecord(final BaseRecord record) {
@@ -227,7 +237,7 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @param recommendation
+     * @param recommendation {@link RemainRecommendation}
      */
 
     public static void fillRemainRecommendation(final RemainRecommendation recommendation) {
@@ -235,9 +245,8 @@ public final class FakeDataFiller {
     }
 
     /**
-     * @param record
+     * @param record {@link SalaryIncreaseRecord}
      */
-
 
     public static void fillSalaryIncreaseRecord(final SalaryIncreaseRecord record) {
         record.setNewSalary(randomSalary());

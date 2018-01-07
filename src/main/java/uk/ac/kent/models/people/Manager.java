@@ -9,6 +9,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import uk.ac.kent.models.records.EmploymentDetailsRecord;
@@ -30,6 +31,7 @@ import uk.ac.kent.models.yuconz.Department;
 @Access(AccessType.FIELD)
 public final class Manager extends Employee {
 
+    public static final int DEFAULT_NUMBER_OF_EMPLOYEES = 15;
     /**
      * A group of {@link Employee}s that the manger has been assigned.
      */

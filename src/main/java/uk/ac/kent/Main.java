@@ -34,8 +34,8 @@ public final class Main extends Application {
      */
 
     public static void main(final String[] args) {
-        DatabasePopulator.populate(); // fill the database (testing)
-        System.exit(0);
+        // DatabasePopulator.populate(); // fill the database (testing)
+        // System.exit(0); //
         launch(args); // launch JavaFX app
     }
 }

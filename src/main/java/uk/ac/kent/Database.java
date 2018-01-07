@@ -131,8 +131,7 @@ public final class Database {
 
     @SuppressWarnings({"rawtypes", "LawOfDemeter"})
     public static List query(final Function<EntityManager, List> funct) {
-        final List results = funct.apply(session);
-        return results;
+        return funct.apply(session);
     }
 
     /**

@@ -43,7 +43,6 @@ public abstract class BaseRecord {
     @GeneratedValue
     protected int id;
 
-
     @Column(name = "date_created", updatable = false)
     @CreationTimestamp
     private LocalDate creationDate;
