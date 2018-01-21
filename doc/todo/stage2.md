@@ -71,3 +71,7 @@
 - so is Director
 - Many records - how about an abstract class from which they all inherit
 - Many recommendations - how about an abstract class from which they all inherit
+
+<img src="https://raw.githubusercontent.com/nl253/Software-Engineering-Project/master/uml/class-diagrams/people.png"></img>
+<img src="https://raw.githubusercontent.com/nl253/Software-Engineering-Project/master/uml/class-diagrams/recommendations.png"></img>
+ 
