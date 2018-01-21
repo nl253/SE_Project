@@ -33,38 +33,21 @@
             <email>nl253@kent.ac.uk</email>
             <name>Norbert Logiewa</name>
             <organization>Kent Univerity</organization>
-            <roles>
-                <role>coding</role>
-            </roles>
         </developer>
         <developer>
             <email>ch678@kent.ac.uk</email>
             <name>Charlotte Hollman</name>
             <organization>Kent University</organization>
-            <roles>
-                <role>UML</role>
-                <role>coding</role>
-            </roles>
         </developer>
         <developer>
             <email>bf84@kent.ac.uk</email>
             <name>Bradley Fuller</name>
             <organization>Kent University</organization>
-            <roles>
-                <role>documentation</role>
-                <role>UML</role>
-            </roles>
         </developer>
         <developer>
             <email>if50@kent.ac.uk</email>
             <name>Imaan Fakim</name>
             <organization>Kent University</organization>
-            <roles>
-                <role>management</role>
-                <role>documentation</role>
-                <role>UML</role>
-                <role>reports</role>
-            </roles>
         </developer>
     </developers>
 

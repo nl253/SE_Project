@@ -1,0 +1,30 @@
+@startuml
+
+abstract class BaseRecord
+class EmploymentDetailsRecord
+class SalaryIncreaseRecord
+class PersonalDetailsRecord
+class TerminationRecord
+class ProbationRecord
+class PromotionRecord
+class AnnualReviewRecord
+
+abstract class BaseRecommendation
+class SalaryIncreaseRecommendation
+class TerminationRecommendation
+class PromotionRecommendation
+class ProbationRecommendation
+class RemainRecommendation
+
+interface Reviewer
+class Manager
+class Director
+class Employee
+
+class Department
+class Position
+
+class Relative
+class Address
+
+@endnuml
