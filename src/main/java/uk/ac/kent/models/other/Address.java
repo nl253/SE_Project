@@ -1,40 +1,15 @@
 package uk.ac.kent.models.other;
 
 import java.text.MessageFormat;
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import uk.ac.kent.models.records.PersonalDetailsRecord;
 
 /**
- * Used as a field of {@link PersonalDetailsRecord}.
- *
- * @author norbert
+ * @author Norbert
  */
 
 @SuppressWarnings({"ProtectedMemberInFinalClass", "PublicMethodNotExposedInInterface", "WeakerAccess"})
-@Entity
-@Table(name = "addresses")
-@Access(AccessType.FIELD)
 public final class Address {
 
-    @Id
-    @GeneratedValue
-    private int id;
-
-    private String street;
-
-    @Column(name = "phone_number")
-    private String houseNumber;
-
-    private String city;
-
-    @Column(name = "post_code")
-    private String postCode;
+    private String street, houseNumber, city, postCode;
 
     /**
      * @param street street name
@@ -48,20 +23,6 @@ public final class Address {
         this.houseNumber = houseNumber;
         this.postCode = postCode;
         this.city = city;
-    }
-
-    /**
-     * Empty constructor for Hibernate.
-     */
-
-    public Address() {}
-
-    public void setId(final int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getStreet() {

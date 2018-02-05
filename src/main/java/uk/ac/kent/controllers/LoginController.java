@@ -10,7 +10,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import uk.ac.kent.Database;
 
 /**
  * Manages the login view.
@@ -92,9 +91,10 @@ public final class LoginController extends BaseController {
      */
 
     private boolean authenticate() {
-        return !Database
-                .query("SELECT e FROM Employee e WHERE CONCAT(e.personalDetails.lastName, e.id) = ?0 AND e.password = ?1", username, password)
-                .isEmpty();
+        // return !HRDatabase
+        //         .query("SELECT e FROM Employee e WHERE CONCAT(e.personalDetails.lastName, e.id) = ?0 AND e.password = ?1", username, password)
+        //         .isEmpty();
+        return false;
     }
 
     /**

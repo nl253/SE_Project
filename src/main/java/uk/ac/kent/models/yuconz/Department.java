@@ -3,16 +3,21 @@ package uk.ac.kent.models.yuconz;
 import java.text.MessageFormat;
 
 /**
- * Used in creation of {@link uk.ac.kent.models.records.EmploymentDetailsRecord}
- * and {@link uk.ac.kent.models.records.PromotionRecord}.
- *
- * @author norbert
+ * @author Norbert
  */
 
 @SuppressWarnings({"unused", "SpellCheckingInspection"})
 public enum Department {
 
-    ADMINISTRATION, HUMAN_RESOURCES, INFORMATION_TECHNOLOGY, SALES_AND_MARKETING, BUSINESS_INTELLIGENCE, MANAGEMENT_AND_CONSULATANCY, OTHER;
+    // @formatter:off
+    ADMINISTRATION,
+    HUMAN_RESOURCES,
+    INFORMATION_TECHNOLOGY,
+    SALES_AND_MARKETING,
+    BUSINESS_INTELLIGENCE,
+    MANAGEMENT_AND_CONSULATANCY,
+    OTHER;
+    // @formatter:on
 
     @Override
     public String toString() {
