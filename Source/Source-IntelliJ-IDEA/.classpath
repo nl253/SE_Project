@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry exported="true" kind="lib" path="lib/JUnit5.0/junit-commons-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/JUnit5.0/junit-console-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/JUnit5.0/junit-engine-api-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/JUnit5.0/junit-gradle-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/JUnit5.0/junit-launcher-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/JUnit5.0/junit4-engine-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/JUnit5.0/junit4-runner-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/JUnit5.0/junit5-api-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/JUnit5.0/junit5-engine-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/JUnit5.0/opentest4j-1.0.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/JUnit5.0/surefire-junit5-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JavaFXApp.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JUnit5.0/junit-commons-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JUnit5.0/junit-console-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JUnit5.0/junit-engine-api-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JUnit5.0/junit-gradle-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JUnit5.0/junit-launcher-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JUnit5.0/junit4-engine-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JUnit5.0/junit4-runner-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JUnit5.0/junit5-api-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JUnit5.0/junit5-engine-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JUnit5.0/opentest4j-1.0.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="out/artifacts/Software_Engineering_Project/JUnit5.0/surefire-junit5-5.0.0-ALPHA.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

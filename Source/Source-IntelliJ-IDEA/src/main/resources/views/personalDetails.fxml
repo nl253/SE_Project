@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity"
+            maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="607.0"
+            xmlns="http://javafx.com/javafx/8.0.121"
+            prefWidth="716.0"
+            fx:controller="ui.controllers.JavaFXPersonalDetailsController">
+
+    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="116.0"
+           layoutY="32.0" prefHeight="24.0" prefWidth="499.0"
+           text="Personal Details">
+        <font>
+            <Font size="19.0"/>
+        </font>
+        <padding>
+            <Insets left="10.0" top="10.0"/>
+        </padding>
+    </Label>
+
+    <Button defaultButton="true" layoutX="538.0" layoutY="524.0"
+            mnemonicParsing="false" onMouseClicked="#handleClose"
+            prefHeight="26.0" prefWidth="77.0"
+            style="-fx-background-color: #9d9a97;" text="Close"
+            textFill="WHITE"/>
+
+
+    <Button defaultButton="true" layoutX="116.0" layoutY="524.0"
+            mnemonicParsing="false" onMouseClicked="#handleAmendPersonalDetails"
+            prefHeight="26.0" prefWidth="77.0"
+            style="-fx-background-color: #0091ec;" text="Apply"
+            textFill="WHITE"/>
+
+    <HBox layoutX="59.0" layoutY="97.0" prefHeight="364.0" prefWidth="599.0">
+        <VBox prefHeight="450.0" prefWidth="299.0">
+            <HBox.margin>
+                <Insets left="30.0" right="30.0"/>
+            </HBox.margin>
+            <Label prefHeight="16.0" prefWidth="190.0" text="first name"/>
+            <TextField fx:id="firstNameTextField"
+                       onKeyReleased="#handleValidateAndNotifyName"
+                       promptText="eg. John"/>
+            <Label text="address">
+                <VBox.margin>
+                    <Insets top="30.0"/>
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="addressTextField"
+                       promptText="eg. 7 Whitehall Road "/>
+            <Label text="county">
+                <VBox.margin>
+                    <Insets top="10.0"/>
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="countyTextField"
+                       onKeyReleased="#handleValidateAndNotifyCapWord"
+                       promptText="eg. Kent"/>
+            <Label text="date of birth">
+                <VBox.margin>
+                    <Insets top="30.0"/>
+                </VBox.margin>
+            </Label>
+            <DatePicker fx:id="dateOfBirthPicker"
+                        onAction="#handleValidateAndNotifyDateOfBirth">
+                <VBox.margin>
+                    <Insets/>
+                </VBox.margin>
+            </DatePicker>
+            <Label text="telephone number">
+                <VBox.margin>
+                    <Insets top="30.0"/>
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="telNoTextField"
+                       onKeyReleased="#handleValidateAndNotifyPhoneNo"
+                       promptText="eg. 07313841875"/>
+            <Label text="emergency contact">
+                <VBox.margin>
+                    <Insets top="30.0"/>
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="emergencyContactTextField"
+                       onKeyReleased="#handleValidateAndNotifyName"
+                       promptText="eg. Peter Jones"/>
+        </VBox>
+        <VBox prefHeight="450.0" prefWidth="301.0">
+            <HBox.margin>
+                <Insets left="30.0" right="30.0"/>
+            </HBox.margin>
+            <Label text="last name"/>
+            <TextField fx:id="lastNameTxtField"
+                       onKeyReleased="#handleValidateAndNotifyName"
+                       promptText="eg. Smith"/>
+            <Label text="city">
+                <VBox.margin>
+                    <Insets top="30.0"/>
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="cityTextField"
+                       onKeyReleased="#handleValidateAndNotifyCapWord"
+                       promptText="eg. Canterbury"/>
+            <Label text="post code">
+                <VBox.margin>
+                    <Insets top="10.0"/>
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="postcodeTxtField"
+                       onKeyReleased="#handleValidateAndNotifyPostcode"
+                       promptText="eg. CT283"/>
+            <Label text="mobile phone number">
+                <VBox.margin>
+                    <Insets top="105.0"/>
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="mobileNoTxtField"
+                       onKeyReleased="#handleValidateAndNotifyPhoneNo"
+                       promptText="eg. 07313841875"/>
+            <Label text="emergency contact number">
+                <VBox.margin>
+                    <Insets top="30.0"/>
+                </VBox.margin>
+            </Label>
+            <TextField fx:id="emergencyContactNoTextField"
+                       onKeyReleased="#handleValidateAndNotifyPhoneNo"
+                       promptText="eg. 07313841875"/>
+        </VBox>
+    </HBox>
+</AnchorPane>
