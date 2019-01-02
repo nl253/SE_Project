@@ -1,7 +1,12 @@
 package ui.view;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ResourceBundle;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -68,13 +73,9 @@ public final class JavaFXViewDisplayer implements ViewDisplayer {
     }
 
     private Parent loadParent(final String fxmlFile) {
-
-        final String path = Paths.get("views", format("{0}.fxml", fxmlFile))
-                                 .toString();
-
+        final String path = Paths.get("Source","Source-IntelliJ-IDEA", "src", "main", "resources", "views", format("{0}.fxml", fxmlFile)).toString();
         try {
-            final Parent parent = FXMLLoader.load(requireNonNull(getClass().getClassLoader()
-                                                                           .getResource(path)));
+            final Parent parent = FXMLLoader.load(Paths.get(System.getProperty("user.dir"), path).toFile().getAbsoluteFile().toURI().toURL());
             log.info(format("Successfully loaded {0}.", path));
             log.info(format("Displaying {0} view.", fxmlFile));
             return parent;
